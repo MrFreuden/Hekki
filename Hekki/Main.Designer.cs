@@ -68,7 +68,7 @@
             // 
             // Junior
             // 
-            this.Junior.Location = new System.Drawing.Point(346, 236);
+            this.Junior.Location = new System.Drawing.Point(346, 350);
             this.Junior.Name = "Junior";
             this.Junior.Size = new System.Drawing.Size(204, 86);
             this.Junior.TabIndex = 3;
