@@ -6,6 +6,7 @@
     <Nullable>enable</Nullable>
     <UseWindowsForms>true</UseWindowsForms>
     <ImplicitUsings>enable</ImplicitUsings>
+    <ApplicationIcon>large.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
@@ -19,6 +20,10 @@
       <EmbedInteropTypes>true</EmbedInteropTypes>
       <CopyLocal>True</CopyLocal>
     </COMReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="large.ico" />
   </ItemGroup>
 
 </Project>
