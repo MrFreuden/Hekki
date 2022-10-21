@@ -33,12 +33,14 @@
             this.DoOneRace = new System.Windows.Forms.Button();
             this.DoThreeRaces = new System.Windows.Forms.Button();
             this.DoSemiFinal = new System.Windows.Forms.Button();
-            this.DoFinal = new System.Windows.Forms.Button();
+            this.DoFinalPro = new System.Windows.Forms.Button();
             this.RebuilKarts = new System.Windows.Forms.Button();
             this.RebuildPilots = new System.Windows.Forms.Button();
             this.DeleteKartsFromLastRace = new System.Windows.Forms.Button();
             this.ReadScores = new System.Windows.Forms.Button();
             this.SortScores = new System.Windows.Forms.Button();
+            this.DoFinalAmator = new System.Windows.Forms.Button();
+            this.SortByLique = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // Clear
@@ -89,15 +91,15 @@
             this.DoSemiFinal.UseVisualStyleBackColor = true;
             this.DoSemiFinal.Click += new System.EventHandler(this.DoSemiFinal_Click);
             // 
-            // DoFinal
+            // DoFinalPro
             // 
-            this.DoFinal.Location = new System.Drawing.Point(471, 120);
-            this.DoFinal.Name = "DoFinal";
-            this.DoFinal.Size = new System.Drawing.Size(170, 91);
-            this.DoFinal.TabIndex = 20;
-            this.DoFinal.Text = "Распределить финал";
-            this.DoFinal.UseVisualStyleBackColor = true;
-            this.DoFinal.Click += new System.EventHandler(this.DoFinal_Click);
+            this.DoFinalPro.Location = new System.Drawing.Point(471, 120);
+            this.DoFinalPro.Name = "DoFinalPro";
+            this.DoFinalPro.Size = new System.Drawing.Size(170, 91);
+            this.DoFinalPro.TabIndex = 20;
+            this.DoFinalPro.Text = "Распределить финал про";
+            this.DoFinalPro.UseVisualStyleBackColor = true;
+            this.DoFinalPro.Click += new System.EventHandler(this.DoFinalPro_Click);
             // 
             // RebuilKarts
             // 
@@ -149,17 +151,39 @@
             this.SortScores.UseVisualStyleBackColor = true;
             this.SortScores.Click += new System.EventHandler(this.SortScores_Click);
             // 
+            // DoFinalAmator
+            // 
+            this.DoFinalAmator.Location = new System.Drawing.Point(690, 120);
+            this.DoFinalAmator.Name = "DoFinalAmator";
+            this.DoFinalAmator.Size = new System.Drawing.Size(170, 91);
+            this.DoFinalAmator.TabIndex = 31;
+            this.DoFinalAmator.Text = "Распределить финал аматоров";
+            this.DoFinalAmator.UseVisualStyleBackColor = true;
+            this.DoFinalAmator.Click += new System.EventHandler(this.DoFinalAmator_Click);
+            // 
+            // SortByLique
+            // 
+            this.SortByLique.Location = new System.Drawing.Point(816, 420);
+            this.SortByLique.Name = "SortByLique";
+            this.SortByLique.Size = new System.Drawing.Size(128, 83);
+            this.SortByLique.TabIndex = 32;
+            this.SortByLique.Text = "Сортировать по лигам";
+            this.SortByLique.UseVisualStyleBackColor = true;
+            this.SortByLique.Click += new System.EventHandler(this.SortByLique_Click);
+            // 
             // SprintReg
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(969, 524);
+            this.Controls.Add(this.SortByLique);
+            this.Controls.Add(this.DoFinalAmator);
             this.Controls.Add(this.SortScores);
             this.Controls.Add(this.ReadScores);
             this.Controls.Add(this.DeleteKartsFromLastRace);
             this.Controls.Add(this.RebuildPilots);
             this.Controls.Add(this.RebuilKarts);
-            this.Controls.Add(this.DoFinal);
+            this.Controls.Add(this.DoFinalPro);
             this.Controls.Add(this.DoSemiFinal);
             this.Controls.Add(this.DoThreeRaces);
             this.Controls.Add(this.DoOneRace);
@@ -178,11 +202,13 @@
         private Button DoOneRace;
         private Button DoThreeRaces;
         private Button DoSemiFinal;
-        private Button DoFinal;
+        private Button DoFinalPro;
         private Button RebuilKarts;
         private Button RebuildPilots;
         private Button DeleteKartsFromLastRace;
         private Button ReadScores;
         private Button SortScores;
+        private Button DoFinalAmator;
+        private Button SortByLique;
     }
 }

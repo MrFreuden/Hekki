@@ -35,9 +35,14 @@ namespace Hekki
             Sprint.DoNextRace(numbersKarts, 3);
         }
 
-        private void DoFinal_Click(object sender, EventArgs e)
+        private void DoFinalPro_Click(object sender, EventArgs e)
         {
             Sprint.DoNextRace(numbersKarts, 4);
+        }
+
+        private void DoFinalAmator_Click(object sender, EventArgs e)
+        {
+            Sprint.DoFinalAmators(numbersKarts, 4);
         }
 
         private void Clear_Click(object sender, EventArgs e)
@@ -71,6 +76,11 @@ namespace Hekki
         private void SortScores_Click(object sender, EventArgs e)
         {
             Sprint.Sort();
+        }
+
+        private void SortByLique_Click(object sender, EventArgs e)
+        {
+            Sprint.SortTwoLiques(numbersKarts);
         }
     }
 }

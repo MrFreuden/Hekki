@@ -1,28 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-
-namespace Hekki
+﻿namespace Hekki
 {
     public class Pilot
     {
         private string _name;
-        private List<int> _usedKarts = new List<int>();
-        private List<int> _scores = new List<int>();
-        private List<string> _times = new List<string>();
-        public int Score;
+        private List<int> _usedKarts = new();
+        private List<int> _scores = new();
+        private List<string> _times = new();
+        private string _ligue;
+        public int Score { get { return _scores.Sum(); } }
         public int KartsCount { get { return _usedKarts.Count; } }
         public int ScoresCount { get { return _scores.Count; } }
         public int TimesCount { get { return _times.Count; } }
         public string Name { get { return _name; } set { _name = value; } }
+        public string Ligue { get { return _ligue; } }
+
         public Pilot(string name)
         {
             Name = name;
         }
-        public string GetName()
-        {
-            return _name;
-        }
+
         public Pilot(List<int> usedKarts, string name, List<int> scores, List<string> times)
         {
             for (int i = 0; i < usedKarts.Count; i++)
@@ -33,10 +29,24 @@ namespace Hekki
             for (int i = 0; i < scores.Count; i++)
                 _scores.Add(scores[i]);
 
-            Score = scores.Sum();
+            for (int i = 0; i < times.Count; i++)
+                _times.Add(times[i]);
+        }
+
+        public Pilot(List<int> usedKarts, string name, List<int> scores, List<string> times, string lique)
+        {
+            for (int i = 0; i < usedKarts.Count; i++)
+                _usedKarts.Add(usedKarts[i]);
+
+            _name = name;
+
+            for (int i = 0; i < scores.Count; i++)
+                _scores.Add(scores[i]);
 
             for (int i = 0; i < times.Count; i++)
                 _times.Add(times[i]);
+
+            _ligue = lique;
         }
 
         public void AddNumberKart(int numberKart)
@@ -85,13 +95,11 @@ namespace Hekki
             {
                 _scores.Add(score[_name][i]);
             }
-            Score = _scores.Sum();
         }
 
         public void AddScore(int score)
         {
             _scores.Add(score);
-            Score = _scores.Sum();
         }
 
         public int GetScoreByNumberRace(int numberRace)
@@ -111,6 +119,11 @@ namespace Hekki
 
             }
 
+        }
+
+        public void DeleteLastUsedKart()
+        {
+            _usedKarts.RemoveAt(_usedKarts.Count - 1);
         }
 
         public void AddEmptyScore()

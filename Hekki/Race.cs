@@ -10,12 +10,11 @@ namespace Hekki
     {
         private static Random rng = new Random();
         private static int _countPilotsInFirstGroup;
-        private static int CountPilotsInLastGroup;
         public static int CountPilotsInFirstGroup { get { return _countPilotsInFirstGroup; } }
 
         public static void StartHeatRace(List<Pilot> pilots, List<int> numbers, int numberRace)
         {
-            List<List<Pilot>> groups = new List<List<Pilot>>();
+            List<List<Pilot>> groups = new();
             Shuffle(pilots);
             groups = DivideByGroup(pilots, numbers);
             _countPilotsInFirstGroup = groups[0].Count;
@@ -26,7 +25,7 @@ namespace Hekki
 
         public static void StartSemiRace(List<Pilot> pilots, List<int> numbers, int numberRace)
         {
-            List<List<Pilot>> groups = new List<List<Pilot>>();
+            List<List<Pilot>> groups = new();
             groups = DivideByGroup(pilots, numbers);
             _countPilotsInFirstGroup = groups[0].Count;
             for (int i = 0; i < groups.Count; i++)
@@ -36,7 +35,7 @@ namespace Hekki
 
         public static void StartFinalRace(List<Pilot> pilots, List<int> numbers, int numberRace, int count = 1)
         {
-            List<List<Pilot>> groups = new List<List<Pilot>>();
+            List<List<Pilot>> groups = new();
             groups = SimpleDivideByGroup(pilots, numbers);
             _countPilotsInFirstGroup = groups[0].Count;
             for (int i = 0; i < groups.Count; i++)
@@ -45,9 +44,19 @@ namespace Hekki
             ExcelWorker.WriteNames(groups, numberRace, "Пилоты");
         }
 
+        public static void StartFinalAmators(List<Pilot> pilots, List<int> numbers, int numberRace)
+        {
+            List<List<Pilot>> groups = new();
+            groups = SimpleDivideByGroup(pilots, numbers);
+            for (int i = 0; i < groups.Count; i++)
+                DoAssignmentByCombo(groups[i], numbers, numberRace);
+
+            ExcelWorker.WriteNames(groups, numberRace, "Пилоты");
+        }
+
         public static void StartRandomRace(List<Pilot> pilots, List<int> numbers)
         {
-            List<List<Pilot>> groups = new List<List<Pilot>>();
+            List<List<Pilot>> groups = new();
             var combos = Combination.GetComboEveryOnEvery(pilots.Count, numbers.Count);
             Shuffle(pilots);
             for (int i = 0; i < pilots.Count; i++)
@@ -65,7 +74,7 @@ namespace Hekki
 
         public static void DoAssignmentByCombo(List<Pilot> pilots, List<int> numbers, List<int> combo)
         {
-            List<Pilot> zaezd = new List<Pilot>();
+            List<Pilot> zaezd = new();
             for (int i = 0; i < combo.Count; i++)
             {
                 pilots[combo[i]].AddNumberKart(numbers[i]);
@@ -80,7 +89,7 @@ namespace Hekki
             List<Pilot> pilots = new List<Pilot>();
             foreach (var pilotName in pilotsNames)
                 pilots.Add(new Pilot(pilotName));
-            List<List<Pilot>> groups = new List<List<Pilot>>();
+            List<List<Pilot>> groups = new();
             groups = DivideByGroup(pilots, numbers);
             _countPilotsInFirstGroup = groups[0].Count;
         }
@@ -113,7 +122,10 @@ namespace Hekki
             if (copyNumbersOfKarts.Count > 0)
             {
                 for (int i = 0; i < group.Count; i++)
+                {
                     group[i].ClearUsedKartsByNumberRace(numberRace);
+                    //group[i].DeleteLastUsedKart();
+                }
                 DoAssignmentToGroup(group, numbersOfKarts, numberRace, counerReapeat + 1);
             }
         }
@@ -131,7 +143,7 @@ namespace Hekki
 
         public static List<List<Pilot>> DivideByGroup(List<Pilot> pilots, List<int> numbersOfKarts)
         {
-            List<List<Pilot>> groups = new List<List<Pilot>>();
+            List<List<Pilot>> groups = new();
             int countGroups = (int)Math.Ceiling((double)pilots.Count / numbersOfKarts.Count);
 
             for (int i = 0; i < countGroups; i++)
@@ -150,7 +162,7 @@ namespace Hekki
         public static List<List<Pilot>> SimpleDivideByGroup(List<Pilot> pilots, List<int> numbersOfKarts)
         {
             var dividedGroups = DivideByGroup(pilots, numbersOfKarts);
-            List<List<Pilot>> groups = new List<List<Pilot>>();
+            List<List<Pilot>> groups = new();
             int countGroups = (int)Math.Ceiling((double)pilots.Count / numbersOfKarts.Count);
 
             for (int i = 0; i < countGroups; i++)
@@ -172,18 +184,18 @@ namespace Hekki
 
         public static List<Pilot> MakePilotsFromTotalBoard(int countPilots)
         {
-            List<Pilot> pilots = new List<Pilot>();
+            List<Pilot> pilots = new();
             var names = ExcelWorker.ReadNamesInTotalBoard();
             var kartsMerged = ExcelWorker.ReadUsedKartsInTotalBoard();
             var scoresMerged = ExcelWorker.ReadScoresInTotalBoard(countPilots);
             var timesMerged = ExcelWorker.ReadTimesInTotalBoard(countPilots);
-
+            var liques = ExcelWorker.ReadLique(countPilots);
             for (int i = 0; i < countPilots; i++)
             {
-                List<int> karts = new List<int>();
-                List<int> scores = new List<int>();
-                List<string> times = new List<string>();
-
+                List<int> karts = new();
+                List<int> scores = new();
+                List<string> times = new();
+                
                 if (kartsMerged.Count != 0)
                 {
                     for (int j = 0; j < kartsMerged[i].Count; j++)
@@ -205,8 +217,15 @@ namespace Hekki
                         scores.Add(scoresMerged[i][j]);
                     }
                 }
-
-                pilots.Add(new Pilot(karts, names[i], scores, times));
+                if (liques.Count != 0)
+                {
+                    pilots.Add(new Pilot(karts, names[i], scores, times, liques[i]));
+                }
+                else
+                {
+                    pilots.Add(new Pilot(karts, names[i], scores, times));
+                }
+                
             }
             return pilots;
         }
@@ -231,7 +250,6 @@ namespace Hekki
             {
                 destination.Add((item));
             });
-
         }
     }
 }

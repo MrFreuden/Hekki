@@ -5,7 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 using Hekki;
 using Microsoft.Office.Interop.Excel;
-using Application = Microsoft.Office.Interop.Excel.Application;
 using Range = Microsoft.Office.Interop.Excel.Range;
 namespace Hekki
 {
