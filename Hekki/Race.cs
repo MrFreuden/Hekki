@@ -1,16 +1,12 @@
-﻿using Microsoft.Office.Interop.Excel;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-
-namespace Hekki
+﻿namespace Hekki
 {
     class Race
     {
         private static Random rng = new Random();
         private static int _countPilotsInFirstGroup;
+        private static int _countPilotsInFirstGroupAmators;
         public static int CountPilotsInFirstGroup { get { return _countPilotsInFirstGroup; } }
+        public static int CountPilotsInFirstGroupAmators { get { return _countPilotsInFirstGroupAmators; } }
 
         public static void StartHeatRace(List<Pilot> pilots, List<int> numbers, int numberRace)
         {
@@ -81,7 +77,6 @@ namespace Hekki
                 zaezd.Add(pilots[combo[i]]);
             }
         }
-
 
         public static void ReBuildCountPilotsInFirstGroup(List<int> numbers)
         {
@@ -195,7 +190,7 @@ namespace Hekki
                 List<int> karts = new();
                 List<int> scores = new();
                 List<string> times = new();
-                
+
                 if (kartsMerged.Count != 0)
                 {
                     for (int j = 0; j < kartsMerged[i].Count; j++)
@@ -225,7 +220,7 @@ namespace Hekki
                 {
                     pilots.Add(new Pilot(karts, names[i], scores, times));
                 }
-                
+
             }
             return pilots;
         }
@@ -250,6 +245,13 @@ namespace Hekki
             {
                 destination.Add((item));
             });
+        }
+
+        public static int DefineCountPilotsInFinal(List<Pilot> pilots, string lique)
+        {
+            int count = pilots.FindAll(x => x.Ligue == lique).Count;
+            int result = count < CountPilotsInFirstGroup ? count : CountPilotsInFirstGroup;
+            return result;
         }
     }
 }

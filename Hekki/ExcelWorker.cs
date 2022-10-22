@@ -295,13 +295,13 @@ namespace Hekki
             }
         }
 
-        public static void WriteUsedKartsAmators(List<Pilot> pilots)
+        public static void WriteUsedKartsAmators(List<Pilot> pilots, int countMargin)
         {
             var usedKarts = new List<string>();
             var keyCells = FindKeyCellByValue("Номера", null);
-            var startIndex = keyCells[0].Row + 1 + Race.CountPilotsInFirstGroup;
+            var startIndex = keyCells[0].Row + 1 + countMargin;
             var names = ReadNamesInTotalBoard();
-            for (int i = 0; i < Race.CountPilotsInFirstGroup; i++)
+            for (int i = 0; i < countMargin; i++)
             {
                 names.RemoveAt(0);
             }
@@ -490,7 +490,6 @@ namespace Hekki
                     {
                         kart.RemoveAt(kart.Count - 1);
                     }
-
                 }
             }
             else

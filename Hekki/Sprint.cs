@@ -6,6 +6,7 @@ namespace Hekki
     {
         private static List<Pilot> pilots = new();
         private static int totalPilots;
+        private static int proCountFinal;
         private static int amatorsCountFinal;
         public static int TotalRacesCount;
         public static int maxKarts;
@@ -51,7 +52,7 @@ namespace Hekki
             }
             else
             {
-                pilots = Race.MakePilotsFromTotalBoard(Race.CountPilotsInFirstGroup);
+                pilots = Race.MakePilotsFromTotalBoard(proCountFinal);
                 Race.StartFinalRace(pilots, numbersKarts, numberRace);
             }
             ExcelWorker.WriteUsedKarts(pilots);
@@ -60,13 +61,13 @@ namespace Hekki
         public static void DoFinalAmators(List<int> numbersKarts, int numberRace)
         {
             Race.ReBuildCountPilotsInFirstGroup(numbersKarts);
-            pilots = Race.MakePilotsFromTotalBoard(Race.CountPilotsInFirstGroup + amatorsCountFinal);
-            for (int i = 0; i < Race.CountPilotsInFirstGroup; i++)
+            pilots = Race.MakePilotsFromTotalBoard(proCountFinal + amatorsCountFinal);
+            for (int i = 0; i < proCountFinal; i++)
             {
                 pilots.RemoveAt(0);
             }
             Race.StartFinalAmators(pilots, numbersKarts, numberRace);
-            ExcelWorker.WriteUsedKartsAmators(pilots);
+            ExcelWorker.WriteUsedKartsAmators(pilots, proCountFinal);
         }
 
         public static void Sort()
@@ -92,36 +93,32 @@ namespace Hekki
         public static void SortTwoLiques(List<int> numbersKarts)
         {
             pilots = Race.MakePilotsFromTotalBoard(totalPilots);
-            int count1 = pilots.FindAll(x => x.Ligue == "Pro").Count;
-            amatorsCountFinal = pilots.FindAll(x => x.Ligue == "Am").Count;
-            var groups = Race.DivideByGroup(pilots, numbersKarts);
-            int countInFirtstGroup = groups[0].Count;
+            DefineCountPilotsInFinals();
+
             string firstCell = "C";
             string lastCell = "K";
             lastCell += (3 + pilots.Count).ToString();
             int w = 4;
-            int index = count1 < countInFirtstGroup ? count1 : countInFirtstGroup;
+
             Range rangeToSort = ExcelWorker.excel.Range[firstCell + w.ToString(), lastCell];
             var c1 = rangeToSort.Columns[1];
             var c2 = rangeToSort.Columns[9];
-
             rangeToSort.Sort(c1, XlSortOrder.xlDescending, c2, Type.Missing, XlSortOrder.xlDescending);
+ 
+            w += proCountFinal;
 
-            w += index;
             rangeToSort = ExcelWorker.excel.Range[firstCell + w.ToString(), lastCell];
-
             rangeToSort.Sort(c1, XlSortOrder.xlAscending, c2, Type.Missing, XlSortOrder.xlDescending);
 
-            index = amatorsCountFinal < countInFirtstGroup ? amatorsCountFinal : countInFirtstGroup;
-            w += index;
+            w += amatorsCountFinal;
 
             rangeToSort = ExcelWorker.excel.Range[firstCell + w.ToString(), lastCell];
-
             rangeToSort.Sort(c2, XlSortOrder.xlDescending);
         }
 
         public static void ReadScor()
         {
+            pilots = Race.MakePilotsFromTotalBoard(totalPilots); //Изменить пересчёт балов, слишком долго
             pilots = ExcelWorker.ReadScoresInRace(pilots);
             ExcelWorker.WriteScoreInTotalBoard(pilots);
         }
@@ -131,7 +128,13 @@ namespace Hekki
             List<string> pilotsNames = ExcelWorker.ReadNamesInTotalBoard();
             pilots = Race.MakePilotsFromTotalBoard(pilotsNames.Count);
             totalPilots = pilots.Count;
-            
+            DefineCountPilotsInFinals();
+        }
+
+        private static void DefineCountPilotsInFinals()
+        {
+            proCountFinal = Race.DefineCountPilotsInFinal(pilots, "Pro");
+            amatorsCountFinal = Race.DefineCountPilotsInFinal(pilots, "Am");
         }
     }
 }
