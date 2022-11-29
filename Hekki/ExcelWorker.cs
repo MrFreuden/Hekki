@@ -185,7 +185,7 @@ namespace Hekki
             Pilot.ClearScoreGlobal(pilots);
             var keyScore = FindKeyCellByValue("Итого", null);
 
-            for (int j = 0; j < keyScore.Count; j++)
+            for (int j = 0; j < pilots.Count; j++)
             {
                 var startIndexScore = keyScore[j].Row + 1;
                 int columnIndexName = 0;
