@@ -1,6 +1,6 @@
 ﻿namespace Hekki
 {
-    class Race
+    public class Race
     {
         private static Random rng = new Random();
         private static int _countPilotsInFirstGroup;
@@ -252,6 +252,11 @@
             int count = pilots.FindAll(x => x.Ligue == lique).Count;
             int result = count < CountPilotsInFirstGroup ? count : CountPilotsInFirstGroup;
             return result;
+        }
+
+        public static void RedefineRandomWithSeed()
+        {
+            rng = new Random(1234124535);
         }
     }
 }

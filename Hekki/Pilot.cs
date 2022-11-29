@@ -73,7 +73,7 @@
             }
             catch (Exception)
             {
-                return _usedKarts[numberRace - 1].ToString();
+                return _usedKarts[_usedKarts.Count - 1].ToString();
             }
 
         }

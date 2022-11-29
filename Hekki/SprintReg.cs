@@ -59,13 +59,13 @@ namespace Hekki
 
         private void RebuildPilots_Click(object sender, EventArgs e)
         {
-            Sprint.ReBuildPilots();
+            Sprint.ReBuildPilots(numbersKarts);
         }
 
         private void DeleteKartsFromLastRace_Click(object sender, EventArgs e)
         {
             ExcelWorker.DeleteLastUsedKartsInTotalBoard();
-            Sprint.ReBuildPilots();
+            Sprint.ReBuildPilots(numbersKarts);
         }
 
         private void ReadScores_Click(object sender, EventArgs e)

@@ -10,7 +10,7 @@ using Range = Microsoft.Office.Interop.Excel.Range;
 
 namespace Hekki
 {
-    internal class Every
+    public class Every
     {
         private static List<Pilot> pilots = new List<Pilot>();
         private static int totalPilots;
@@ -45,10 +45,17 @@ namespace Hekki
             }
         }
 
-        public static void ReadScor()
+        public static void ReadScor(List<int> numbersKarts)
         {
-            pilots = ExcelWorker.ReadScoresInRace(pilots);
+            pilots = ExcelWorker.ReadScoresInRaceEveryOnEvery(pilots, numbersKarts.Count);
             ExcelWorker.WriteScoreInTotalBoard(pilots);
+        }
+
+        public static void ReBuildPilots()
+        {
+            List<string> pilotsNames = ExcelWorker.ReadNamesInTotalBoard();
+            pilots = Race.MakePilotsFromTotalBoard(pilotsNames.Count);
+            totalPilots = pilots.Count;
         }
     }
 }

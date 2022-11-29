@@ -10,7 +10,7 @@ using Range = Microsoft.Office.Interop.Excel.Range;
 
 namespace Hekki
 {
-    internal class Cherkasy
+    public class Cherkasy
     {
         private static List<Pilot> pilots = new List<Pilot>();
         private static int totalPilots;
@@ -26,6 +26,7 @@ namespace Hekki
 
         public static void DoQualRace(List<int> numbersKarts)
         {
+            
             int numberRace;
             try
             {
@@ -69,19 +70,31 @@ namespace Hekki
             ExcelWorker.WriteScoreInTotalBoard(pilots);
         }
 
-        public static void SortTimes()
+        public static void SortTimeInTB()
+        {
+            
+            var keyCells = ExcelWorker.FindKeyCellByValue("Best Lap", null);
+
+
+            var range = ExcelWorker.GetTotalBoardRange(pilots.Count);
+            
+            
+
+            for (int i = 0; i < keyCells.Count; i++)
+            {
+                range.Sort(range.Columns[keyCells[i].Column - 2], XlSortOrder.xlAscending);
+            }
+        }
+
+        public static void SortTimeInRace()
         {
             var keyCells = ExcelWorker.FindKeyCellByValue("ВРЕМЯ", null);
-            keyCells.AddRange(ExcelWorker.FindKeyCellByValue("Best Lap", null));
-
             for (int i = 0; i < keyCells.Count; i++)
             {
                 int j = 0;
                 while (keyCells[i][1, j--].Value != null) { }
                 var firstCellRow = keyCells[i].Row;
                 var firstCellCol = keyCells[i][1, j].Column;
-                var lastCellRow = keyCells[i].Row + 32;
-                var lastCellCol = keyCells[i].Column;
 
                 Range rangeToSort = ExcelWorker.excel.Range[ExcelWorker.excel.Cells[firstCellRow + 1, firstCellCol + 1], keyCells[i][50]];
 

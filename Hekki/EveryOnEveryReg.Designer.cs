@@ -35,6 +35,7 @@
             this.SortScores = new System.Windows.Forms.Button();
             this.ReplaceKart = new System.Windows.Forms.Button();
             this.RebuilKarts = new System.Windows.Forms.Button();
+            this.RebuildPilots = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // Clear
@@ -104,11 +105,22 @@
             this.RebuilKarts.UseVisualStyleBackColor = true;
             this.RebuilKarts.Click += new System.EventHandler(this.RebuilKarts_Click);
             // 
+            // RebuildPilots
+            // 
+            this.RebuildPilots.Location = new System.Drawing.Point(329, 324);
+            this.RebuildPilots.Name = "RebuildPilots";
+            this.RebuildPilots.Size = new System.Drawing.Size(128, 83);
+            this.RebuildPilots.TabIndex = 28;
+            this.RebuildPilots.Text = "Пересобрать пилотов";
+            this.RebuildPilots.UseVisualStyleBackColor = true;
+            this.RebuildPilots.Click += new System.EventHandler(this.RebuildPilots_Click);
+            // 
             // EveryOnEveryReg
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(969, 524);
+            this.Controls.Add(this.RebuildPilots);
             this.Controls.Add(this.RebuilKarts);
             this.Controls.Add(this.ReplaceKart);
             this.Controls.Add(this.SortScores);
@@ -118,6 +130,7 @@
             this.Controls.Add(this.Clear);
             this.Name = "EveryOnEveryReg";
             this.Text = "EveryOnEveryReg";
+            this.Load += new System.EventHandler(this.EveryOnEveryReg_Load);
             this.ResumeLayout(false);
 
         }
@@ -131,5 +144,6 @@
         private Button SortScores;
         private Button ReplaceKart;
         private Button RebuilKarts;
+        private Button RebuildPilots;
     }
 }

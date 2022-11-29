@@ -8,11 +8,10 @@ using Microsoft.Office.Interop.Excel;
 using Range = Microsoft.Office.Interop.Excel.Range;
 namespace Hekki
 {
-    internal class Junior
+    public class Junior
     {
         private static List<Pilot> pilots = new List<Pilot>();
         private static int totalPilots;
-
 
         public static void DoQualRandom(List<int> numbersKarts)
         {
@@ -58,11 +57,20 @@ namespace Hekki
             ExcelWorker.WriteUsedKarts(pilots);
         }
 
-        public static void SortTimes()
+        public static void SortTimeInTB()
+        {
+            var keyCells = ExcelWorker.FindKeyCellByValue("Best Lap", null);
+            var range = ExcelWorker.GetTotalBoardRange(pilots.Count);
+
+            for (int i = 0; i < keyCells.Count; i++)
+            {
+                range.Sort(range.Columns[keyCells[i].Column - 2], XlSortOrder.xlAscending);
+            }
+        }
+
+        public static void SortTimeInRace()
         {
             var keyCells = ExcelWorker.FindKeyCellByValue("ВРЕМЯ", null);
-            keyCells.AddRange(ExcelWorker.FindKeyCellByValue("Best Lap", null));
-
             for (int i = 0; i < keyCells.Count; i++)
             {
                 int j = 0;
@@ -71,6 +79,8 @@ namespace Hekki
                 var firstCellCol = keyCells[i][1, j].Column;
 
                 Range rangeToSort = ExcelWorker.excel.Range[ExcelWorker.excel.Cells[firstCellRow + 1, firstCellCol + 1], keyCells[i][50]];
+
+
                 rangeToSort.Sort(rangeToSort.Columns[(j - 1) * -1], XlSortOrder.xlAscending);
             }
         }

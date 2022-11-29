@@ -2,7 +2,7 @@
 using Range = Microsoft.Office.Interop.Excel.Range;
 namespace Hekki
 {
-    internal class Sprint
+    public class Sprint
     {
         private static List<Pilot> pilots = new();
         private static int totalPilots;
@@ -10,6 +10,7 @@ namespace Hekki
         private static int amatorsCountFinal;
         public static int TotalRacesCount;
         public static int maxKarts;
+
         public static void DoThreeRaces(List<int> numbersKarts)
         {
             pilots.Clear();
@@ -18,7 +19,7 @@ namespace Hekki
                 pilots.Add(new Pilot(pilotName));
             totalPilots = pilots.Count;
             TotalRacesCount = totalPilots > 16 ? 3 : 4;
-            ExcelWorker.CleanData();
+            //ExcelWorker.CleanData();
 
             for (int i = 0; i < 3; i++)
                 Race.StartHeatRace(pilots, numbersKarts, i);
@@ -80,8 +81,6 @@ namespace Hekki
                 while (keyCells[i][1, j--].Value != null) { }
                 var firstCellRow = keyCells[i].Row;
                 var firstCellCol = keyCells[i][1, j].Column;
-                var lastCellRow = keyCells[i].Row + 32;
-                var lastCellCol = keyCells[i].Column;
 
                 Range rangeToSort = ExcelWorker.excel.Range[ExcelWorker.excel.Cells[firstCellRow + 1, firstCellCol + 1], keyCells[i][50]];
 
@@ -96,7 +95,9 @@ namespace Hekki
             DefineCountPilotsInFinals();
 
             string firstCell = "C";
-            string lastCell = "K";
+            var keyCell = ExcelWorker.FindKeyCellByValue("ВСЕГО", null);
+            var address = keyCell[0].Address;
+            string lastCell = address[1].ToString();
             lastCell += (3 + pilots.Count).ToString();
             int w = 4;
 
@@ -118,16 +119,17 @@ namespace Hekki
 
         public static void ReadScor()
         {
-            pilots = Race.MakePilotsFromTotalBoard(totalPilots); //Изменить пересчёт балов, слишком долго
+            pilots = Race.MakePilotsFromTotalBoard(totalPilots);
             pilots = ExcelWorker.ReadScoresInRace(pilots);
             ExcelWorker.WriteScoreInTotalBoard(pilots);
         }
 
-        public static void ReBuildPilots()
+        public static void ReBuildPilots(List<int> numbersKarts)
         {
             List<string> pilotsNames = ExcelWorker.ReadNamesInTotalBoard();
             pilots = Race.MakePilotsFromTotalBoard(pilotsNames.Count);
             totalPilots = pilots.Count;
+            Race.ReBuildCountPilotsInFirstGroup(numbersKarts);
             DefineCountPilotsInFinals();
         }
 

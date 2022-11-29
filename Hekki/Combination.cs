@@ -8,8 +8,10 @@ using System.Threading.Tasks;
 
 namespace Hekki
 {
-    internal class Combination
+    public class Combination
     {
+        private static Random rnd = new();
+
         private static IEnumerable<List<int>> AllCombinations(List<int> arg, List<int> awithout)
         {
             if (arg.Count == 1)
@@ -44,12 +46,11 @@ namespace Hekki
 
         public static List<int> GetAvaibleCombo(List<int> numbersKarts, List<Pilot> pilots)
         {
-            Random rnd = new Random();
             var totallist = new List<int>(numbersKarts);
             var allcombis = AllCombinations(totallist, new List<int>());
             var allcombi = allcombis.ToList();
-            List<int> spare = new List<int>();
-            List<int> nums = new List<int>();
+            List<int> spare = new();
+            List<int> nums = new();
 
             for (int i = 0; i < pilots.Count; i++)
             {
@@ -98,9 +99,10 @@ namespace Hekki
             Shuffle(combos);
             return combos;
         }
+
         private static IList<T> Shuffle<T>(IList<T> list)
         {
-            Random rnd = new Random();
+            
             int n = list.Count;
             while (n > 1)
             {
@@ -111,6 +113,11 @@ namespace Hekki
                 list[n] = value;
             }
             return list;
+        }
+
+        public static void RedefineRandomWithSeed()
+        {
+            rnd = new Random(1234124535);
         }
     }
 }

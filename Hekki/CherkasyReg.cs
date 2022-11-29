@@ -85,7 +85,8 @@ namespace Hekki
 
         private void SortTimes_Click(object sender, EventArgs e)
         {
-            Cherkasy.SortTimes();
+            Cherkasy.SortTimeInTB();
+            Cherkasy.SortTimeInRace();
         }
     }
 }

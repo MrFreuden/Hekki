@@ -27,7 +27,8 @@ namespace Hekki
 
         private void Clear_Click(object sender, EventArgs e)
         {
-            ExcelWorker.CleanData(11);
+            ExcelWorker.CleanData(null, 11);
+            ExcelWorker.CleanData(ExcelWorker.GetTotalBoardRange(45));
         }
 
         private void RebuilKarts_Click(object sender, EventArgs e)
@@ -39,12 +40,22 @@ namespace Hekki
 
         private void ReadScores_Click(object sender, EventArgs e)
         {
-            Every.ReadScor();
+            Every.ReadScor(numbersKarts);
         }
 
         private void SortScores_Click(object sender, EventArgs e)
         {
             Every.SortScores();
+        }
+
+        private void RebuildPilots_Click(object sender, EventArgs e)
+        {
+            Every.ReBuildPilots();
+        }
+
+        private void EveryOnEveryReg_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

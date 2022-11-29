@@ -79,7 +79,8 @@ namespace Hekki
 
         private void SortTimes_Click(object sender, EventArgs e)
         {
-            Junior.SortTimes();
+            Junior.SortTimeInRace();
+            Junior.SortTimeInTB();
         }
     }
 }
