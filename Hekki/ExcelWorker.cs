@@ -1,4 +1,6 @@
-﻿using System.Globalization;
+﻿using Microsoft.Office.Interop.Excel;
+using System.Globalization;
+using System.Xml.Linq;
 using Application = Microsoft.Office.Interop.Excel.Application;
 using Range = Microsoft.Office.Interop.Excel.Range;
 namespace Hekki
@@ -155,6 +157,7 @@ namespace Hekki
                     columnIndexName--;
 
                 columnIndexName = keyScore[j].Column - ((columnIndexName * -1) + 1);
+
                 for (int i = 0; i < pilots.Count && startIndexScore < 50; startIndexScore++)
                 {
                     string name;
@@ -175,8 +178,15 @@ namespace Hekki
                     pilots[index].AddScore((int)excel.Cells[startIndexScore, keyScore[j].Column].Value);
                     i++;
                 }
+                int maxScoreCount = pilots.Max(x => x.ScoresCount);
+                if (maxScoreCount < 4)
+                {
+                    continue;
+                }
+                List<Pilot> pNew = pilots.Where(x => x.ScoresCount < maxScoreCount).ToList();
+
+                Pilot.AddEmptyScoresGlobal(pNew);
             }
-            //Race.Shuffle(pilots);
             return pilots.ToList();
         }
 

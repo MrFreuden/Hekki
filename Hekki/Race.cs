@@ -42,6 +42,7 @@
 
         public static void StartFinalAmators(List<Pilot> pilots, List<int> numbers, int numberRace)
         {
+            
             List<List<Pilot>> groups = new();
             groups = SimpleDivideByGroup(pilots, numbers);
             for (int i = 0; i < groups.Count; i++)

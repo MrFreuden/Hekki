@@ -53,6 +53,13 @@ namespace Hekki
             }
             else
             {
+                if (pilots.Count < 19)
+                {
+                    var k1 = ExcelWorker.FindKeyCellByValue("Карт", null);
+                    var k2 = ExcelWorker.FindKeyCellByValue("Пилоты", null);
+                    k1[3][2] = 0.ToString();
+                    k2[3][2] = 0.ToString();
+                }
                 pilots = Race.MakePilotsFromTotalBoard(proCountFinal);
                 Race.StartFinalRace(pilots, numbersKarts, numberRace);
             }
@@ -117,11 +124,25 @@ namespace Hekki
             rangeToSort.Sort(c2, XlSortOrder.xlDescending);
         }
 
-        public static void ReadScor()
+        public static void ReadScor(List<int> numbersKarts)
         {
             pilots = Race.MakePilotsFromTotalBoard(totalPilots);
             pilots = ExcelWorker.ReadScoresInRace(pilots);
+            var pNew = pilots.Where(x => x.ScoresCount > 5).ToList();
+            if (pNew.Count > 0)
+            {
+                pNew = pNew.Where(x => x.GetScoreByNumberRace(x.ScoresCount - 1) != 0).ToList();
+                Test(pNew);
+            }
             ExcelWorker.WriteScoreInTotalBoard(pilots);
+        }
+
+        private static void Test(List<Pilot> pNew)
+        {
+            foreach (var pilot in pNew)
+            {
+                pilot.DeleteScore(pilot.ScoresCount - 2);
+            }
         }
 
         public static void ReBuildPilots(List<int> numbersKarts)

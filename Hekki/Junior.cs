@@ -116,6 +116,7 @@ namespace Hekki
 
         public static void ReadScor()
         {
+            pilots = Race.MakePilotsFromTotalBoard(totalPilots);
             pilots = ExcelWorker.ReadScoresInRace(pilots);
             ExcelWorker.WriteScoreInTotalBoard(pilots);
         }

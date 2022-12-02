@@ -88,18 +88,27 @@
             return res;
         }
 
-        public void AddScore(Dictionary<string, List<int>> score)
-        {
-            _scores.Clear();
-            for (int i = 0; i < score[_name].Count; i++)
-            {
-                _scores.Add(score[_name][i]);
-            }
-        }
-
         public void AddScore(int score)
         {
             _scores.Add(score);
+        }
+
+        public static void AddEmptyScoresGlobal(List<Pilot> pilots)
+        {
+            foreach (var pilot in pilots)
+            {
+                pilot.AddEmptyScore();
+            }
+        }
+
+        public void AddEmptyScore()
+        {
+            _scores.Add(0);
+        }
+
+        public void DeleteScore(int index)
+        {
+            _scores.RemoveAt(index);
         }
 
         public int GetScoreByNumberRace(int numberRace)
@@ -119,21 +128,6 @@
 
             }
 
-        }
-
-        public void DeleteLastUsedKart()
-        {
-            _usedKarts.RemoveAt(_usedKarts.Count - 1);
-        }
-
-        public void AddEmptyScore()
-        {
-            _scores.Add(0);
-        }
-
-        public void AddEmptyNumberKart()
-        {
-            _usedKarts.Add(0);
         }
 
         public List<int> GetNumbersKarts()

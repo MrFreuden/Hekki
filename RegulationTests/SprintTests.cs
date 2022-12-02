@@ -65,7 +65,7 @@ namespace RegulationTests
         [Test, Order(2)]
         public void AssignmentSemiFinal()
         {
-            Sprint.ReadScor();
+            Sprint.ReadScor(numbers);
             Sprint.Sort();
             Sprint.DoNextRace(numbers, 3);
 
@@ -83,7 +83,7 @@ namespace RegulationTests
         [Test, Order(3)]
         public void AssignmentFinalPro()
         {
-            Sprint.ReadScor();
+            Sprint.ReadScor(numbers);
             Sprint.SortTwoLiques(numbers);
             Sprint.DoNextRace(numbers, 4);
 
@@ -117,7 +117,7 @@ namespace RegulationTests
         [Test, Order(5)]
         public void IdenticalWithTestData()
         {
-            Sprint.ReadScor();
+            Sprint.ReadScor(numbers);
             Sprint.SortTwoLiques(numbers);
 
 
