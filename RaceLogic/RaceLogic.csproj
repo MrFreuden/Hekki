@@ -18,4 +18,8 @@
     </COMReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\ExcelController\ExcelController.csproj" />
+  </ItemGroup>
+
 </Project>

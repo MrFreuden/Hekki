@@ -26,4 +26,9 @@
     <Content Include="large.ico" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\ExcelController\ExcelController.csproj" />
+    <ProjectReference Include="..\RaceLogic\RaceLogic.csproj" />
+  </ItemGroup>
+
 </Project>

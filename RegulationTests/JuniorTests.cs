@@ -1,11 +1,12 @@
 ﻿using NUnit.Framework;
-using Hekki;
 using Microsoft.Office.Interop.Excel;
 using System.Collections.Generic;
 using System;
 using System.IO;
 using System.Linq;
-
+using RaceLogic;
+using Pilot = RaceLogic.Pilot;
+using ExcelController;
 namespace RegulationTests
 {
     public class JuniorTests
