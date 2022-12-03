@@ -10,6 +10,10 @@
 *.userosscache
 *.sln.docstates
 
+*.vsto binary
+*.deploy binary
+*.manifest binary
+
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
 
