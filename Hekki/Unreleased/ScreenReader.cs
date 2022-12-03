@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Hekki
+namespace Hekki.Unreleased
 {
-    internal class PrintScreen
+    internal class ScreenReader
     {
     }
 }

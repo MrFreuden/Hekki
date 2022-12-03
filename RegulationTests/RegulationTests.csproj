@@ -27,11 +27,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Hekki\Hekki.csproj" />
+    <Folder Include="TestData\Junior\" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="TestData\Junior\" />
+    <ProjectReference Include="..\ExcelController\ExcelController.csproj" />
+    <ProjectReference Include="..\RaceLogic\RaceLogic.csproj" />
   </ItemGroup>
 
 </Project>

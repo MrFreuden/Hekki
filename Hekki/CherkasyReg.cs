@@ -1,13 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-
+﻿using RaceLogic;
+using ExcelController;
 namespace Hekki
 {
     public partial class CherkasyReg : Form
@@ -22,7 +14,7 @@ namespace Hekki
 
         private void DoQual1_Click(object sender, EventArgs e)
         {
-            Cherkasy.DoQualRace(numbersKarts);
+            RaceLogic.Cherkasy.DoQualRace(numbersKarts);
         }
 
         private void DoHeat1_Click(object sender, EventArgs e)
@@ -47,7 +39,7 @@ namespace Hekki
 
         private void Clear_Click(object sender, EventArgs e)
         {
-            ExcelWorker.CleanData();
+            ExcelController. ExcelWorker.CleanData();
         }
 
         private void RebuilKarts_Click(object sender, EventArgs e)

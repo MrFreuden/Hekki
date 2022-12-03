@@ -1,6 +1,8 @@
 namespace ExcelWorker.Test
 {
-    using Hekki;
+    using RaceLogic;
+    using Pilot = ExcelController.Pilot;
+    using ExcelController;
     using NUnit.Framework;
     using System.Collections.Generic;
 
