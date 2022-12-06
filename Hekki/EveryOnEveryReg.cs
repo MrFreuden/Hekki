@@ -12,6 +12,7 @@ namespace Hekki
 {
     public partial class EveryOnEveryReg : Form
     {
+        private static Every _every = new();
         private static List<int> numbersKarts;
         public EveryOnEveryReg(List<int> karts)
         {
@@ -22,7 +23,7 @@ namespace Hekki
 
         private void DoRaces_Click(object sender, EventArgs e)
         {
-            Every.DoRaces(numbersKarts);
+            _every.DoRaces(numbersKarts);
         }
 
         private void Clear_Click(object sender, EventArgs e)
@@ -40,17 +41,17 @@ namespace Hekki
 
         private void ReadScores_Click(object sender, EventArgs e)
         {
-            Every.ReadScor(numbersKarts);
+            _every.ReadScor(numbersKarts);
         }
 
         private void SortScores_Click(object sender, EventArgs e)
         {
-            Every.SortScores();
+            _every.SortScores();
         }
 
         private void RebuildPilots_Click(object sender, EventArgs e)
         {
-            Every.ReBuildPilots();
+            _every.ReBuildPilots();
         }
 
         private void EveryOnEveryReg_Load(object sender, EventArgs e)

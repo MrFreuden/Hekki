@@ -11,6 +11,7 @@ namespace RegulationTests
     public class CherkasyTests
     {
         dynamic correctSheet = ExcelWorker.excel.Sheets["cherkasyCorrect"];
+        private Cherkasy _cherkasy = new();
         private List<int> numbers = new() { 1, 2, 3, 4, 5, 6, 7, 8 };
         private List<Pilot> correctPilots;
 
@@ -46,7 +47,7 @@ namespace RegulationTests
 
         public void PilotsTime()
         {
-            Cherkasy.ReadTime();
+            _cherkasy.ReadTime();
             var pilots = Race.MakePilotsFromTotalBoard(correctPilots.Count).OrderBy(o => o.Name).ToList();
             
             for (int i = 0; i < pilots.Count; i++)
@@ -63,10 +64,12 @@ namespace RegulationTests
         public void AssignmentQual1()
         {
             Race.RedefineRandomWithSeed();
-            Cherkasy.DoQualRace(numbers);
+            Combination.RedefineRandomWithSeed();
+            _cherkasy.DoQualRace(numbers);
+            _cherkasy.WriteUsedKarts();
             PilotsTime();
-            Cherkasy.SortTimeInTB();
-            Cherkasy.SortTimeInRace();
+            _cherkasy.SortTimeInTB();
+            _cherkasy.SortTimeInRace();
 
             int col = ExcelWorker.excel.Range["L1", "L1"].Column;
 
@@ -84,9 +87,9 @@ namespace RegulationTests
         [Test, Order(2)]
         public void AssignmentHeat1()
         {
-            Cherkasy.DoOneRace(numbers);
-            ExcelWorker.WriteTestData(@"../../../TestData/Cherkasy/TestTime.txt", "Время", ExcelWorker.excel.get_Range("Z1", "AD100"));
-            Cherkasy.ReadScor();
+            _cherkasy.DoOneRace(numbers);
+            _cherkasy.WriteUsedKarts();
+            _cherkasy.ReadScor();
 
 
             int col = ExcelWorker.excel.Range["R1", "R1"].Column;
@@ -105,11 +108,14 @@ namespace RegulationTests
         [Test, Order(3)]
         public void AssignmentQual2()
         {
+            ExcelWorker.WriteTestData(@"../../../TestData/Cherkasy/TestTime.txt", "Время", ExcelWorker.excel.get_Range("Z1", "AD100"));
             Race.RedefineRandomWithSeed();
-            Cherkasy.DoQualRace(numbers);
+            Combination.RedefineRandomWithSeed();
+            _cherkasy.DoQualRace(numbers);
+            _cherkasy.WriteUsedKarts();
             PilotsTime();
-            Cherkasy.SortTimeInTB();
-            Cherkasy.SortTimeInRace();
+            _cherkasy.SortTimeInTB();
+            _cherkasy.SortTimeInRace();
 
 
             int col = ExcelWorker.excel.Range["Z1", "Z1"].Column;
@@ -128,8 +134,9 @@ namespace RegulationTests
         [Test, Order(4)]
         public void AssignmentHeat2()
         {
-            Cherkasy.DoOneRace(numbers);
-            Cherkasy.ReadScor();
+            _cherkasy.DoOneRace(numbers);
+            _cherkasy.WriteUsedKarts();
+            _cherkasy.ReadScor();
 
             int col = ExcelWorker.excel.Range["AF1", "AF1"].Column;
 
@@ -147,9 +154,10 @@ namespace RegulationTests
         [Test, Order(5)]
         public void AssignmentFinal()
         {
-            Cherkasy.SortScores();
-            Cherkasy.DoFinal(numbers);
-            Cherkasy.ReadScor();
+            _cherkasy.SortScores();
+            _cherkasy.DoFinal(numbers);
+            _cherkasy.WriteUsedKarts();
+            _cherkasy.ReadScor();
 
             int col = ExcelWorker.excel.Range["AN1", "AN1"].Column;
 
@@ -167,7 +175,7 @@ namespace RegulationTests
         [Test, Order(6)]
         public void IdenticalWithTestData()
         {
-            Cherkasy.SortScores();
+            _cherkasy.SortScores();
 
             for (int i = 1; i < 46; i++)
             {

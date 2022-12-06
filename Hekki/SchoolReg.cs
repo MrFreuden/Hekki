@@ -12,6 +12,7 @@ namespace Hekki
 {
     public partial class SchoolReg : Form
     {
+        private static School _school = new();
         private static List<int> numbersKarts;
         public SchoolReg(List<int> karts)
         {
@@ -22,17 +23,20 @@ namespace Hekki
 
         private void DoQual_Click(object sender, EventArgs e)
         {
-            School.DoRace(numbersKarts);
+            _school.DoRace(numbersKarts);
+            _school.WriteUsedKarts();
         }
 
         private void DoRace1_Click(object sender, EventArgs e)
         {
-            School.DoRace(numbersKarts);
+            _school.DoRace(numbersKarts);
+            _school.WriteUsedKarts();
         }
 
         private void DoRace2_Click(object sender, EventArgs e)
         {
-            School.DoRace(numbersKarts);
+            _school.DoRace(numbersKarts);
+            _school.WriteUsedKarts();
         }
 
         private void Clear_Click(object sender, EventArgs e)
@@ -49,18 +53,18 @@ namespace Hekki
 
         private void RebuildPilots_Click(object sender, EventArgs e)
         {
-            School.ReBuildPilots();
+            _school.ReBuildPilots();
         }
 
         private void ReadTimes_Click(object sender, EventArgs e)
         {
-            School.ReadTime();
+            _school.ReadTime();
         }
 
         private void SortTimes_Click(object sender, EventArgs e)
         {
-            School.SortTimeInTB();
-            School.SortTimeInRace();
+            _school.SortTimeInTB();
+            _school.SortTimeInRace();
         }
     }
 }

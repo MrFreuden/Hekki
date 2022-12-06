@@ -11,6 +11,7 @@ namespace RegulationTests
     public class EveryOnEveryTests
     {
         dynamic correctSheet = ExcelWorker.excel.Sheets["everyCorrect"];
+        private Every _every = new();
         private List<int> numbers = new() { 1, 2, 3, 4, 5, 6, 7, 8 };
         private List<Pilot> correctPilots;
 
@@ -65,7 +66,7 @@ namespace RegulationTests
         [Test, Order(1)]
         public void AssignmentRaces()
         {
-            Every.DoRaces(numbers);
+            _every.DoRaces(numbers);
             int row = 2;
             for (int i = 1; i < 6; i++)
             {
@@ -77,14 +78,14 @@ namespace RegulationTests
         [Test, Order(2)]
         public void IdenticalTBWithTestData()
         {
-            Every.ReadScor(numbers);
-            Every.SortScores();
+            _every.ReadScor(numbers);
+            _every.SortScores();
 
             int col = ExcelWorker.excel.Range["T1", "T1"].Column;
 
-            for (int i = col; i < 12; i++)
+            for (int i = col; i < 12 + col; i++)
             {
-                for (int j = 92; j < j + 45; j++)
+                for (int j = 92; j < 92 + 16; j++)
                 {
                     var sut = Convert.ToString(ExcelWorker.excel.Cells[j, i].Value);
                     var correct = Convert.ToString(correctSheet.Cells[j, i].Value);

@@ -11,6 +11,7 @@ namespace RegulationTests
     public class SchoolTests
     {
         dynamic correctSheet = ExcelWorker.excel.Sheets["schoolCorrect"];
+        private School _school = new();
         private List<int> numbers = new() { 1, 2, 3, 4, 5, 6, 7, 8 };
         private List<Pilot> correctPilots;
 
@@ -19,6 +20,8 @@ namespace RegulationTests
         {
             SetCorrectPilots();
             WriteTestData();
+            Race.RedefineRandomWithSeed();
+            Combination.RedefineRandomWithSeed();
         }
 
         private void WriteTestData()
@@ -44,7 +47,7 @@ namespace RegulationTests
 
         public void PilotsTime()
         {
-            School.ReadTime();
+            _school.ReadTime();
             var pilots = Race.MakePilotsFromTotalBoard(correctPilots.Count).OrderBy(o => o.Name).ToList();
 
             for (int i = 0; i < pilots.Count; i++)
@@ -61,11 +64,13 @@ namespace RegulationTests
         public void AssignmentQual()
         {
             Race.RedefineRandomWithSeed();
-            School.DoRace(numbers);
+            Combination.RedefineRandomWithSeed();
+            _school.DoRace(numbers);
+            _school.WriteUsedKarts();
             ExcelWorker.WriteTestData(@"../../../TestData/School/TestTime.txt", "Время", ExcelWorker.excel.get_Range("O1", "O10"));
             PilotsTime();
-            School.SortTimeInTB();
-            School.SortTimeInRace();
+            _school.SortTimeInTB();
+            _school.SortTimeInRace();
 
             int col = ExcelWorker.excel.Range["O1", "O1"].Column;
 
@@ -84,11 +89,13 @@ namespace RegulationTests
         public void AssignmentRace1()
         {
             Race.RedefineRandomWithSeed();
-            School.DoRace(numbers);
+            Combination.RedefineRandomWithSeed();
+            _school.DoRace(numbers);
+            _school.WriteUsedKarts();
             ExcelWorker.WriteTestData(@"../../../TestData/School/TestTime.txt", "Время", ExcelWorker.excel.get_Range("U1", "U10"));
             PilotsTime();
-            School.SortTimeInTB();
-            School.SortTimeInRace();
+            _school.SortTimeInTB();
+            _school.SortTimeInRace();
 
             int col = ExcelWorker.excel.Range["U1", "U1"].Column;
 
@@ -107,11 +114,13 @@ namespace RegulationTests
         public void AssignmentRace2()
         {
             Race.RedefineRandomWithSeed();
-            School.DoRace(numbers);
+            Combination.RedefineRandomWithSeed();
+            _school.DoRace(numbers);
+            _school.WriteUsedKarts();
             ExcelWorker.WriteTestData(@"../../../TestData/School/TestTime.txt", "Время", ExcelWorker.excel.get_Range("AA1", "AA10"));
             PilotsTime();
-            School.SortTimeInTB();
-            School.SortTimeInRace();
+            _school.SortTimeInTB();
+            _school.SortTimeInRace();
 
             int col = ExcelWorker.excel.Range["AA1", "AA1"].Column;
 

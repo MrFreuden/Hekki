@@ -11,6 +11,7 @@ namespace RegulationTests
     public class JuniorTests
     {
         dynamic correctSheet = ExcelWorker.excel.Sheets["juniorCorrect"];
+        private Junior _junior = new();
         private List<int> numbers = new() { 1, 2, 3, 4, 5, 6, 7, 8 };
         private List<Pilot> correctPilots;
 
@@ -20,6 +21,7 @@ namespace RegulationTests
             SetCorrectPilots();
             WriteTestData();
             Race.RedefineRandomWithSeed();
+            Combination.RedefineRandomWithSeed();
         }
 
         private void WriteTestData()
@@ -46,7 +48,7 @@ namespace RegulationTests
 
         public void PilotsTime()
         {
-            Junior.ReadTime();
+            _junior.ReadTime();
             var pilots = Race.MakePilotsFromTotalBoard(correctPilots.Count).OrderBy(o => o.Name).ToList();
 
             for (int i = 0; i < pilots.Count; i++)
@@ -61,12 +63,13 @@ namespace RegulationTests
         [Test, Order(1)]
         public void AssignmentQual()
         {
-            Junior.DoQualRandom(numbers);
+            _junior.DoQualRandom(numbers);
+            _junior.WriteUsedKarts();
             ExcelWorker.WriteTestData(@"../../../TestData/Junior/TestTime.txt", "Время", ExcelWorker.excel.get_Range("T1", "T10"));
             PilotsTime();
-            Junior.ReadScor();
-            Junior.SortTimeInTB();
-            Junior.SortTimeInRace();
+            _junior.ReadScor();
+            _junior.SortTimeInTB();
+            _junior.SortTimeInRace();
 
             int col = ExcelWorker.excel.Range["N1", "N1"].Column;
 
@@ -84,12 +87,13 @@ namespace RegulationTests
         [Test, Order(2)]
         public void AssignmentHeat1()
         {
-            Junior.DoRace(numbers);
+            _junior.DoRace(numbers);
+            _junior.WriteUsedKarts();
             ExcelWorker.WriteTestData(@"../../../TestData/Junior/TestTime.txt", "Время", ExcelWorker.excel.get_Range("AC1", "AC10"));
             PilotsTime();
-            Junior.ReadScor();
-            Junior.SortTimeInTB();
-            Junior.SortTimeInRace();
+            _junior.ReadScor();
+            _junior.SortTimeInTB();
+            _junior.SortTimeInRace();
 
             int col = ExcelWorker.excel.Range["W1", "W1"].Column;
 
@@ -107,12 +111,13 @@ namespace RegulationTests
         [Test, Order(3)]
         public void AssignmentHeat2()
         {
-            Junior.DoRace(numbers);
+            _junior.DoRace(numbers);
+            _junior.WriteUsedKarts();
             ExcelWorker.WriteTestData(@"../../../TestData/Junior/TestTime.txt", "Время", ExcelWorker.excel.get_Range("AL1", "AL10"));
             PilotsTime();
-            Junior.ReadScor();
-            Junior.SortTimeInTB();
-            Junior.SortTimeInRace();
+            _junior.ReadScor();
+            _junior.SortTimeInTB();
+            _junior.SortTimeInRace();
 
             int col = ExcelWorker.excel.Range["AF1", "AF1"].Column;
 
@@ -130,9 +135,10 @@ namespace RegulationTests
         [Test, Order(4)]
         public void AssignmentFinal()
         {
-            Junior.SortScores();
-            Junior.DoFinal(numbers);
-            Junior.ReadScor();
+            _junior.SortScores();
+            _junior.DoFinal(numbers);
+            _junior.WriteUsedKarts();
+            _junior.ReadScor();
 
             int col = ExcelWorker.excel.Range["AO1", "AO1"].Column;
 
@@ -150,7 +156,7 @@ namespace RegulationTests
         [Test, Order(5)]
         public void IdenticalWithTestData()
         {
-            Junior.SortScores();
+            _junior.SortScores();
 
             for (int i = 1; i < 47; i++)
             {

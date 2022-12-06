@@ -46,6 +46,7 @@ namespace Hekki
 
         public static List<int> GetAvaibleCombo(List<int> numbersKarts, List<Pilot> pilots)
         {
+            var q = rnd.Next(100);
             var totallist = new List<int>(numbersKarts);
             var allcombis = AllCombinations(totallist, new List<int>());
             var allcombi = allcombis.ToList();

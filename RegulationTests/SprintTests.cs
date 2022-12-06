@@ -11,6 +11,7 @@ namespace RegulationTests
     public class SprintTests
     {
         dynamic correctSheet = ExcelWorker.excel.Sheets["sprintCorrect"];
+        private Sprint _sprint = new();
         private List<int> numbers = new() { 1, 2, 3, 4, 5, 6, 7, 8 };
         private List<Pilot> correctPilots;
 
@@ -49,8 +50,9 @@ namespace RegulationTests
         [Test, Order(1)]
         public void AssignmentThreeHeats()
         {
-            Sprint.DoThreeRaces(numbers);
-            
+            _sprint.DoThreeRaces(numbers);
+            _sprint.WriteUsedKarts();
+
             for (int i = 13; i < 23 + 13; i++)
             {
                 for (int j = 4; j < 40 + 4; j++)
@@ -65,9 +67,10 @@ namespace RegulationTests
         [Test, Order(2)]
         public void AssignmentSemiFinal()
         {
-            Sprint.ReadScor(numbers);
-            Sprint.Sort();
-            Sprint.DoNextRace(numbers, 3);
+            _sprint.ReadScor();
+            _sprint.SortScores();
+            _sprint.DoNextRace(numbers, 3);
+            _sprint.WriteUsedKarts();
 
             for (int i = 37; i < 7 + 37; i++)
             {
@@ -83,9 +86,10 @@ namespace RegulationTests
         [Test, Order(3)]
         public void AssignmentFinalPro()
         {
-            Sprint.ReadScor(numbers);
-            Sprint.SortTwoLiques(numbers);
-            Sprint.DoNextRace(numbers, 4);
+            _sprint.ReadScor();
+            _sprint.SortTwoLiques(numbers);
+            _sprint.DoNextRace(numbers, 4);
+            _sprint.WriteUsedKarts();
 
             for (int i = 39; i < 7 + 39; i++)
             {
@@ -101,7 +105,8 @@ namespace RegulationTests
         [Test, Order(4)]
         public void AssignmentFinalAmators()
         {
-            Sprint.DoFinalAmators(numbers, 4);
+            _sprint.DoFinalAmators(numbers, 4);
+            _sprint.WriteUsedKartsAmators();
 
             for (int i = 47; i < 7 + 47; i++)
             {
@@ -117,8 +122,8 @@ namespace RegulationTests
         [Test, Order(5)]
         public void IdenticalWithTestData()
         {
-            Sprint.ReadScor(numbers);
-            Sprint.SortTwoLiques(numbers);
+            _sprint.ReadScor();
+            _sprint.SortTwoLiques(numbers);
 
 
             for (int i = 1; i < 7 + 47; i++)

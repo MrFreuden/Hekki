@@ -1,48 +1,46 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-
-namespace Hekki
+﻿namespace Hekki
 {
     public partial class CherkasyReg : Form
     {
-        private static List<int> numbersKarts;
+        private static Cherkasy _cherkasy = new();
+        private static List<int> _numbersKarts;
         public CherkasyReg(List<int> karts)
         {
             InitializeComponent();
-            numbersKarts = karts;
-            numbersOfKarts.Lines = numbersKarts.ConvertAll<string>(delegate (int i) { return i.ToString(); }).ToArray();
+            
+            _numbersKarts = karts;
+            numbersOfKarts.Lines = _numbersKarts.ConvertAll<string>(delegate (int i) { return i.ToString(); }).ToArray();
         }
 
         private void DoQual1_Click(object sender, EventArgs e)
         {
-            Cherkasy.DoQualRace(numbersKarts);
+            
+            _cherkasy.DoQualRace(_numbersKarts);
+            _cherkasy.WriteUsedKarts();
         }
 
         private void DoHeat1_Click(object sender, EventArgs e)
         {
-            Cherkasy.DoOneRace(numbersKarts);
+            _cherkasy.DoOneRace(_numbersKarts);
+            _cherkasy.WriteUsedKarts();
         }
 
         private void DoQual2_Click(object sender, EventArgs e)
         {
-            Cherkasy.DoQualRace(numbersKarts);
+            _cherkasy.DoQualRace(_numbersKarts);
+            _cherkasy.WriteUsedKarts();
         }
 
         private void DoHeat2_Click(object sender, EventArgs e)
         {
-            Cherkasy.DoOneRace(numbersKarts);
+            _cherkasy.DoOneRace(_numbersKarts);
+            _cherkasy.WriteUsedKarts();
         }
 
         private void DoFinal_Click(object sender, EventArgs e)
         {
-            Cherkasy.DoFinal(numbersKarts);
+            _cherkasy.DoFinal(_numbersKarts);
+            _cherkasy.WriteUsedKarts();
         }
 
         private void Clear_Click(object sender, EventArgs e)
@@ -52,41 +50,41 @@ namespace Hekki
 
         private void RebuilKarts_Click(object sender, EventArgs e)
         {
-            numbersKarts.Clear();
+            _numbersKarts.Clear();
             foreach (string i in numbersOfKarts.Lines)
-                numbersKarts.Add(Int32.Parse(i));
+                _numbersKarts.Add(Int32.Parse(i));
         }
 
         private void RebuildPilots_Click(object sender, EventArgs e)
         {
-            Cherkasy.ReBuildPilots();
+            _cherkasy.ReBuildPilots();
         }
 
         private void DeleteKartsFromLastRace_Click(object sender, EventArgs e)
         {
             ExcelWorker.DeleteLastUsedKartsInTotalBoard();
-            Cherkasy.ReBuildPilots();
+            _cherkasy.ReBuildPilots();
         }
 
         private void ReadScores_Click(object sender, EventArgs e)
         {
-            Cherkasy.ReadScor();
+            _cherkasy.ReadScor();
         }
 
         private void SortScores_Click(object sender, EventArgs e)
         {
-            Cherkasy.SortScores();
+            _cherkasy.SortScores();
         }
 
         private void ReadTimes_Click(object sender, EventArgs e)
         {
-            Cherkasy.ReadTime();
+            _cherkasy.ReadTime();
         }
 
         private void SortTimes_Click(object sender, EventArgs e)
         {
-            Cherkasy.SortTimeInTB();
-            Cherkasy.SortTimeInRace();
+            _cherkasy.SortTimeInTB();
+            _cherkasy.SortTimeInRace();
         }
     }
 }

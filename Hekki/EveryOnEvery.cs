@@ -10,13 +10,10 @@ using Range = Microsoft.Office.Interop.Excel.Range;
 
 namespace Hekki
 {
-    public class Every
+    public class Every : Regulation
     {
-        private static List<Pilot> pilots = new List<Pilot>();
-        private static int totalPilots;
-        public static int TotalRacesCount;
 
-        public static void DoRaces(List<int> numbersKarts)
+        public void DoRaces(List<int> numbersKarts)
         {
             pilots.Clear();
             List<string> pilotsNames = ExcelWorker.ReadNamesInTotalBoard();
@@ -29,33 +26,14 @@ namespace Hekki
 
         }
 
-        public static void SortScores()
+        public void ReadScor(List<int> numbersKarts)
         {
-            var keyCells = ExcelWorker.FindKeyCellByValue("ВСЕГО", null);
+            var names = ExcelWorker.ReadNamesInTotalBoard();
+            pilotsCount = names.Count;
+            var scores = ExcelWorker.ReadScoresInRaceEveryOnEvery(names, numbersKarts.Count);
 
-            for (int i = 0; i < keyCells.Count; i++)
-            {
-                int j = 0;
-                while (keyCells[i][1, j--].Value != null) { }
-                var firstCellRow = keyCells[i].Row;
-                var firstCellCol = keyCells[i][1, j].Column;
 
-                Range rangeToSort = ExcelWorker.excel.Range[ExcelWorker.excel.Cells[firstCellRow + 1, firstCellCol + 1], keyCells[i][50]];
-                rangeToSort.Sort(rangeToSort.Columns[(j - 1) * -1], XlSortOrder.xlDescending);
-            }
-        }
-
-        public static void ReadScor(List<int> numbersKarts)
-        {
-            pilots = ExcelWorker.ReadScoresInRaceEveryOnEvery(pilots, numbersKarts.Count);
-            ExcelWorker.WriteScoreInTotalBoard(pilots);
-        }
-
-        public static void ReBuildPilots()
-        {
-            List<string> pilotsNames = ExcelWorker.ReadNamesInTotalBoard();
-            pilots = Race.MakePilotsFromTotalBoard(pilotsNames.Count);
-            totalPilots = pilots.Count;
+            ExcelWorker.WriteScoreInTotalBoard(scores);
         }
     }
 }

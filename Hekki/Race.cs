@@ -15,9 +15,11 @@
             groups = DivideByGroup(pilots, numbers);
             _countPilotsInFirstGroup = groups[0].Count;
             for (int i = 0; i < groups.Count; i++)
-                DoAssignmentToGroup(groups[i], numbers, numberRace);
-            ExcelWorker.WriteNames(groups, numberRace, "Пилоты");
+                DoAssignmentByCombo(groups[i], numbers, numberRace);
+
+            WriteDataInRace(groups, numberRace);
         }
+        
 
         public static void StartSemiRace(List<Pilot> pilots, List<int> numbers, int numberRace)
         {
@@ -25,8 +27,9 @@
             groups = DivideByGroup(pilots, numbers);
             _countPilotsInFirstGroup = groups[0].Count;
             for (int i = 0; i < groups.Count; i++)
-                DoAssignmentToGroup(groups[i], numbers, numberRace);
-            ExcelWorker.WriteNames(groups, numberRace, "Пилоты");
+                DoAssignmentByCombo(groups[i], numbers, numberRace);
+
+            WriteDataInRace(groups, numberRace);
         }
 
         public static void StartFinalRace(List<Pilot> pilots, List<int> numbers, int numberRace, int count = 1)
@@ -35,9 +38,9 @@
             groups = SimpleDivideByGroup(pilots, numbers);
             _countPilotsInFirstGroup = groups[0].Count;
             for (int i = 0; i < groups.Count; i++)
-                DoAssignmentToGroup(groups[i], numbers, numberRace);
+                DoAssignmentByCombo(groups[i], numbers, numberRace);
 
-            ExcelWorker.WriteNames(groups, numberRace, "Пилоты");
+            WriteDataInRace(groups, numberRace);
         }
 
         public static void StartFinalAmators(List<Pilot> pilots, List<int> numbers, int numberRace)
@@ -48,7 +51,7 @@
             for (int i = 0; i < groups.Count; i++)
                 DoAssignmentByCombo(groups[i], numbers, numberRace);
 
-            ExcelWorker.WriteNames(groups, numberRace, "Пилоты");
+            WriteDataInRace(groups, numberRace);
         }
 
         public static void StartRandomRace(List<Pilot> pilots, List<int> numbers)
@@ -64,12 +67,13 @@
                 {
                     groups[0].Add(pilots[combos[i][j]]);
                 }
-                ExcelWorker.WriteNames(groups, i, "Пилоты");
+                ///ExcelWorker.WriteNames(groups, i, "Пилоты");
+                WriteDataInRace(groups, 111);
                 groups.Clear();
             }
         }
 
-        public static void DoAssignmentByCombo(List<Pilot> pilots, List<int> numbers, List<int> combo)
+        private static void DoAssignmentByCombo(List<Pilot> pilots, List<int> numbers, List<int> combo)
         {
             List<Pilot> zaezd = new();
             for (int i = 0; i < combo.Count; i++)
@@ -79,16 +83,7 @@
             }
         }
 
-        public static void ReBuildCountPilotsInFirstGroup(List<int> numbers)
-        {
-            List<string> pilotsNames = ExcelWorker.ReadNamesInTotalBoard();
-            List<Pilot> pilots = new List<Pilot>();
-            foreach (var pilotName in pilotsNames)
-                pilots.Add(new Pilot(pilotName));
-            List<List<Pilot>> groups = new();
-            groups = DivideByGroup(pilots, numbers);
-            _countPilotsInFirstGroup = groups[0].Count;
-        }
+        
 
         public static void DoAssignmentToGroup(List<Pilot> group, List<int> numbersOfKarts, int numberRace, int counerReapeat = 0)
         {
@@ -120,7 +115,7 @@
                 for (int i = 0; i < group.Count; i++)
                 {
                     group[i].ClearUsedKartsByNumberRace(numberRace);
-                    //group[i].DeleteLastUsedKart();
+                    //group[i].ClearLastUsedKart();
                 }
                 DoAssignmentToGroup(group, numbersOfKarts, numberRace, counerReapeat + 1);
             }
@@ -258,6 +253,35 @@
         public static void RedefineRandomWithSeed()
         {
             rng = new Random(1234124535);
+        }
+
+        public static void ReBuildCountPilotsInFirstGroup(List<int> numbers)
+        {
+            List<string> pilotsNames = ExcelWorker.ReadNamesInTotalBoard();
+            List<Pilot> pilots = new List<Pilot>();
+            foreach (var pilotName in pilotsNames)
+                pilots.Add(new Pilot(pilotName));
+            List<List<Pilot>> groups = new();
+            groups = DivideByGroup(pilots, numbers);
+            _countPilotsInFirstGroup = groups[0].Count;
+        }
+
+        private static void WriteDataInRace(List<List<Pilot>> groups, int numberRace)
+        {
+            List<List<string>> names = new();
+            List<List<string>> karts = new();
+            for (int i = 0; i < groups.Count; i++)
+            {
+                names.Add(new List<string>());
+                karts.Add(new List<string>());
+                foreach (var pilot in groups[i])
+                {
+                    names[i].Add(pilot.Name);
+                    karts[i].Add(pilot.GetNumberKartByRace(numberRace));
+                }
+            }
+            ExcelWorker.WriteNamesInRace(names, numberRace);
+            ExcelWorker.WriteKartsInRace(karts, numberRace);
         }
     }
 }

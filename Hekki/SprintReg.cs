@@ -12,6 +12,7 @@ namespace Hekki
 {
     public partial class SprintReg : Form
     {
+        private static Sprint _sprint = new();
         private static List<int> numbersKarts;
         public SprintReg(List<int> karts)
         {
@@ -22,27 +23,32 @@ namespace Hekki
 
         private void DoOneRace_Click(object sender, EventArgs e)
         {
-            Sprint.DoOneRace(numbersKarts);
+            _sprint.DoOneRace(numbersKarts);
+            _sprint.WriteUsedKarts();
         }
 
         private void DoThreeRaces_Click(object sender, EventArgs e)
         {
-            Sprint.DoThreeRaces(numbersKarts);
+            _sprint.DoThreeRaces(numbersKarts);
+            _sprint.WriteUsedKarts();
         }
 
         private void DoSemiFinal_Click(object sender, EventArgs e)
         {
-            Sprint.DoNextRace(numbersKarts, 3);
+            _sprint.DoNextRace(numbersKarts, 3);
+            _sprint.WriteUsedKarts();
         }
 
         private void DoFinalPro_Click(object sender, EventArgs e)
         {
-            Sprint.DoNextRace(numbersKarts, 4);
+            _sprint.DoNextRace(numbersKarts, 4);
+            _sprint.WriteUsedKarts();
         }
 
         private void DoFinalAmator_Click(object sender, EventArgs e)
         {
-            Sprint.DoFinalAmators(numbersKarts, 4);
+            _sprint.DoFinalAmators(numbersKarts, 4);
+            _sprint.WriteUsedKartsAmators();
         }
 
         private void Clear_Click(object sender, EventArgs e)
@@ -59,28 +65,28 @@ namespace Hekki
 
         private void RebuildPilots_Click(object sender, EventArgs e)
         {
-            Sprint.ReBuildPilots(numbersKarts);
+            _sprint.ReBuildPilots(numbersKarts);
         }
 
         private void DeleteKartsFromLastRace_Click(object sender, EventArgs e)
         {
             ExcelWorker.DeleteLastUsedKartsInTotalBoard();
-            Sprint.ReBuildPilots(numbersKarts);
+            _sprint.ReBuildPilots(numbersKarts);
         }
 
         private void ReadScores_Click(object sender, EventArgs e)
         {
-            Sprint.ReadScor(numbersKarts);
+            _sprint.ReadScor();
         }
 
         private void SortScores_Click(object sender, EventArgs e)
         {
-            Sprint.Sort();
+            _sprint.SortScores();
         }
 
         private void SortByLique_Click(object sender, EventArgs e)
         {
-            Sprint.SortTwoLiques(numbersKarts);
+            _sprint.SortTwoLiques(numbersKarts);
         }
     }
 }

@@ -13,6 +13,8 @@
         public int TimesCount { get { return _times.Count; } }
         public string Name { get { return _name; } set { _name = value; } }
         public string Ligue { get { return _ligue; } }
+        public List<int> Scores { get { return _scores; } }
+        public List<int> Times { get { return _scores; } }
 
         public Pilot(string name)
         {
@@ -93,6 +95,11 @@
             _scores.Add(score);
         }
 
+        public void AddScore(string score)
+        {
+            _scores.Add(Int32.Parse(score));
+        }
+
         public static void AddEmptyScoresGlobal(List<Pilot> pilots)
         {
             foreach (var pilot in pilots)
@@ -116,6 +123,7 @@
             return _scores[numberRace];
         }
 
+ 
         public void ClearUsedKartsByNumberRace(int numberRace)
         {
             try
@@ -125,9 +133,22 @@
             catch (Exception)
             {
 
-
+                _usedKarts.RemoveAt(numberRace-1);
             }
 
+        }
+
+        public void ClearLastUsedKart()
+        {
+            try
+            {
+                _usedKarts.RemoveAt(_usedKarts[_usedKarts.Count - 1]);
+            }
+            catch (Exception)
+            {
+
+
+            }
         }
 
         public List<int> GetNumbersKarts()

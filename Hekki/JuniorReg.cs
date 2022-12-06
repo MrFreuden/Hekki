@@ -1,17 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-
-namespace Hekki
+﻿namespace Hekki
 {
     public partial class JuniorReg : Form
     {
+        private static Junior _junior = new();
         private static List<int> numbersKarts;
         public JuniorReg(List<int> karts)
         {
@@ -22,27 +13,32 @@ namespace Hekki
 
         private void DoQualRandom_Click(object sender, EventArgs e)
         {
-            Junior.DoQualRandom(numbersKarts);
+            _junior.DoQualRandom(numbersKarts);
+            _junior.WriteUsedKarts();
         }
 
         private void DoQualByList_Click(object sender, EventArgs e)
         {
-            Junior.DoQualByList(numbersKarts);
+            _junior.DoQualByList(numbersKarts);
+            _junior.WriteUsedKarts();
         }
 
         private void DoRace1_Click(object sender, EventArgs e)
         {
-            Junior.DoRace(numbersKarts);
+            _junior.DoRace(numbersKarts);
+            _junior.WriteUsedKarts();
         }
 
         private void DoRace2_Click(object sender, EventArgs e)
         {
-            Junior.DoRace(numbersKarts);
+            _junior.DoRace(numbersKarts);
+            _junior.WriteUsedKarts();
         }
 
         private void DoFinal_Click(object sender, EventArgs e)
         {
-            Junior.DoFinal(numbersKarts);
+            _junior.DoFinal(numbersKarts);
+            _junior.WriteUsedKarts();
         }
 
         private void Clear_Click(object sender, EventArgs e)
@@ -59,28 +55,28 @@ namespace Hekki
 
         private void RebuildPilots_Click(object sender, EventArgs e)
         {
-            Junior.ReBuildPilots();
+            _junior.ReBuildPilots();
         }
 
         private void ReadScores_Click(object sender, EventArgs e)
         {
-            Junior.ReadScor();
+            _junior.ReadScor();
         }
 
         private void SortScores_Click(object sender, EventArgs e)
         {
-            Junior.SortScores();
+            _junior.SortScores();
         }
 
         private void ReadTimes_Click(object sender, EventArgs e)
         {
-            Junior.ReadTime();
+            _junior.ReadTime();
         }
 
         private void SortTimes_Click(object sender, EventArgs e)
         {
-            Junior.SortTimeInRace();
-            Junior.SortTimeInTB();
+            _junior.SortTimeInRace();
+            _junior.SortTimeInTB();
         }
     }
 }

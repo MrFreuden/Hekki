@@ -1,12 +1,11 @@
-﻿using Microsoft.Office.Interop.Excel;
-using System.Globalization;
-using System.Xml.Linq;
+﻿using System.Globalization;
 using Application = Microsoft.Office.Interop.Excel.Application;
 using Range = Microsoft.Office.Interop.Excel.Range;
 namespace Hekki
 {
     public class ExcelWorker
     {
+        private const int MAXkarts = 8;
         private static int count = 0;
         public static Application excel = GetExcel();
 
@@ -143,9 +142,11 @@ namespace Hekki
 
             return pilotsLiques;
         }
-        public static List<Pilot> ReadScoresInRace(List<Pilot> pilots)
+        public static List<List<string>> ReadScoresInRace(List<string> pilots)
         {
-            Pilot.ClearScoreGlobal(pilots);
+            var pilotsScores = new List<List<string>>();
+            for (int i = 0; i < pilots.Count; i++)
+                pilotsScores.Add(new List<string>());
             var keyScore = FindKeyCellByValue("Итого", null);
 
             for (int j = 0; j < keyScore.Count; j++)
@@ -170,29 +171,27 @@ namespace Hekki
                         continue;
                     }
 
-                    var index = pilots.FindIndex(x => x.Name == name);
+                    var index = pilots.FindIndex(x => x == name);
                     if (index == -1)
                     {
                         continue;
                     }
-                    pilots[index].AddScore((int)excel.Cells[startIndexScore, keyScore[j].Column].Value);
+                    pilotsScores[index].Add(excel.Cells[startIndexScore, keyScore[j].Column].Value.ToString());
                     i++;
                 }
-                int maxScoreCount = pilots.Max(x => x.ScoresCount);
-                if (maxScoreCount < 4)
-                {
-                    continue;
-                }
-                List<Pilot> pNew = pilots.Where(x => x.ScoresCount < maxScoreCount).ToList();
 
-                Pilot.AddEmptyScoresGlobal(pNew);
+                var pilotsWithOutScore = pilotsScores.Where(x => x.Count < j + 1).ToList();
+                for (int i = 0; i < pilotsWithOutScore.Count; i++)
+                    pilotsWithOutScore[i].Add("0");
             }
-            return pilots.ToList();
+            return pilotsScores;
         }
 
-        public static List<Pilot> ReadScoresInRaceEveryOnEvery(List<Pilot> pilots, int countInGroup)
+        public static List<List<string>> ReadScoresInRaceEveryOnEvery(List<string> pilots, int countInGroup)
         {
-            Pilot.ClearScoreGlobal(pilots);
+            var pilotsScores = new List<List<string>>();
+            for (int i = 0; i < pilots.Count; i++)
+                pilotsScores.Add(new List<string>());
             var keyScore = FindKeyCellByValue("Итого", null);
 
             for (int j = 0; j < pilots.Count; j++)
@@ -216,22 +215,23 @@ namespace Hekki
                         continue;
                     }
 
-                    var index = pilots.FindIndex(x => x.Name == name);
+                    var index = pilots.FindIndex(x => x == name);
                     if (index == -1)
                     {
                         continue;
                     }
-                    pilots[index].AddScore((int)excel.Cells[startIndexScore, keyScore[j].Column].Value);
+                    pilotsScores[index].Add(excel.Cells[startIndexScore, keyScore[j].Column].Value.ToString());
                     i++;
                 }
             }
-            //Race.Shuffle(pilots);
-            return pilots.ToList();
+            return pilotsScores;
         }
 
-        public static List<Pilot> ReadTimeInRace(List<Pilot> pilots)
+        public static List<List<string>> ReadTimeInRace(List<string> pilots)
         {
-            Pilot.ClearTimeGlobal(pilots);
+            var pilotsTimes = new List<List<string>>();
+            for (int i = 0; i < pilots.Count; i++)
+                pilotsTimes.Add(new List<string>());
             var keyTime = FindKeyCellByValue("Время", null);
 
             for (int j = 0; j < keyTime.Count; j++)
@@ -255,145 +255,137 @@ namespace Hekki
                         continue;
                     }
 
-                    var index = pilots.FindIndex(x => x.Name == name);
+                    var index = pilots.FindIndex(x => x == name);
                     if (index == -1)
                     {
                         continue;
                     }
-                    pilots[index].AddTime(excel.Cells[startIndexTime, keyTime[j].Column].Value.ToString());
+                    pilotsTimes[index].Add(excel.Cells[startIndexTime, keyTime[j].Column].Value.ToString());
                     i++;
                 }
             }
-            return pilots;
+            return pilotsTimes;
         }
 
-        public static void WriteLique(List<Pilot> pilots)
+        public static void WriteLique(List<string> pilotsLiques)
         {
             var keyCells = FindKeyCellByValue("Лига", null);
             var startIndex = keyCells[0].Row + 1;
-            var names = ReadNamesInTotalBoard();
-            for (int i = 0; i < pilots.Count; i++)
+            for (int i = 0; i < pilotsLiques.Count; i++)
             {
-                var index = pilots.FindIndex(x => x.Name == names[i]);
-                excel.Cells[startIndex, keyCells[0].Column] = pilots[index].Ligue;
+                excel.Cells[startIndex, keyCells[0].Column] = pilotsLiques[i];
                 startIndex++;
             }
         }
 
-        public static void WriteNames(List<List<Pilot>> groups, int numberRace, string keyWord)
+        public static void WriteNamesInRace(List<List<string>> pilotsNamesByGroup, int numberRace)
         {
-            var keyCells = FindKeyCellByValue(keyWord, true, null);
-            var keyKartCell = FindKeyCellByValue("Карт", true, null);
+            var keyCells = FindKeyCellByValue("Пилоты", true, null);
             var startIndex = GetStartIndexOfEmptyTable(keyCells[1].Row, keyCells[1].Column);
 
-            foreach (var group in groups)
+            foreach (var group in pilotsNamesByGroup)
             {
-                List<Pilot> fullGroup = new(group);
-                if (fullGroup.Count < 8)
-                    fullGroup = AddEmptysInGroup(group);
+                List<string> fullGroup = new(group);
+                if (fullGroup.Count < MAXkarts)
+                    fullGroup = AddEmptysInList(group, "");
+
                 foreach (var pilot in fullGroup)
                 {
-                    if (pilot.Name == "1")
-                    {
-                        excel.Cells[startIndex, keyCells[1].Column] = "";
-                        excel.Cells[startIndex, keyKartCell[1].Column] = "";
-                        startIndex++;
-                    }
-                    else
-                    {
-                        //System.Threading.Thread.Sleep(500);
-                        excel.Cells[startIndex, keyCells[1].Column] = pilot.Name;
-                        excel.Cells[startIndex, keyKartCell[1].Column] = pilot.GetNumberKartByRace(numberRace);
-                        startIndex++;
-                    }
+                    //System.Threading.Thread.Sleep(500);
+                    excel.Cells[startIndex, keyCells[1].Column] = pilot;
+                    startIndex++;
+
                 }
             }
         }
 
-        public static void WriteUsedKarts(List<Pilot> pilots)
+        public static void WriteKartsInRace(List<List<string>> pilotsKartsByGroup, int numberRace)
         {
-            var usedKarts = new List<string>();
+            var keyCells = FindKeyCellByValue("Карт", true, null);
+            var startIndex = GetStartIndexOfEmptyTable(keyCells[1].Row, keyCells[1].Column);
+
+            foreach (var groupNumbers in pilotsKartsByGroup)
+            {
+                List<string> fullGroupNumbers = new(groupNumbers);
+                if (fullGroupNumbers.Count < MAXkarts)
+                    fullGroupNumbers = AddEmptysInList(groupNumbers, "");
+
+                foreach (var number in fullGroupNumbers)
+                {
+                    //System.Threading.Thread.Sleep(500);
+                    excel.Cells[startIndex, keyCells[1].Column] = number;
+                    startIndex++;
+                }
+            }
+        }
+        private static List<string> AddEmptysInList(List<string> group, string value)
+        {
+            while (group.Count < MAXkarts)
+            {
+                group.Add(value);
+            }
+            return group;
+        }
+
+        public static void WriteUsedKarts(List<string> pilotsKarts)
+        {
             var keyCells = FindKeyCellByValue("Номера", null);
             var startIndex = keyCells[0].Row + 1;
-            var names = ReadNamesInTotalBoard();
-            for (int i = 0; i < pilots.Count; i++)
+            for (int i = 0; i < pilotsKarts.Count; i++)
             {
-                var index = pilots.FindIndex(x => x.Name == names[i]);
-                if (index == -1)
-                {
-                    continue;
-                }
-                excel.Cells[startIndex, keyCells[0].Column] = pilots[index].GetAllNumbersKarts();
+                excel.Cells[startIndex, keyCells[0].Column] = pilotsKarts[i];
                 startIndex++;
             }
         }
 
-        public static void WriteUsedKartsAmators(List<Pilot> pilots, int countMargin)
+        public static void WriteUsedKartsAmators(List<string> pilotsKarts, int countMargin)
         {
-            var usedKarts = new List<string>();
             var keyCells = FindKeyCellByValue("Номера", null);
             var startIndex = keyCells[0].Row + 1 + countMargin;
-            var names = ReadNamesInTotalBoard();
-            for (int i = 0; i < countMargin; i++)
+
+            for (int i = 0; i < pilotsKarts.Count; i++)
             {
-                names.RemoveAt(0);
-            }
-            for (int i = 0; i < pilots.Count; i++)
-            {
-                var index = pilots.FindIndex(x => x.Name == names[i]);
-                if (index == -1)
-                {
-                    continue;
-                }
-                excel.Cells[startIndex, keyCells[0].Column] = pilots[index].GetAllNumbersKarts();
+                excel.Cells[startIndex, keyCells[0].Column] = pilotsKarts[i];
                 startIndex++;
             }
         }
-        public static void WriteScoreInTotalBoard(List<Pilot> pilots)
+        public static void WriteScoreInTotalBoard(List<List<string>> pilotsScores)
         {
-
-            var names = ReadNamesInTotalBoard();
             var keyCells = FindKeyCellByValue("Хит", GetHeadersTB());
             for (int i = 0; i < keyCells.Count; i++)
             {
                 var startIndex = keyCells[0].Row + 1;
-                for (int j = 0; j < pilots.Count; j++)
+                for (int j = 0; j < pilotsScores.Count; j++)
                 {
-                    var index = pilots.FindIndex(x => x.Name == names[j]);
-                    if (pilots[index].ScoresCount - 1 < i)
-                    {
-                        startIndex++;
-                        continue;
-                    }
-                    excel.Cells[startIndex, keyCells[i].Column].Value = pilots[index].GetScoreByNumberRace(i).ToString();
-
+                    excel.Cells[startIndex, keyCells[i].Column].Value = pilotsScores[j][i].ToString();
                     startIndex++;
                 }
             }
         }
 
-        public static void WriteTimeInTotalBoard(List<Pilot> pilots)
+        public static void WriteTimeInTotalBoard(List<List<string>> pilotsTimes)
         {
             var myCulture = new CultureInfo("ru-RU");
             myCulture.NumberFormat.NumberDecimalSeparator = ".";
             Thread.CurrentThread.CurrentCulture = myCulture;
 
-            var names = ReadNamesInTotalBoard();
             var keyCells = FindKeyCellByValue("Best Lap", excel.Range["A1", "K100"]);
 
 
-            for (int i = 1; i < pilots[0].TimesCount + 1; i++)
+            for (int i = 0; i < keyCells.Count; i++)
             {
                 var startIndex = keyCells[0].Row + 1;
-                for (int j = 0; j < pilots.Count; j++)
+                for (int j = 0; j < pilotsTimes.Count; j++)
                 {
-                    var index = pilots.FindIndex(x => x.Name == names[j]);
-                    if (pilots[index].TimesCount < i)
+                    try
                     {
-                        startIndex++;
-                        continue;
+                        excel.Cells[startIndex, keyCells[i].Column] = pilotsTimes[j][i].ToString();
                     }
-                    excel.Cells[startIndex, keyCells[i - 1].Column].Value = pilots[index].GetTimeByIndex(i - 1).ToString();
+                    catch (ArgumentOutOfRangeException)
+                    {
+                        
+                    }
+                    
                     startIndex++;
                 }
             }
@@ -491,18 +483,23 @@ namespace Hekki
             }
         }
 
-        public static void CleanData(Range rangeToClean = null, int countBellow = 45)
+        public static void CleanData(Range rangeToClean = null, int countBellow = 45, bool debugMode = true)
         {
+            
             var keyCells = FindKeyCellByValue("Номера", rangeToClean);
             keyCells.AddRange(FindKeyCellByValue("Best Lap", rangeToClean));
             keyCells.AddRange(FindKeyCellByValue("ХИТ", rangeToClean));
             keyCells.AddRange(FindKeyCellByValue("Карт", rangeToClean));
             keyCells.AddRange(FindKeyCellByValue("Пилоты", rangeToClean));
-            keyCells.AddRange(FindKeyCellByValue("Очки", rangeToClean));
             keyCells.AddRange(FindKeyCellByValue("Штраф", rangeToClean));
             keyCells.AddRange(FindKeyCellByValue("Время", rangeToClean));
-            keyCells.AddRange(FindKeyCellByValue("Имя", rangeToClean));
-            keyCells.AddRange(FindKeyCellByValue("Лига", rangeToClean));
+
+            if (debugMode)
+            {
+                keyCells.AddRange(FindKeyCellByValue("Имя", rangeToClean));
+                keyCells.AddRange(FindKeyCellByValue("Лига", rangeToClean));
+                keyCells.AddRange(FindKeyCellByValue("Очки", rangeToClean));
+            }
 
             for (int i = 0; i < keyCells.Count; i++)
             {
@@ -592,15 +589,6 @@ namespace Hekki
                 index++;
             }
             return index;
-        }
-
-        private static List<Pilot> AddEmptysInGroup(List<Pilot> group)
-        {
-            while (group.Count < 8)
-            {
-                group.Add(new Pilot("1"));
-            }
-            return group;
         }
     }
 }
