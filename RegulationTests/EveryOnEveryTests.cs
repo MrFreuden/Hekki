@@ -1,6 +1,7 @@
 ﻿using NUnit.Framework;
-using Hekki;
-using Microsoft.Office.Interop.Excel;
+using RaceLogic;
+using ExcelController;
+using RaceLogic.Regulations;
 using System.Collections.Generic;
 using System;
 using System.IO;
@@ -11,7 +12,7 @@ namespace RegulationTests
     public class EveryOnEveryTests
     {
         dynamic correctSheet = ExcelWorker.excel.Sheets["everyCorrect"];
-        private Every _every = new();
+        private EveryOnEvery _every = new();
         private List<int> numbers = new() { 1, 2, 3, 4, 5, 6, 7, 8 };
         private List<Pilot> correctPilots;
 

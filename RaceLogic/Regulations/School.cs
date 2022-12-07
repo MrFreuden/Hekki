@@ -1,10 +1,8 @@
-﻿using Microsoft.Office.Interop.Excel;
-using Range = Microsoft.Office.Interop.Excel.Range;
-namespace Hekki
+﻿using ExcelController;
+namespace RaceLogic.Regulations
 {
     public class School : Regulation
     {
-
         public void DoRace(List<int> numbersKarts)
         {
             int numberRace;

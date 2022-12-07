@@ -1,12 +1,4 @@
-﻿using Hekki;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Numerics;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Hekki
+﻿namespace RaceLogic
 {
     public class Combination
     {
@@ -103,7 +95,7 @@ namespace Hekki
 
         private static IList<T> Shuffle<T>(IList<T> list)
         {
-            
+
             int n = list.Count;
             while (n > 1)
             {

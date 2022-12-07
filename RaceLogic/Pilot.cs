@@ -1,4 +1,4 @@
-﻿namespace Hekki
+﻿namespace RaceLogic
 {
     public class Pilot
     {
@@ -123,7 +123,7 @@
             return _scores[numberRace];
         }
 
- 
+
         public void ClearUsedKartsByNumberRace(int numberRace)
         {
             try
@@ -133,7 +133,7 @@
             catch (Exception)
             {
 
-                _usedKarts.RemoveAt(numberRace-1);
+                _usedKarts.RemoveAt(numberRace - 1);
             }
 
         }

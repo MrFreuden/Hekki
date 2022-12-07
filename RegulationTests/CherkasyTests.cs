@@ -1,6 +1,7 @@
 ﻿using NUnit.Framework;
-using Hekki;
-using Microsoft.Office.Interop.Excel;
+using RaceLogic;
+using ExcelController;
+using RaceLogic.Regulations;
 using System.Collections.Generic;
 using System;
 using System.IO;

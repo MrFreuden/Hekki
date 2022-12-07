@@ -1,18 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Hekki;
-using Microsoft.Office.Interop.Excel;
-using Application = Microsoft.Office.Interop.Excel.Application;
-using Range = Microsoft.Office.Interop.Excel.Range;
+﻿using ExcelController;
 
-namespace Hekki
+namespace RaceLogic.Regulations
 {
-    public class Every : Regulation
+    public class EveryOnEvery : Regulation
     {
-
         public void DoRaces(List<int> numbersKarts)
         {
             pilots.Clear();

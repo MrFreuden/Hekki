@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.InteropServices;
+﻿using System.Runtime.InteropServices;
 using System.Runtime.Versioning;
 using System.Security;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Hekki
+namespace ExcelController
 {
-    public class Marshal2
+    internal class Marshal2
     {
         internal const String OLEAUT32 = "oleaut32.dll";
         internal const String OLE32 = "ole32.dll";
@@ -56,6 +51,5 @@ namespace Hekki
         [SuppressUnmanagedCodeSecurity]
         [System.Security.SecurityCritical]  // auto-generated
         private static extern void GetActiveObject(ref Guid rclsid, IntPtr reserved, [MarshalAs(UnmanagedType.Interface)] out Object ppunk);
-
     }
 }

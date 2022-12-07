@@ -1,18 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+﻿using RaceLogic.Regulations;
+using ExcelController;
 
 namespace Hekki
 {
     public partial class EveryOnEveryReg : Form
     {
-        private static Every _every = new();
+        private static EveryOnEvery _every = new();
         private static List<int> numbersKarts;
         public EveryOnEveryReg(List<int> karts)
         {

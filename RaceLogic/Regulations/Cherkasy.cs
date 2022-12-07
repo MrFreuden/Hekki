@@ -1,9 +1,9 @@
-﻿namespace Hekki
+﻿using ExcelController;
+
+namespace RaceLogic.Regulations
 {
     public class Cherkasy : Regulation
     {
-
-
         public void DoOneRace(List<int> numbersKarts)
         {
             int numberRace = pilots[0].GetNumbersKarts().Count;
@@ -34,7 +34,7 @@
             Race.StartHeatRace(pilots, numbersKarts, numberRace);
         }
 
-        
+
 
         public void DoFinal(List<int> numbersKarts)
         {
@@ -42,7 +42,7 @@
             int numberRace = pilots[0].GetNumbersKarts().Count;
             pilots = Race.MakePilotsFromTotalBoard(Race.CountPilotsInFirstGroup);
             Race.StartFinalRace(pilots, numbersKarts, numberRace);
-      
+
         }
     }
 }

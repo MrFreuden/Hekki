@@ -1,4 +1,4 @@
-namespace Hekki
+namespace Hekki.Hekki.UI
 {
     internal static class Program
     {

@@ -1,7 +1,8 @@
-﻿using Microsoft.Office.Interop.Excel;
+﻿using ExcelController;
+using Microsoft.Office.Interop.Excel;
 using Range = Microsoft.Office.Interop.Excel.Range;
 
-namespace Hekki
+namespace RaceLogic
 {
     public class Regulation
     {
@@ -115,6 +116,5 @@ namespace Hekki
                 }
             }
         }
-
     }
 }

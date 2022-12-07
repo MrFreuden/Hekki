@@ -1,6 +1,8 @@
-﻿using Microsoft.Office.Interop.Excel;
+﻿using ExcelController;
+using Microsoft.Office.Interop.Excel;
 using Range = Microsoft.Office.Interop.Excel.Range;
-namespace Hekki
+
+namespace RaceLogic.Regulations
 {
     public class Sprint : Regulation
     {
@@ -100,7 +102,7 @@ namespace Hekki
             var c1 = rangeToSort.Columns[1];
             var c2 = rangeToSort.Columns[9];
             rangeToSort.Sort(c1, XlSortOrder.xlDescending, c2, Type.Missing, XlSortOrder.xlDescending);
- 
+
             w += proCountFinal;
 
             rangeToSort = ExcelWorker.excel.Range[firstCell + w.ToString(), lastCell];
@@ -133,7 +135,7 @@ namespace Hekki
             ExcelWorker.WriteScoreInTotalBoard(scores);
             AddScoresToPilots(scores);
 
-            
+
         }
 
         private void Test(List<Pilot> pNew)

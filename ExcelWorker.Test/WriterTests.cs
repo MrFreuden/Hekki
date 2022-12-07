@@ -1,3 +1,4 @@
+using RaceLogic;
 namespace ExcelWorker.Test
 {
     using Hekki;
@@ -16,12 +17,12 @@ namespace ExcelWorker.Test
         [OneTimeSetUp]
         public void Setup()
         {
-            namesOriginal = ExcelWorker.ReadNamesInTotalBoard();
-            testNames = ExcelWorker.ReadTestNamesFromTxt();
-            ExcelWorker.WriteNamesInTotalBoard(testNames);
+            namesOriginal = ExcelController.ExcelWorker.ReadNamesInTotalBoard();
+            testNames = ExcelController.ExcelWorker.ReadTestNamesFromTxt();
+            ExcelController.ExcelWorker.WriteNamesInTotalBoard(testNames);
             pilots = Race.MakePilotsFromTotalBoard(testNames.Count);
             Race.RedefineRandomWithSeed();
-            ExcelWorker.CleanData();
+            ExcelController.ExcelWorker.CleanData();
 
         }
 

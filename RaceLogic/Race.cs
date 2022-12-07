@@ -1,4 +1,5 @@
-﻿namespace Hekki
+﻿using ExcelController;
+namespace RaceLogic
 {
     public class Race
     {
@@ -19,7 +20,7 @@
 
             WriteDataInRace(groups, numberRace);
         }
-        
+
 
         public static void StartSemiRace(List<Pilot> pilots, List<int> numbers, int numberRace)
         {
@@ -45,7 +46,7 @@
 
         public static void StartFinalAmators(List<Pilot> pilots, List<int> numbers, int numberRace)
         {
-            
+
             List<List<Pilot>> groups = new();
             groups = SimpleDivideByGroup(pilots, numbers);
             for (int i = 0; i < groups.Count; i++)
@@ -83,7 +84,7 @@
             }
         }
 
-        
+
 
         public static void DoAssignmentToGroup(List<Pilot> group, List<int> numbersOfKarts, int numberRace, int counerReapeat = 0)
         {

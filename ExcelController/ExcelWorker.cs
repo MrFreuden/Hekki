@@ -1,7 +1,9 @@
 ﻿using System.Globalization;
+using Microsoft.Office.Interop.Excel;
 using Application = Microsoft.Office.Interop.Excel.Application;
 using Range = Microsoft.Office.Interop.Excel.Range;
-namespace Hekki
+
+namespace ExcelController
 {
     public class ExcelWorker
     {
@@ -383,9 +385,9 @@ namespace Hekki
                     }
                     catch (ArgumentOutOfRangeException)
                     {
-                        
+
                     }
-                    
+
                     startIndex++;
                 }
             }
@@ -417,8 +419,6 @@ namespace Hekki
             }
         }
 
-
-
         public static Range FindKeyCellByValue(
             string value,
             bool needEmpty,
@@ -439,7 +439,7 @@ namespace Hekki
             return finded;
         }
 
-        public static List<Range> FindKeyCellByValue(
+        public static IList<Range> FindKeyCellByValue(
             string value,
             Range searchedRange)
         {
@@ -485,30 +485,36 @@ namespace Hekki
 
         public static void CleanData(Range rangeToClean = null, int countBellow = 45, bool debugMode = true)
         {
-            
-            var keyCells = FindKeyCellByValue("Номера", rangeToClean);
-            keyCells.AddRange(FindKeyCellByValue("Best Lap", rangeToClean));
-            keyCells.AddRange(FindKeyCellByValue("ХИТ", rangeToClean));
-            keyCells.AddRange(FindKeyCellByValue("Карт", rangeToClean));
-            keyCells.AddRange(FindKeyCellByValue("Пилоты", rangeToClean));
-            keyCells.AddRange(FindKeyCellByValue("Штраф", rangeToClean));
-            keyCells.AddRange(FindKeyCellByValue("Время", rangeToClean));
+            List<IList<Range>> keyCells = new()
+            {
+                FindKeyCellByValue("Номера", rangeToClean),
+                FindKeyCellByValue("Best Lap", rangeToClean),
+                FindKeyCellByValue("ХИТ", rangeToClean),
+                FindKeyCellByValue("Карт", rangeToClean),
+                FindKeyCellByValue("Пилоты", rangeToClean),
+                FindKeyCellByValue("Штраф", rangeToClean),
+                FindKeyCellByValue("Время", rangeToClean)
+            };
 
             if (debugMode)
             {
-                keyCells.AddRange(FindKeyCellByValue("Имя", rangeToClean));
-                keyCells.AddRange(FindKeyCellByValue("Лига", rangeToClean));
-                keyCells.AddRange(FindKeyCellByValue("Очки", rangeToClean));
+                keyCells.Add(FindKeyCellByValue("Имя", rangeToClean));
+                keyCells.Add(FindKeyCellByValue("Лига", rangeToClean));
+                keyCells.Add(FindKeyCellByValue("Очки", rangeToClean));
             }
 
-            for (int i = 0; i < keyCells.Count; i++)
+            for (int j = 0; j < keyCells.Count; j++)
             {
-                string q = keyCells[i][2].Address.Replace("$", String.Empty);
-                string s = keyCells[i][countBellow].Address.Replace("$", String.Empty);
-                var aras = excel.get_Range(q, s);
-                //aras.Interior.Color = Microsoft.Office.Interop.Excel.XlRgbColor.rgbWhite;
-                aras.ClearContents();
+                for (int i = 0; i < keyCells[j].Count; i++)
+                {
+                    string q = keyCells[j][i][2].Address.Replace("$", String.Empty);
+                    string s = keyCells[j][i][countBellow].Address.Replace("$", String.Empty);
+                    var aras = excel.get_Range(q, s);
+                    //aras.Interior.Color = Microsoft.Office.Interop.Excel.XlRgbColor.rgbWhite;
+                    aras.ClearContents();
+                }
             }
+            
 
         }
 

@@ -1,4 +1,6 @@
-﻿namespace Hekki
+﻿using ExcelController;
+using RaceLogic.Regulations;
+namespace Hekki
 {
     public partial class JuniorReg : Form
     {

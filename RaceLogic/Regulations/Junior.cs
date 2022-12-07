@@ -1,4 +1,6 @@
-﻿namespace Hekki
+﻿using ExcelController;
+
+namespace RaceLogic.Regulations
 {
     public class Junior : Regulation
     {
@@ -12,7 +14,7 @@
 
             pilots = Race.MakePilotsFromTotalBoard(pilots.Count);
             Race.StartHeatRace(pilots, numbersKarts, 0);
-            
+
         }
 
         public void DoQualByList(List<int> numbersKarts)
@@ -25,7 +27,7 @@
 
             pilots = Race.MakePilotsFromTotalBoard(pilots.Count);
             Race.StartFinalRace(pilots, numbersKarts, 0);
-            
+
         }
 
         public void DoRace(List<int> numbersKarts)
@@ -34,7 +36,7 @@
             pilots = Race.MakePilotsFromTotalBoard(pilots.Count);
             int countGroups = (int)Math.Ceiling((double)pilots.Count / numbersKarts.Count);
             Race.StartFinalRace(pilots, numbersKarts, numberRace, countGroups);
-            
+
         }
 
         public void DoFinal(List<int> numbersKarts)
@@ -43,7 +45,7 @@
             int numberRace = pilots[0].GetNumbersKarts().Count;
             pilots = Race.MakePilotsFromTotalBoard(Race.CountPilotsInFirstGroup);
             Race.StartFinalRace(pilots, numbersKarts, numberRace);
-            
+
         }
     }
 }

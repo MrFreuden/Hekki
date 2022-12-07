@@ -1,3 +1,4 @@
+using RaceLogic;
 namespace ExcelWorker.Test
 {
     using Hekki;
@@ -14,9 +15,9 @@ namespace ExcelWorker.Test
         [OneTimeSetUp]
         public void Setup()
         {
-            namesOriginal = ExcelWorker.ReadNamesInTotalBoard();
-            testNames = ExcelWorker.ReadTestNamesFromTxt();
-            ExcelWorker.WriteNamesInTotalBoard(testNames);
+            namesOriginal = ExcelController.ExcelWorker.ReadNamesInTotalBoard();
+            testNames = ExcelController.ExcelWorker.ReadTestNamesFromTxt();
+            ExcelController.ExcelWorker.WriteNamesInTotalBoard(testNames);
             for (int i = 0; i < testNames.Count; i++)
             {
                 pilots.Add(new Pilot(testNames[i]));
@@ -32,7 +33,7 @@ namespace ExcelWorker.Test
         [Test]
         public void CorrectReadNamesFromTxt()
         {
-            var sut = ExcelWorker.ReadTestNamesFromTxt();
+            var sut = ExcelController.ExcelWorker.ReadTestNamesFromTxt();
             var names = new string[]
             {
                 "MARTOLOG",
@@ -66,7 +67,7 @@ namespace ExcelWorker.Test
         [Test]
         public void ReadNamesInTotalBoardTest()
         {
-            var sut = ExcelWorker.ReadNamesInTotalBoard();
+            var sut = ExcelController.ExcelWorker.ReadNamesInTotalBoard();
 
             for (int i = 0; i < sut.Count; i++)
             {
@@ -77,7 +78,7 @@ namespace ExcelWorker.Test
         [Test]
         public void ReadLiquesTest()
         {
-            var sut = ExcelWorker.ReadLique(testNames.Count);
+            var sut = ExcelController.ExcelWorker.ReadLique(testNames.Count);
             var liques = new string[]
             {
                 "Pro",
@@ -111,7 +112,7 @@ namespace ExcelWorker.Test
         [Test]
         public void ReadUsedKartsInTB()
         {
-            var sut = ExcelWorker.ReadUsedKartsInTotalBoard();
+            var sut = ExcelController.ExcelWorker.ReadUsedKartsInTotalBoard();
             List<List<int>> numbers = new()
             {
                 new List<int>() { 4, 3, 6 },
@@ -260,7 +261,7 @@ namespace ExcelWorker.Test
         [Test]
         public void ReadScoreTB()
         {
-            var sut = ExcelWorker.ReadScoresInTotalBoard(testNames.Count);
+            var sut = ExcelController.ExcelWorker.ReadScoresInTotalBoard(testNames.Count);
             List<List<int>> scores = new()
             {
                 new List<int>() { 6, 10, 6 },

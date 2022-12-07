@@ -1,4 +1,6 @@
-﻿namespace Hekki
+﻿using RaceLogic.Regulations;
+using ExcelController;
+namespace Hekki
 {
     public partial class CherkasyReg : Form
     {
