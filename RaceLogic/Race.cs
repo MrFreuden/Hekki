@@ -68,7 +68,6 @@ namespace RaceLogic
                 {
                     groups[0].Add(pilots[combos[i][j]]);
                 }
-                ///ExcelWorker.WriteNames(groups, i, "Пилоты");
                 WriteDataInRace(groups, 111);
                 groups.Clear();
             }
@@ -81,44 +80,6 @@ namespace RaceLogic
             {
                 pilots[combo[i]].AddNumberKart(numbers[i]);
                 zaezd.Add(pilots[combo[i]]);
-            }
-        }
-
-
-
-        public static void DoAssignmentToGroup(List<Pilot> group, List<int> numbersOfKarts, int numberRace, int counerReapeat = 0)
-        {
-            if (counerReapeat == 50)
-            {
-                DoAssignmentByCombo(group, numbersOfKarts, numberRace);
-                return;
-            }
-            List<int> copyNumbersOfKarts;
-            CopyList(numbersOfKarts, copyNumbersOfKarts = new List<int>());
-            while (copyNumbersOfKarts.Count > group.Count)
-                copyNumbersOfKarts.RemoveAt(0);
-            for (int j = 0; j < group.Count; j++)
-            {
-                int k = 0;
-                while (k < copyNumbersOfKarts.Count)
-                {
-                    if (Pilot.IsCanBeAdd(group[j], copyNumbersOfKarts[k]))
-                    {
-                        group[j].AddNumberKart(copyNumbersOfKarts[k]);
-                        copyNumbersOfKarts.RemoveAt(k);
-                        break;
-                    }
-                    k++;
-                }
-            }
-            if (copyNumbersOfKarts.Count > 0)
-            {
-                for (int i = 0; i < group.Count; i++)
-                {
-                    group[i].ClearUsedKartsByNumberRace(numberRace);
-                    //group[i].ClearLastUsedKart();
-                }
-                DoAssignmentToGroup(group, numbersOfKarts, numberRace, counerReapeat + 1);
             }
         }
 
@@ -176,6 +137,7 @@ namespace RaceLogic
 
         public static List<Pilot> MakePilotsFromTotalBoard(int countPilots)
         {
+            
             List<Pilot> pilots = new();
             var names = ExcelWorker.ReadNamesInTotalBoard();
             var kartsMerged = ExcelWorker.ReadUsedKartsInTotalBoard();
