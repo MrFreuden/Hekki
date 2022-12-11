@@ -194,7 +194,7 @@ namespace ExcelController
 
         public static List<List<int>> ReadScoresInTotalBoard(int countPilots)
         {
-            var keyCells = FindKeyCellByValue("Хит", excel.Range["A1", "K100"]);
+            var keyCells = FindKeyCellByValue("Хит", GetHeadersTB());
 
             List<List<int>> score = new();
 
