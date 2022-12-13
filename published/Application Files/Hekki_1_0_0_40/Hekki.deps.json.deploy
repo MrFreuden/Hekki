@@ -1,0 +1,50 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v6.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v6.0": {
+      "Hekki/1.0.0": {
+        "dependencies": {
+          "ExcelController": "1.0.0",
+          "RaceLogic": "1.0.0"
+        },
+        "runtime": {
+          "Hekki.dll": {}
+        }
+      },
+      "ExcelController/1.0.0": {
+        "runtime": {
+          "ExcelController.dll": {}
+        }
+      },
+      "RaceLogic/1.0.0": {
+        "dependencies": {
+          "ExcelController": "1.0.0"
+        },
+        "runtime": {
+          "RaceLogic.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "Hekki/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "ExcelController/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "RaceLogic/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}
