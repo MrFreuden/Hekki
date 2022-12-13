@@ -48,7 +48,8 @@ namespace RegulationTests
 
         public void PilotsTime()
         {
-            _cherkasy.ReadTime();
+            var times = _cherkasy.GetTimes();
+            _cherkasy.WriteTimes(times);
             var pilots = Race.MakePilotsFromTotalBoard(correctPilots.Count).OrderBy(o => o.Name).ToList();
             
             for (int i = 0; i < pilots.Count; i++)
@@ -90,7 +91,8 @@ namespace RegulationTests
         {
             _cherkasy.DoOneRace(numbers);
             _cherkasy.WriteUsedKarts();
-            _cherkasy.ReadScor();
+            var scores = _cherkasy.GetScores();
+            _cherkasy.WriteScores(scores);
 
 
             int col = ExcelWorker.excel.Range["R1", "R1"].Column;
@@ -137,7 +139,8 @@ namespace RegulationTests
         {
             _cherkasy.DoOneRace(numbers);
             _cherkasy.WriteUsedKarts();
-            _cherkasy.ReadScor();
+            var scores = _cherkasy.GetScores();
+            _cherkasy.WriteScores(scores);
 
             int col = ExcelWorker.excel.Range["AF1", "AF1"].Column;
 
@@ -158,7 +161,8 @@ namespace RegulationTests
             _cherkasy.SortScores();
             _cherkasy.DoFinal(numbers);
             _cherkasy.WriteUsedKarts();
-            _cherkasy.ReadScor();
+            var scores = _cherkasy.GetScores();
+            _cherkasy.WriteScores(scores);
 
             int col = ExcelWorker.excel.Range["AN1", "AN1"].Column;
 

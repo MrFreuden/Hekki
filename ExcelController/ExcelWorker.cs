@@ -1,4 +1,5 @@
 ﻿using System.Globalization;
+using System.Linq;
 using Application = Microsoft.Office.Interop.Excel.Application;
 using Range = Microsoft.Office.Interop.Excel.Range;
 
@@ -264,13 +265,37 @@ namespace ExcelController
             return pilotsLiques;
         }
 
-        public static List<List<string>> ReadScoresInRace(List<string> pilots)
+        public static List<List<string>> ReadNamesInRace(int pilotsCount, int[] indexesNeededCols)
+        {
+            var pilotsNames = new List<List<string>>();
+            var keyScore = FindKeyCellByValue("Пилоты", null);
+            for (int j = 0, k = 0; j < keyScore.Count; j++)
+            {
+                if ( ! (indexesNeededCols.Contains(keyScore[j].Column)))
+                    continue;
+
+                var startIndexScore = keyScore[j].Row + 1;
+
+                pilotsNames.Add(new List<string>());
+                for (int i = 0; i < pilotsCount; startIndexScore++)
+                {
+                    var val = Convert.ToString(excel.Cells[startIndexScore, keyScore[j].Column].Value);
+                    if (val == null)
+                        continue;
+
+                    pilotsNames[k].Add(val);
+                    i++;
+                }
+                k++;
+            }
+            return pilotsNames;
+        }
+
+        public static List<List<string>> ReadScoresInRace(int pilotsCount, out int[] cols)
         {
             var pilotsScores = new List<List<string>>();
-            for (int i = 0; i < pilots.Count; i++)
-                pilotsScores.Add(new List<string>());
             var keyScore = FindKeyCellByValue("Итого", null);
-
+            cols = new int[keyScore.Count];
             for (int j = 0; j < keyScore.Count; j++)
             {
                 var startIndexScore = keyScore[j].Row + 1;
@@ -280,43 +305,29 @@ namespace ExcelController
                     columnIndexName--;
 
                 columnIndexName = keyScore[j].Column - ((columnIndexName * -1) + 1);
-
-                for (int i = 0; i < pilots.Count && startIndexScore < 50; startIndexScore++)
+                cols[j] = columnIndexName;
+                pilotsScores.Add(new List<string>());
+                for (int i = 0; i < pilotsCount && startIndexScore < 50; startIndexScore++)
                 {
-                    string name;
-                    try
-                    {
-                        name = excel.Cells[startIndexScore, columnIndexName].Value.ToString();
-                    }
-                    catch (Exception)
+                    if (Convert.ToString(excel.Cells[startIndexScore, columnIndexName].Value) == null)
                     {
                         continue;
                     }
-
-                    var index = pilots.FindIndex(x => x == name);
-                    if (index == -1)
-                    {
-                        continue;
-                    }
-                    pilotsScores[index].Add(excel.Cells[startIndexScore, keyScore[j].Column].Value.ToString());
+                    var val = Convert.ToString(excel.Cells[startIndexScore, keyScore[j].Column].Value);
+                    
+                    pilotsScores[j].Add(val);
                     i++;
                 }
-
-                var pilotsWithOutScore = pilotsScores.Where(x => x.Count < j + 1).ToList();
-                for (int i = 0; i < pilotsWithOutScore.Count; i++)
-                    pilotsWithOutScore[i].Add("0");
             }
             return pilotsScores;
         }
 
-        public static List<List<string>> ReadScoresInRaceEveryOnEvery(List<string> pilots, int countInGroup)
+        public static List<List<string>> ReadScoresInRaceEveryOnEvery(int pilotsCount, int countInGroup, out int[] cols)
         {
-            var pilotsScores = new List<List<string>>();
-            for (int i = 0; i < pilots.Count; i++)
-                pilotsScores.Add(new List<string>());
+            var pilotsScores = new List<List<string>>();  
             var keyScore = FindKeyCellByValue("Итого", null);
-
-            for (int j = 0; j < pilots.Count; j++)
+            cols = new int[keyScore.Count];
+            for (int j = 0; j < pilotsCount; j++)
             {
                 var startIndexScore = keyScore[j].Row + 1;
                 int columnIndexName = 0;
@@ -325,37 +336,28 @@ namespace ExcelController
                     columnIndexName--;
 
                 columnIndexName = keyScore[j].Column - ((columnIndexName * -1) + 1);
+                cols[j] = columnIndexName;
+                pilotsScores.Add(new List<string>());
                 for (int i = 0; i < countInGroup; startIndexScore++)
                 {
-                    string name;
-                    try
-                    {
-                        name = excel.Cells[startIndexScore, columnIndexName].Value.ToString();
-                    }
-                    catch (Exception)
+                    if (Convert.ToString(excel.Cells[startIndexScore, columnIndexName].Value) == null)
                     {
                         continue;
                     }
+                    var val = Convert.ToString(excel.Cells[startIndexScore, keyScore[j].Column].Value);
 
-                    var index = pilots.FindIndex(x => x == name);
-                    if (index == -1)
-                    {
-                        continue;
-                    }
-                    pilotsScores[index].Add(excel.Cells[startIndexScore, keyScore[j].Column].Value.ToString());
+                    pilotsScores[j].Add(val);
                     i++;
                 }
             }
             return pilotsScores;
         }
 
-        public static List<List<string>> ReadTimeInRace(List<string> pilots)
+        public static List<List<string>> ReadTimesInRace(int pilotsCount, out int[] cols)
         {
             var pilotsTimes = new List<List<string>>();
-            for (int i = 0; i < pilots.Count; i++)
-                pilotsTimes.Add(new List<string>());
             var keyTime = FindKeyCellByValue("Время", null);
-
+            cols = new int[keyTime.Count];
             for (int j = 0; j < keyTime.Count; j++)
             {
                 var startIndexTime = keyTime[j].Row + 1;
@@ -365,24 +367,21 @@ namespace ExcelController
                     columnIndexName--;
 
                 columnIndexName = keyTime[j].Column - ((columnIndexName * -1) + 1);
-                for (int i = 0; i < pilots.Count && startIndexTime < 50; startIndexTime++)
+                cols[j] = columnIndexName;
+                if (Convert.ToString(excel.Cells[startIndexTime, columnIndexName].Value) == null)
                 {
-                    string name;
-                    try
-                    {
-                        name = excel.Cells[startIndexTime, columnIndexName].Value.ToString();
-                    }
-                    catch (Exception)
+                    continue;
+                }
+                pilotsTimes.Add(new List<string>());
+                for (int i = 0; i < pilotsCount && startIndexTime < 50; startIndexTime++)
+                {
+                    if (Convert.ToString(excel.Cells[startIndexTime, columnIndexName].Value) == null)
                     {
                         continue;
                     }
+                    var val = Convert.ToString(excel.Cells[startIndexTime, keyTime[j].Column].Value);
 
-                    var index = pilots.FindIndex(x => x == name);
-                    if (index == -1)
-                    {
-                        continue;
-                    }
-                    pilotsTimes[index].Add(excel.Cells[startIndexTime, keyTime[j].Column].Value.ToString());
+                    pilotsTimes[j].Add(val);
                     i++;
                 }
             }

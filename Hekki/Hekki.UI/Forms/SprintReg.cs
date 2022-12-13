@@ -69,7 +69,8 @@ namespace Hekki
 
         private void ReadScores_Click(object sender, EventArgs e)
         {
-            _sprint.ReadScor();
+            var scores = _sprint.GetScores();
+            _sprint.WriteScores(scores);
         }
 
         private void SortScores_Click(object sender, EventArgs e)

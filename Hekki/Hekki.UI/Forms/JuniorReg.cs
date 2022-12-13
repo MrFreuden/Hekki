@@ -62,7 +62,8 @@ namespace Hekki
 
         private void ReadScores_Click(object sender, EventArgs e)
         {
-            _junior.ReadScor();
+            var scores = _junior.GetScores();
+            _junior.WriteScores(scores);
         }
 
         private void SortScores_Click(object sender, EventArgs e)
@@ -72,7 +73,8 @@ namespace Hekki
 
         private void ReadTimes_Click(object sender, EventArgs e)
         {
-            _junior.ReadTime();
+            var times = _junior.GetTimes();
+            _junior.WriteTimes(times);
         }
 
         private void SortTimes_Click(object sender, EventArgs e)

@@ -68,7 +68,8 @@ namespace RegulationTests
         [Test, Order(2)]
         public void AssignmentSemiFinal()
         {
-            _sprint.ReadScor();
+            var scores = _sprint.GetScores();
+            _sprint.WriteScores(scores);
             _sprint.SortScores();
             _sprint.DoNextRace(numbers, 3);
             _sprint.WriteUsedKarts();
@@ -87,7 +88,8 @@ namespace RegulationTests
         [Test, Order(3)]
         public void AssignmentFinalPro()
         {
-            _sprint.ReadScor();
+            var scores = _sprint.GetScores();
+            _sprint.WriteScores(scores);
             _sprint.SortTwoLiques(numbers);
             _sprint.DoNextRace(numbers, 4);
             _sprint.WriteUsedKarts();
@@ -123,7 +125,8 @@ namespace RegulationTests
         [Test, Order(5)]
         public void IdenticalWithTestData()
         {
-            _sprint.ReadScor();
+            var scores = _sprint.GetScores();
+            _sprint.WriteScores(scores);
             _sprint.SortTwoLiques(numbers);
 
 

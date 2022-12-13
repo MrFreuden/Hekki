@@ -48,7 +48,8 @@ namespace RegulationTests
 
         public void PilotsTime()
         {
-            _school.ReadTime();
+            var times = _school.GetTimes();
+            _school.WriteTimes(times);
             var pilots = Race.MakePilotsFromTotalBoard(correctPilots.Count).OrderBy(o => o.Name).ToList();
 
             for (int i = 0; i < pilots.Count; i++)

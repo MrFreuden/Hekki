@@ -121,16 +121,21 @@ namespace ExcelWorkerTest
 
             // Act
             var sut = ExcelWorker.ReadScoresInRace(
-                namesFromTxt);
+                countPilots, out int[] cols);
 
             // Assert
-            int col = 22;
+            int col = 23;
             for (int i = 0; i < 1; i++)
             {
                 int row = 4;
-                for (int j = 0; j < countPilots; j++, row++)
+                for (int j = 0; j < countPilots; row++)
                 {
-                    Assert.AreEqual(ExcelWorker.excel.Cells[row, col].Value.ToString(), sut[j][i]);
+                    if (ExcelWorker.excel.Cells[row, col].Value.ToString() == "0")
+                    {
+                        continue;
+                    }
+                    Assert.AreEqual(ExcelWorker.excel.Cells[row, col].Value.ToString(), sut[i][j]);
+                    j++;
                 }
             }
         }
@@ -139,32 +144,60 @@ namespace ExcelWorkerTest
         public void ReadScoresInRaceEveryOnEvery_MethodIsInvoked_CorrectValue()
         {
             // Arrange
-            var excelWorker = new ExcelWorker();
-            List<string> pilots = null;
-            int countInGroup = 0;
+            ExcelWorker.excel.ActiveWorkbook.Sheets["every"].Select();
+            int countInGroup = 8;
 
             // Act
-            var result = ExcelWorker.ReadScoresInRaceEveryOnEvery(
-                pilots,
-                countInGroup);
+            var sut = ExcelWorker.ReadScoresInRaceEveryOnEvery(
+                countPilots,
+                countInGroup,
+                out int[] cols);
+            for (int i = 0; i < cols.Length; i++)
+                cols[i] += 4;
 
             // Assert
-            Assert.Fail();
+            int row = -1;
+            for (int i = 0; i < countPilots; i++)
+            {
+                row += 5;
+                for (int j = 0; j < countInGroup; row++)
+                {
+                    if (ExcelWorker.excel.Cells[row, cols[i]].Value.ToString() == "0")
+                    {
+                        continue;
+                    }
+                    Assert.AreEqual(ExcelWorker.excel.Cells[row, cols[i]].Value.ToString(), sut[i][j]);
+                    j++;
+                }
+            }
+
+            ExcelWorker.excel.ActiveWorkbook.Sheets["ExcelTests"].Select();
         }
 
         [Test]
         public void ReadTimeInRace_MethodIsInvoked_CorrectValue()
         {
             // Arrange
-            var excelWorker = new ExcelWorker();
-            List<string> pilots = null;
 
             // Act
-            var result = ExcelWorker.ReadTimeInRace(
-                pilots);
+            var sut = ExcelWorker.ReadTimesInRace(
+                countPilots, out int[] cols);
 
             // Assert
-            Assert.Fail();
+            int col = 20;
+            for (int i = 0; i < 1; i++)
+            {
+                int row = 4;
+                for (int j = 0; j < countPilots; row++)
+                {
+                    if (Convert.ToString(ExcelWorker.excel.Cells[row, col].Value) == null)
+                    {
+                        continue;
+                    }
+                    Assert.AreEqual(ExcelWorker.excel.Cells[row, col].Value.ToString(), sut[i][j]);
+                    j++;
+                }
+            }
         }
     }
 }

@@ -114,11 +114,9 @@ namespace RaceLogic.Regulations
             rangeToSort.Sort(c2, XlSortOrder.xlDescending);
         }
 
-        public override void ReadScor()
+        public override List<List<string>> GetScores()
         {
-            var names = ExcelWorker.ReadNamesInTotalBoard();
-            pilotsCount = names.Count;
-            var scores = ExcelWorker.ReadScoresInRace(names);
+            var scores = base.GetScores();
             if (scores[0].Count > 5)
             {
                 var amators = scores.Where(x => x[x.Count - 1] != "0").ToList();
@@ -132,18 +130,7 @@ namespace RaceLogic.Regulations
                     pilotScores.RemoveAt(pilotScores.Count - 1);
                 }
             }
-            ExcelWorker.WriteScoreInTotalBoard(scores);
-            AddScoresToPilots(scores);
-
-
-        }
-
-        private void Test(List<Pilot> pNew)
-        {
-            foreach (var pilot in pNew)
-            {
-                pilot.DeleteScore(pilot.ScoresCount - 2);
-            }
+            return scores;
         }
 
         public void ReBuildPilots(List<int> numbersKarts)

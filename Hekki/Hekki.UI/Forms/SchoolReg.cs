@@ -51,7 +51,8 @@ namespace Hekki
 
         private void ReadTimes_Click(object sender, EventArgs e)
         {
-            _school.ReadTime();
+            var times = _school.GetTimes();
+            _school.WriteTimes(times);
         }
 
         private void SortTimes_Click(object sender, EventArgs e)

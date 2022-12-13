@@ -165,8 +165,7 @@ namespace ExcelWorkerTest
             }
         }
 
-        [Test]
-        [Ignore("Ignore a test")]
+        [Test, Order(1)]
         public void WriteUsedKartsAmators_MethodIsInvoked_ExcelCorrectValue()
         {
             // Arrange

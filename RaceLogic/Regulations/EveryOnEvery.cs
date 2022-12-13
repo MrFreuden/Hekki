@@ -17,14 +17,14 @@ namespace RaceLogic.Regulations
 
         }
 
-        public void ReadScor(List<int> numbersKarts)
+        public List<List<string>> GetScores(List<int> numbersKarts)
         {
-            var names = ExcelWorker.ReadNamesInTotalBoard();
-            pilotsCount = names.Count;
-            var scores = ExcelWorker.ReadScoresInRaceEveryOnEvery(names, numbersKarts.Count);
+            var namesInOrder = ExcelWorker.ReadNamesInTotalBoard();
+            pilotsCount = namesInOrder.Count;
+            var scores = ExcelWorker.ReadScoresInRaceEveryOnEvery(pilotsCount, numbersKarts.Count, out int[] cols);
+            var namesInRace = ExcelWorker.ReadNamesInRace(numbersKarts.Count, cols);
 
-
-            ExcelWorker.WriteScoreInTotalBoard(scores);
+            return GetSortedDataInOrdenNames(scores, namesInRace, namesInOrder, false);
         }
     }
 }

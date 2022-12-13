@@ -49,7 +49,8 @@ namespace RegulationTests
 
         public void PilotsTime()
         {
-            _junior.ReadTime();
+            var times = _junior.GetTimes();
+            _junior.WriteTimes(times);
             var pilots = Race.MakePilotsFromTotalBoard(correctPilots.Count).OrderBy(o => o.Name).ToList();
 
             for (int i = 0; i < pilots.Count; i++)
@@ -68,7 +69,8 @@ namespace RegulationTests
             _junior.WriteUsedKarts();
             ExcelWorker.WriteTestData(@"../../../TestData/Junior/TestTime.txt", "Время", ExcelWorker.excel.get_Range("T1", "T10"));
             PilotsTime();
-            _junior.ReadScor();
+            var scores = _junior.GetScores();
+            _junior.WriteScores(scores);
             _junior.SortTimeInTB();
             _junior.SortTimeInRace();
 
@@ -92,7 +94,8 @@ namespace RegulationTests
             _junior.WriteUsedKarts();
             ExcelWorker.WriteTestData(@"../../../TestData/Junior/TestTime.txt", "Время", ExcelWorker.excel.get_Range("AC1", "AC10"));
             PilotsTime();
-            _junior.ReadScor();
+            var scores = _junior.GetScores();
+            _junior.WriteScores(scores);
             _junior.SortTimeInTB();
             _junior.SortTimeInRace();
 
@@ -116,7 +119,8 @@ namespace RegulationTests
             _junior.WriteUsedKarts();
             ExcelWorker.WriteTestData(@"../../../TestData/Junior/TestTime.txt", "Время", ExcelWorker.excel.get_Range("AL1", "AL10"));
             PilotsTime();
-            _junior.ReadScor();
+            var scores = _junior.GetScores();
+            _junior.WriteScores(scores);
             _junior.SortTimeInTB();
             _junior.SortTimeInRace();
 
@@ -139,7 +143,8 @@ namespace RegulationTests
             _junior.SortScores();
             _junior.DoFinal(numbers);
             _junior.WriteUsedKarts();
-            _junior.ReadScor();
+            var scores = _junior.GetScores();
+            _junior.WriteScores(scores);
 
             int col = ExcelWorker.excel.Range["AO1", "AO1"].Column;
 

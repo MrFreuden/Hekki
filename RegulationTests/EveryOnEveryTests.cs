@@ -79,7 +79,8 @@ namespace RegulationTests
         [Test, Order(2)]
         public void IdenticalTBWithTestData()
         {
-            _every.ReadScor(numbers);
+            var scores = _every.GetScores(numbers);
+            _every.WriteScores(scores);
             _every.SortScores();
 
             int col = ExcelWorker.excel.Range["T1", "T1"].Column;

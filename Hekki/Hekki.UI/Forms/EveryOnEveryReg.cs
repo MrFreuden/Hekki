@@ -34,7 +34,8 @@ namespace Hekki
 
         private void ReadScores_Click(object sender, EventArgs e)
         {
-            _every.ReadScor(numbersKarts);
+            var scores = _every.GetScores(numbersKarts);
+            _every.WriteScores(scores);
         }
 
         private void SortScores_Click(object sender, EventArgs e)
