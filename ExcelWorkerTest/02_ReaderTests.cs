@@ -120,8 +120,10 @@ namespace ExcelWorkerTest
             // Arrange
 
             // Act
-            var sut = ExcelWorker.ReadScoresInRace(
-                countPilots, out int[] cols);
+            var sut = ExcelWorker.ReadDataInRace(
+                "Итого",
+                countPilots, 
+                out int[] cols);
 
             // Assert
             int col = 23;
@@ -190,11 +192,40 @@ namespace ExcelWorkerTest
             // Arrange
 
             // Act
-            var sut = ExcelWorker.ReadTimesInRace(
-                countPilots, out int[] cols);
+            var sut = ExcelWorker.ReadDataInRace(
+                "Время",
+                countPilots, 
+                out int[] cols);
 
             // Assert
             int col = 20;
+            for (int i = 0; i < 1; i++)
+            {
+                int row = 4;
+                for (int j = 0; j < countPilots; row++)
+                {
+                    if (Convert.ToString(ExcelWorker.excel.Cells[row, col].Value) == null)
+                    {
+                        continue;
+                    }
+                    Assert.AreEqual(ExcelWorker.excel.Cells[row, col].Value.ToString(), sut[i][j]);
+                    j++;
+                }
+            }
+        }
+
+        [Test]
+        public void ReadNamesInRace_MethodIsInvoked_CorrectValue()
+        {
+            // Arrange
+            int[] indexesNeededCols = new[] {19};
+            // Act
+            var sut = ExcelWorker.ReadNamesInRace(
+                countPilots,
+                indexesNeededCols);
+
+            // Assert
+            int col = 19;
             for (int i = 0; i < 1; i++)
             {
                 int row = 4;

@@ -74,9 +74,9 @@ namespace ExcelWorkerTest
             int numberRace = 0;
 
             // Act
-            ExcelWorker.WriteNamesInRace(
-                pilotsNamesByGroup,
-                numberRace);
+            ExcelWorker.WriteInfoDataInRace(
+                "Пилоты",
+                pilotsNamesByGroup);
 
             // Assert
             int row = 4;
@@ -119,9 +119,9 @@ namespace ExcelWorkerTest
             int numberRace = 0;
 
             // Act
-            ExcelWorker.WriteKartsInRace(
-                pilotsKartsByGroup,
-                numberRace);
+            ExcelWorker.WriteInfoDataInRace(
+                "Карт",
+                pilotsKartsByGroup);
 
             // Assert
             int row = 4;

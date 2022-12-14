@@ -164,11 +164,12 @@ namespace RaceLogic
                         times.Add(timesMerged[i][j]);
                     }
                 }
-                if (scoresMerged.Count != 0 && scoresMerged[i].Sum() != 0)
+                // && scoresMerged[i].Sum() != 0
+                if (scoresMerged.Count != 0)
                 {
                     for (int j = 0; j < scoresMerged[i].Count; j++)
                     {
-                        scores.Add(scoresMerged[i][j]);
+                        scores.Add(Int32.Parse(scoresMerged[i][j]));
                     }
                 }
                 if (liques.Count != 0)
@@ -243,8 +244,10 @@ namespace RaceLogic
                     karts[i].Add(pilot.GetNumberKartByRace(numberRace));
                 }
             }
-            ExcelWorker.WriteNamesInRace(names, numberRace);
-            ExcelWorker.WriteKartsInRace(karts, numberRace);
+            ExcelWorker.WriteInfoDataInRace("Пилоты", names);
+            ExcelWorker.WriteInfoDataInRace("Карт", karts);
+            //ExcelWorker.WriteNamesInRace(names, numberRace);
+            //ExcelWorker.WriteKartsInRace(karts, numberRace);
         }
     }
 }

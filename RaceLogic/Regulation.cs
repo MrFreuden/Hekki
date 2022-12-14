@@ -13,7 +13,8 @@ namespace RaceLogic
         public virtual List<List<string>> GetTimes()
         {
             var namesInOrder = ExcelWorker.ReadNamesInTotalBoard();
-            var timesInRace = ExcelWorker.ReadTimesInRace(namesInOrder.Count, out int[] cols);
+            //var timesInRace = ExcelWorker.ReadTimesInRace(namesInOrder.Count, out int[] cols);
+            var timesInRace = ExcelWorker.ReadDataInRace("Время", pilotsCount, out int[] cols);
             var namesInRace = ExcelWorker.ReadNamesInRace(namesInOrder.Count, cols);
             return GetSortedDataInOrdenNames(timesInRace, namesInRace, namesInOrder);
         }
@@ -28,7 +29,8 @@ namespace RaceLogic
         {
             var namesInOrder = ExcelWorker.ReadNamesInTotalBoard();
             pilotsCount = namesInOrder.Count;
-            var scoresInRace = ExcelWorker.ReadScoresInRace(pilotsCount, out int[] cols);
+            //var scoresInRace = ExcelWorker.ReadScoresInRace(pilotsCount, out int[] cols);
+            var scoresInRace = ExcelWorker.ReadDataInRace("Итого", pilotsCount, out int[] cols);
             var namesInRace = ExcelWorker.ReadNamesInRace(pilotsCount, cols);
             return GetSortedDataInOrdenNames(scoresInRace, namesInRace, namesInOrder);
         }
