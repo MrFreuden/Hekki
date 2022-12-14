@@ -192,21 +192,21 @@ namespace ExcelController
             return karts;
         }
 
-        public static List<List<string>> ReadScoresInTotalBoard(int countPilots)
+        public static List<List<string>> ReadDataInTB(string keyWord, int countPilots)
         {
-            var keyCells = FindKeyCellByValue("Хит", GetHeadersTB());
+            var keyCells = FindKeyCellByValue(keyWord, GetHeadersTB());
             if (keyCells.Count == 0)
             {
                 return new List<List<string>>();
             }
-            List<List<string>> score = new();
+            List<List<string>> data = new();
 
             int i = 0;
             int k = 1;
 
             for (int j = 0; j < countPilots; j++)
             {
-                score.Add(new List<string>());
+                data.Add(new List<string>());
                 for (int q = 0; q < keyCells.Count; q++)
                 {
                     string number;
@@ -214,43 +214,14 @@ namespace ExcelController
                         continue;
                     else
                         number = keyCells[q].Cells[1 + k].Value.ToString();
-                    score[i].Add(number);
+                    data[i].Add(number);
                 }
                 i++;
                 k++;
             }
-            return score;
+            return data;
         }
-
-        public static List<List<string>> ReadTimesInTotalBoard(int countPilots)
-        {
-            var keyCells = FindKeyCellByValue("Best Lap", GetHeadersTB());
-            if (keyCells.Count == 0)
-            {
-                return new List<List<string>>();
-            }
-            List<List<string>> time = new();
-
-            int i = 0;
-            int k = 1;
-
-            for (int j = 0; j < countPilots; j++)
-            {
-                time.Add(new List<string>());
-                for (int q = 0; q < keyCells.Count; q++)
-                {
-                    string number;
-                    if (keyCells[q].Cells[1 + k].Value == null)
-                        continue;
-                    else
-                        number = keyCells[q].Cells[1 + k].Value.ToString();
-                    time[i].Add(number);
-                }
-                i++;
-                k++;
-            }
-            return time;
-        }
+        
 
         public static List<string> ReadLique(int countPilots)
         {

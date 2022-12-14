@@ -60,7 +60,8 @@ namespace ExcelWorkerTest
             // Arrange
 
             // Act
-            var sut = ExcelWorker.ReadScoresInTotalBoard(
+            var sut = ExcelWorker.ReadDataInTB(
+                "Хит",
                 countPilots);
 
             // Assert
@@ -82,7 +83,8 @@ namespace ExcelWorkerTest
             // Arrange
 
             // Act
-            var sut = ExcelWorker.ReadTimesInTotalBoard(
+            var sut = ExcelWorker.ReadDataInTB(
+                "Best Lap",
                 countPilots);
 
             // Assert
@@ -148,10 +150,11 @@ namespace ExcelWorkerTest
             // Arrange
             ExcelWorker.excel.ActiveWorkbook.Sheets["every"].Select();
             int countInGroup = 8;
+            int pilotsCount = ExcelWorker.ReadNamesInTotalBoard().Count;
 
             // Act
             var sut = ExcelWorker.ReadScoresInRaceEveryOnEvery(
-                countPilots,
+                pilotsCount,
                 countInGroup,
                 out int[] cols);
             for (int i = 0; i < cols.Length; i++)
@@ -163,7 +166,7 @@ namespace ExcelWorkerTest
             int nextRow;
             int q1 = 0;
             int q2 = 1;
-            for (int i = 0; i < countPilots; i++)
+            for (int i = 0; i < pilotsCount; i++)
             {
                 prevRow = row;
                 for (int j = 0; j < countInGroup; row++)
