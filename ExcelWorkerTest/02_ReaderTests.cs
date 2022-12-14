@@ -156,21 +156,31 @@ namespace ExcelWorkerTest
                 cols[i] += 4;
 
             // Assert
-            int row = -1;
+            int row = 3;
+            int prevRow;
+            int nextRow;
+            int q1 = 0;
+            int q2 = 1;
             for (int i = 0; i < countPilots; i++)
             {
-                row += 5;
+                prevRow = row;
                 for (int j = 0; j < countInGroup; row++)
                 {
-                    if (ExcelWorker.excel.Cells[row, cols[i]].Value.ToString() == "0")
-                    {
-                        continue;
-                    }
-                    Assert.AreEqual(ExcelWorker.excel.Cells[row, cols[i]].Value.ToString(), sut[i][j]);
+                    Assert.AreEqual(ExcelWorker.excel.Cells[row, cols[q1]].Value.ToString(), sut[i][j]);
                     j++;
                 }
+                nextRow = row + 4;
+                row = prevRow;
+                i++;
+                for (int j = 0; j < countInGroup; row++)
+                {
+                    Assert.AreEqual(ExcelWorker.excel.Cells[row, cols[q2]].Value.ToString(), sut[i][j]);
+                    j++;
+                }
+                row = nextRow;
+                q1 += 2;
+                q2 += 2;
             }
-
             ExcelWorker.excel.ActiveWorkbook.Sheets["ExcelTests"].Select();
         }
 
