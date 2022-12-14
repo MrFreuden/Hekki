@@ -83,7 +83,7 @@ namespace RaceLogic.Regulations
                     continue;
                 karts.Add(pilots[index].GetAllNumbersKarts());
             }
-            ExcelWorker.WriteUsedKartsAmators(karts, proCountFinal);
+            ExcelWorker.WriteUsedKarts(karts, proCountFinal);
         }
 
         public void SortTwoLiques(List<int> numbersKarts)

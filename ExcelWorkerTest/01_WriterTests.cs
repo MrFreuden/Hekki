@@ -180,7 +180,7 @@ namespace ExcelWorkerTest
             }
 
             // Act
-            ExcelWorker.WriteUsedKartsAmators(
+            ExcelWorker.WriteUsedKarts(
                 pilotsKarts,
                 countMargin);
 
@@ -208,7 +208,8 @@ namespace ExcelWorkerTest
             }
 
             // Act
-            ExcelWorker.WriteScoreInTotalBoard(
+            ExcelWorker.WriteDataInTotalBoard(
+                "Хит",
                 pilotsScores);
 
             // Assert
@@ -239,7 +240,8 @@ namespace ExcelWorkerTest
             }
 
             // Act
-            ExcelWorker.WriteTimeInTotalBoard(
+            ExcelWorker.WriteDataInTotalBoard(
+                "Best Lap",
                 pilotsTimes);
 
             // Assert

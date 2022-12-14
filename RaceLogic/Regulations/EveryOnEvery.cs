@@ -22,7 +22,7 @@ namespace RaceLogic.Regulations
             var namesInOrder = ExcelWorker.ReadNamesInTotalBoard();
             pilotsCount = namesInOrder.Count;
             var scores = ExcelWorker.ReadScoresInRaceEveryOnEvery(pilotsCount, numbersKarts.Count, out int[] cols);
-            var namesInRace = ExcelWorker.ReadNamesInRace(numbersKarts.Count, cols);
+            var namesInRace = ExcelWorker.ReadNamesInRace(numbersKarts.Count, cols, 111);
 
             return GetSortedDataInOrdenNames(scores, namesInRace, namesInOrder, false);
         }

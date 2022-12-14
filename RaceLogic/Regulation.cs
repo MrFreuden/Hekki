@@ -13,6 +13,7 @@ namespace RaceLogic
         public virtual List<List<string>> GetTimes()
         {
             var namesInOrder = ExcelWorker.ReadNamesInTotalBoard();
+            pilotsCount = namesInOrder.Count;
             //var timesInRace = ExcelWorker.ReadTimesInRace(namesInOrder.Count, out int[] cols);
             var timesInRace = ExcelWorker.ReadDataInRace("Время", pilotsCount, out int[] cols);
             var namesInRace = ExcelWorker.ReadNamesInRace(namesInOrder.Count, cols);
@@ -21,7 +22,7 @@ namespace RaceLogic
 
         public void WriteTimes(List<List<string>> times)
         {
-            ExcelWorker.WriteTimeInTotalBoard(times);
+            ExcelWorker.WriteDataInTotalBoard("Best Lap" ,times);
             AddTimesToPilots(times);
         }
 
@@ -37,7 +38,7 @@ namespace RaceLogic
 
         public void WriteScores(List<List<string>> score)
         {
-            ExcelWorker.WriteScoreInTotalBoard(score);
+            ExcelWorker.WriteDataInTotalBoard("Хит", score);
             AddScoresToPilots(score);
         }
 
@@ -52,7 +53,7 @@ namespace RaceLogic
 
             for (int indexRace = 0; indexRace < data.Count; indexRace++)
             {
-                for (int i = 0, j = 0; i < data[indexRace].Count; )
+                for (int i = 0, j = 0; i < data[indexRace].Count ; )
                 {
                     int index = namesInRace[indexRace].FindIndex(x => x == namesOrder[j]);
                     if (index == -1)
