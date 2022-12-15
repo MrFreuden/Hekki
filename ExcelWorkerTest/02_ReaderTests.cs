@@ -60,7 +60,7 @@ namespace ExcelWorkerTest
             // Arrange
 
             // Act
-            var sut = ExcelWorker.ReadDataInTB(
+            var sut = ExcelWorker.ReadResultsInTB(
                 "Хит",
                 countPilots);
 
@@ -83,7 +83,7 @@ namespace ExcelWorkerTest
             // Arrange
 
             // Act
-            var sut = ExcelWorker.ReadDataInTB(
+            var sut = ExcelWorker.ReadResultsInTB(
                 "Best Lap",
                 countPilots);
 
@@ -122,7 +122,7 @@ namespace ExcelWorkerTest
             // Arrange
 
             // Act
-            var sut = ExcelWorker.ReadDataInRace(
+            var sut = ExcelWorker.ReadResultsInRace(
                 "Итого",
                 countPilots, 
                 out int[] cols);
@@ -195,7 +195,7 @@ namespace ExcelWorkerTest
             // Arrange
 
             // Act
-            var sut = ExcelWorker.ReadDataInRace(
+            var sut = ExcelWorker.ReadResultsInRace(
                 "Время",
                 countPilots, 
                 out int[] cols);

@@ -141,8 +141,8 @@ namespace RaceLogic
             List<Pilot> pilots = new();
             var names = ExcelWorker.ReadNamesInTotalBoard();
             var kartsMerged = ExcelWorker.ReadUsedKartsInTotalBoard();
-            var scoresMerged = ExcelWorker.ReadDataInTB("Хит", countPilots);
-            var timesMerged = ExcelWorker.ReadDataInTB("Best Lap", countPilots);
+            var scoresMerged = ExcelWorker.ReadResultsInTB("Хит", countPilots);
+            var timesMerged = ExcelWorker.ReadResultsInTB("Best Lap", countPilots);
             var liques = ExcelWorker.ReadLique(countPilots);
             for (int i = 0; i < countPilots; i++)
             {

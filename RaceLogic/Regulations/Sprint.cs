@@ -74,16 +74,7 @@ namespace RaceLogic.Regulations
 
         public void WriteUsedKartsAmators()
         {
-            var names = ExcelWorker.ReadNamesInTotalBoard();
-            List<string> karts = new();
-            foreach (var name in names)
-            {
-                var index = pilots.FindIndex(x => x.Name == name);
-                if (index == -1)
-                    continue;
-                karts.Add(pilots[index].GetAllNumbersKarts());
-            }
-            ExcelWorker.WriteUsedKarts(karts, proCountFinal);
+            WriteUsedKarts(proCountFinal);
         }
 
         public void SortTwoLiques(List<int> numbersKarts)

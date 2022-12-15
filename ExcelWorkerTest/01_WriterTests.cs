@@ -45,7 +45,8 @@ namespace ExcelWorkerTest
             }
 
             // Act
-            ExcelWorker.WriteLique(
+            ExcelWorker.WriteDataInCol(
+                "Лига",
                 pilotsLiques);
 
             // Assert
@@ -154,7 +155,8 @@ namespace ExcelWorkerTest
                 pilotsKarts.Add(Convert.ToString(fixture.Create<int>()));
             }
             // Act
-            ExcelWorker.WriteUsedKarts(
+            ExcelWorker.WriteDataInCol(
+                "Номера",
                 pilotsKarts);
 
             // Assert
@@ -180,7 +182,8 @@ namespace ExcelWorkerTest
             }
 
             // Act
-            ExcelWorker.WriteUsedKarts(
+            ExcelWorker.WriteDataInCol(
+                "Номера",
                 pilotsKarts,
                 countMargin);
 
@@ -208,7 +211,7 @@ namespace ExcelWorkerTest
             }
 
             // Act
-            ExcelWorker.WriteDataInTotalBoard(
+            ExcelWorker.WriteResultsInTotalBoard(
                 "Хит",
                 pilotsScores);
 
@@ -240,7 +243,7 @@ namespace ExcelWorkerTest
             }
 
             // Act
-            ExcelWorker.WriteDataInTotalBoard(
+            ExcelWorker.WriteResultsInTotalBoard(
                 "Best Lap",
                 pilotsTimes);
 
@@ -263,7 +266,8 @@ namespace ExcelWorkerTest
             List<string> names = namesFromTxt;
 
             // Act
-            ExcelWorker.WriteNamesInTotalBoard(
+            ExcelWorker.WriteDataInCol(
+                "Имя",
                 names);
 
             // Assert

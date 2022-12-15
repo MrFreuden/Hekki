@@ -15,14 +15,14 @@ namespace RaceLogic
             var namesInOrder = ExcelWorker.ReadNamesInTotalBoard();
             pilotsCount = namesInOrder.Count;
             //var timesInRace = ExcelWorker.ReadTimesInRace(namesInOrder.Count, out int[] cols);
-            var timesInRace = ExcelWorker.ReadDataInRace("Время", pilotsCount, out int[] cols);
+            var timesInRace = ExcelWorker.ReadResultsInRace("Время", pilotsCount, out int[] cols);
             var namesInRace = ExcelWorker.ReadNamesInRace(namesInOrder.Count, cols);
             return GetSortedDataInOrdenNames(timesInRace, namesInRace, namesInOrder);
         }
 
         public void WriteTimes(List<List<string>> times)
         {
-            ExcelWorker.WriteDataInTotalBoard("Best Lap" ,times);
+            ExcelWorker.WriteResultsInTotalBoard("Best Lap" ,times);
             AddTimesToPilots(times);
         }
 
@@ -31,14 +31,14 @@ namespace RaceLogic
             var namesInOrder = ExcelWorker.ReadNamesInTotalBoard();
             pilotsCount = namesInOrder.Count;
             //var scoresInRace = ExcelWorker.ReadScoresInRace(pilotsCount, out int[] cols);
-            var scoresInRace = ExcelWorker.ReadDataInRace("Итого", pilotsCount, out int[] cols);
+            var scoresInRace = ExcelWorker.ReadResultsInRace("Итого", pilotsCount, out int[] cols);
             var namesInRace = ExcelWorker.ReadNamesInRace(pilotsCount, cols);
             return GetSortedDataInOrdenNames(scoresInRace, namesInRace, namesInOrder);
         }
 
         public void WriteScores(List<List<string>> score)
         {
-            ExcelWorker.WriteDataInTotalBoard("Хит", score);
+            ExcelWorker.WriteResultsInTotalBoard("Хит", score);
             AddScoresToPilots(score);
         }
 
@@ -75,7 +75,7 @@ namespace RaceLogic
             return sortedData;
         }
 
-        public virtual void WriteUsedKarts()
+        public virtual void WriteUsedKarts(int countMargin = 0)
         {
             var names = ExcelWorker.ReadNamesInTotalBoard();
             List<string> karts = new();
@@ -86,13 +86,13 @@ namespace RaceLogic
                     continue;
                 karts.Add(pilots[index].GetAllNumbersKarts());
             }
-            ExcelWorker.WriteUsedKarts(karts);
+            ExcelWorker.WriteDataInCol("Номера", karts, countMargin);
         }
 
         public virtual void SortTimeInTB()
         {
             var keyCells = ExcelWorker.FindKeyCellByValue("Best Lap", null);
-            var range = ExcelWorker.GetTotalBoardRange(pilots.Count);
+            var range = ExcelWorker.GetTBRange(pilots.Count);
 
             for (int i = 0; i < keyCells.Count; i++)
             {

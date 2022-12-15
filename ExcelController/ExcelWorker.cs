@@ -97,7 +97,7 @@ namespace ExcelController
             }
         }
 
-        public static Range GetTotalBoardRange(int countPilots)
+        public static Range GetTBRange(int countPilots)
         {
             var keyCells = FindKeyCellByValue("№", null);
             var keyCells2 = FindKeyCellByValue("Всего", null);
@@ -105,12 +105,6 @@ namespace ExcelController
             string ad2 = keyCells2[0].Address.Replace("$", String.Empty);
             ad2 = ad2[0] + (ad2[1] + countPilots.ToString());
             return excel.get_Range(ad1, ad2);
-        }
-
-        public static void CleanColumnAfterKey(Range keyCell)
-        {
-            for (int i = 2; i < 100; i++)
-                keyCell[i] = "";
         }
 
         public static void DeleteLastUsedKartsInTotalBoard()
@@ -178,7 +172,7 @@ namespace ExcelController
             return karts;
         }
 
-        public static List<List<string>> ReadDataInTB(string keyWord, int countPilots)
+        public static List<List<string>> ReadResultsInTB(string keyWord, int countPilots)
         {
             var keyCells = FindKeyCellByValue(keyWord, GetHeadersTB());
             if (keyCells.Count == 0)
@@ -208,7 +202,6 @@ namespace ExcelController
             return data;
         }
 
-
         public static List<string> ReadLique(int countPilots)
         {
             List<string> pilotsLiques = new();
@@ -222,7 +215,9 @@ namespace ExcelController
             return pilotsLiques;
         }
 
-        public static List<List<string>> ReadNamesInRace(int pilotsCount, int[] indexesNeededCols, int countBreaker = 50)
+        public static List<List<string>> ReadNamesInRace(int pilotsCount, 
+            int[] indexesNeededCols, 
+            int countBreaker = 50)
         {
             var pilotsNames = new List<List<string>>();
             var keyScore = FindKeyCellByValue("Пилоты", null);
@@ -248,7 +243,10 @@ namespace ExcelController
             return pilotsNames;
         }
 
-        public static List<List<string>> ReadDataInRace(string keyWord, int pilotsCount, out int[] cols, int countBreaker = 50)
+        public static List<List<string>> ReadResultsInRace(string keyWord, 
+            int pilotsCount, 
+            out int[] cols, 
+            int countBreaker = 50)
         {
             var pilotsData = new List<List<string>>();
             var keyCells = FindKeyCellByValue(keyWord, null);
@@ -299,17 +297,6 @@ namespace ExcelController
             return pilotsScores;
         }
 
-        public static void WriteLique(List<string> pilotsLiques)
-        {
-            var keyCells = FindKeyCellByValue("Лига", null);
-            var startIndex = keyCells[0].Row + 1;
-            for (int i = 0; i < pilotsLiques.Count; i++)
-            {
-                excel.Cells[startIndex, keyCells[0].Column] = pilotsLiques[i];
-                startIndex++;
-            }
-        }
-
         public static void WriteInfoDataInRace(string keyWord, List<List<string>> pilotsDataByGroup)
         {
             var keyCells = FindKeyCellByValue(keyWord, true, null);
@@ -330,50 +317,41 @@ namespace ExcelController
             }
         }
 
-        public static void WriteUsedKarts(List<string> pilotsKarts, int countMargin = 0)
+        public static void WriteDataInCol(string keyWord, List<string> data, int countMargin = 0)
         {
-            var keyCells = FindKeyCellByValue("Номера", null);
+            var keyCells = FindKeyCellByValue(keyWord, null);
             var startIndex = keyCells[0].Row + 1 + countMargin;
-            for (int i = 0; i < pilotsKarts.Count; i++)
+            for (int i = 0; i < data.Count; i++)
             {
-                excel.Cells[startIndex, keyCells[0].Column] = pilotsKarts[i];
+                excel.Cells[startIndex, keyCells[0].Column] = data[i];
                 startIndex++;
             }
         }
 
-        public static void WriteDataInTotalBoard(string keyWord, List<List<string>> pilotsData)
+        public static void WriteResultsInTotalBoard(string keyWord, List<List<string>> pilotsResultsData)
         {
             var keyCells = FindKeyCellByValue(keyWord, GetHeadersTB());
             for (int i = 0; i < keyCells.Count; i++)
             {
                 var startIndex = keyCells[0].Row + 1;
-                for (int j = 0; j < pilotsData.Count; j++)
+                for (int j = 0; j < pilotsResultsData.Count; j++)
                 {
                     try
                     {
-                        excel.Cells[startIndex, keyCells[i].Column].Value = pilotsData[j][i].ToString();
+                        excel.Cells[startIndex, keyCells[i].Column].Value = pilotsResultsData[j][i].ToString();
                     }
                     catch (Exception)
                     {
 
                     }
-                    
                     startIndex++;
                 }
             }
         }
 
-        public static void WriteNamesInTotalBoard(List<string> names)
-        {
-            var keyCells = FindKeyCellByValue("Имя", null);
-            CleanColumnAfterKey(keyCells[0]);
-            for (int i = 2, j = 0; j < names.Count; i++, j++)
-                keyCells[0][i] = names[j];
-        }
-
         public static void WriteUsedKartsInTotalBoard(List<List<int>> numberKarts)
         {
-            var keyCells = FindKeyCellByValue("Номера", excel.Range["A1", "K100"]);
+            var keyCells = FindKeyCellByValue("Номера", GetHeadersTB());
             int k = 2;
             for (int i = 0; i < numberKarts.Count; i++)
             {

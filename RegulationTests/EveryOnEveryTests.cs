@@ -28,7 +28,7 @@ namespace RegulationTests
         private void WriteTestData()
         {
             ExcelWorker.CleanData(null, 11);
-            ExcelWorker.CleanData(ExcelWorker.GetTotalBoardRange(45));
+            ExcelWorker.CleanData(ExcelWorker.GetTBRange(45));
             ExcelWorker.WriteTestData(@"../../../TestData/EveryOnEvery/TestNames.txt", "Имя");
             ExcelWorker.WriteTestData(@"../../../TestData/EveryOnEvery/TestScore1.txt", "Очки время");
             ExcelWorker.WriteTestData(@"../../../TestData/EveryOnEvery/TestScore2.txt", "Очки место");
