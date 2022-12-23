@@ -500,7 +500,7 @@ namespace ExcelController
             keyCells.AddRange(FindKeyCellByValue("Очки", rangeToClean));
             keyCells.AddRange(FindKeyCellByValue("Штраф", rangeToClean));
             keyCells.AddRange(FindKeyCellByValue("Время", rangeToClean));
-            keyCells.AddRange(FindKeyCellByValue("Имя", rangeToClean));
+            //keyCells.AddRange(FindKeyCellByValue("Имя", rangeToClean));
             keyCells.AddRange(FindKeyCellByValue("Лига", rangeToClean));
 
             for (int i = 0; i < keyCells.Count; i++)
