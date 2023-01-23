@@ -9,9 +9,9 @@ namespace Hekki.Hekki.UI
         ///  The main entry point for the application.
         /// </summary>
         [STAThread]
-        static void Main()
+        static async Task Main()
         {
-            UpdateMyApp();
+            await UpdateMyApp();
             SquirrelAwareApp.HandleEvents(
                 onInitialInstall: OnAppInstall,
                 onAppUninstall: OnAppUninstall,
@@ -32,6 +32,13 @@ namespace Hekki.Hekki.UI
 
         private static void OnAppRun(SemanticVersion version, IAppTools tools, bool firstRun)
         {
+            //Task.Run(async () =>
+            //{
+            //    using (var mgr = UpdateManager.GitHubUpdateManager("https://github.com/MrFreuden/Hekki"))
+            //    {
+            //        await mgr.Result.UpdateApp();
+            //    }
+            //});
             tools.SetProcessAppUserModelId();
             // show a welcome message when the app is first installed
             if (firstRun) MessageBox.Show("Thanks for installing my application!");
