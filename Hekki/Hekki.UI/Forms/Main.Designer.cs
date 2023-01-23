@@ -49,7 +49,7 @@
             // 
             // School
             // 
-            this.School.Location = new System.Drawing.Point(346, 61);
+            this.School.Location = new System.Drawing.Point(282, 115);
             this.School.Name = "School";
             this.School.Size = new System.Drawing.Size(204, 86);
             this.School.TabIndex = 1;
