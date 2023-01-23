@@ -1,4 +1,5 @@
 using Squirrel;
+using System.Threading.Tasks;
 
 namespace Hekki.Hekki.UI
 {
@@ -10,6 +11,7 @@ namespace Hekki.Hekki.UI
         [STAThread]
         static void Main()
         {
+            UpdateMyApp();
             SquirrelAwareApp.HandleEvents(
                 onInitialInstall: OnAppInstall,
                 onAppUninstall: OnAppUninstall,
@@ -34,5 +36,17 @@ namespace Hekki.Hekki.UI
             // show a welcome message when the app is first installed
             if (firstRun) MessageBox.Show("Thanks for installing my application!");
         }
+
+        private static async Task UpdateMyApp()
+        {
+            using var mgr = UpdateManager.GitHubUpdateManager("https://github.com/MrFreuden/Hekki");
+            var newVersion = await mgr.Result.UpdateApp();
+
+            // optionally restart the app automatically, or ask the user if/when they want to restart
+            if (newVersion != null)
+            {
+                UpdateManager.RestartApp();
+            }
+        } 
     }
 }
