@@ -91,7 +91,6 @@ namespace ExcelController
                     string q = keyCells[j][i][2].Address.Replace("$", String.Empty);
                     string s = keyCells[j][i][countBellow].Address.Replace("$", String.Empty);
                     var aras = excel.get_Range(q, s);
-                    //aras.Interior.Color = Microsoft.Office.Interop.Excel.XlRgbColor.rgbWhite;
                     aras.ClearContents();
                 }
             }
