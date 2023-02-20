@@ -84,7 +84,7 @@ namespace RaceLogic
                 var index = pilots.FindIndex(x => x.Name == name);
                 if (index == -1)
                     continue;
-                karts.Add(pilots[index].GetAllNumbersKarts());
+                karts.Add(pilots[index].GetAllNumbersKartsAsString());
             }
             ExcelWorker.WriteDataInCol("Номера", karts, countMargin);
         }

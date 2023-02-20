@@ -79,8 +79,8 @@ namespace ExcelController
 
             if (debugMode)
             {
-                keyCells.Add(FindKeyCellByValue("Имя", rangeToClean));
-                keyCells.Add(FindKeyCellByValue("Лига", rangeToClean));
+                //keyCells.Add(FindKeyCellByValue("Имя", rangeToClean));
+                //keyCells.Add(FindKeyCellByValue("Лига", rangeToClean));
                 keyCells.Add(FindKeyCellByValue("Очки", rangeToClean));
             }
 
@@ -160,9 +160,14 @@ namespace ExcelController
                 karts.Add(new List<int>());
 
                 string numbers = keyCells[0].Cells[i, 1].Value.ToString();
-                for (int j = 0, k = 0; j < numbers.Length; j++, k++)
+                var splitedNumbers = numbers.Split(' ').ToList();
+                if (splitedNumbers[splitedNumbers.Count - 1] == " ")
                 {
-                    karts[q].Add(numbers[k] - '0');
+                    splitedNumbers.RemoveAt(splitedNumbers.Count - 1);
+                }
+                for (int j = 0, k = 0; j < splitedNumbers.Count - 1; j++, k++)
+                {
+                    karts[q].Add(Int32.Parse(splitedNumbers[k]));
                 }
                 i++;
                 q++;
@@ -356,7 +361,7 @@ namespace ExcelController
             {
                 string numbers = "";
                 for (int j = 0; j < numberKarts[i].Count; j++)
-                    numbers += numberKarts[i][j].ToString();
+                    numbers += numberKarts[i][j].ToString() + " ";
                 keyCells[0][k].Value = numbers;
                 k++;
             }

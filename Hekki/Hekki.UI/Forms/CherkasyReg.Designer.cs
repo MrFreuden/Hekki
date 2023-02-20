@@ -60,7 +60,6 @@
             this.numbersOfKarts.Name = "numbersOfKarts";
             this.numbersOfKarts.Size = new System.Drawing.Size(125, 162);
             this.numbersOfKarts.TabIndex = 15;
-            this.numbersOfKarts.Text = "11\n12\n13\n14\n15\n16\n17\n18\n19\n20";
             this.numbersOfKarts.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.numbersOfKarts_KeyPress);
             // 
             // DoQual1

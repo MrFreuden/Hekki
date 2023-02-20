@@ -80,12 +80,12 @@
 
         }
 
-        public string GetAllNumbersKarts()
+        public string GetAllNumbersKartsAsString()
         {
             string res = "";
             foreach (int numberKart in _usedKarts)
             {
-                res += numberKart.ToString();
+                res += numberKart.ToString() + " ";
             }
             return res;
         }
