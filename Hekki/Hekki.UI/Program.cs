@@ -43,6 +43,7 @@ namespace Hekki.Hekki.UI
 
             if (newVersion != null)
             {
+                MessageBox.Show("Доступно новое обновление. Сейчас перезапутим программу.");
                 UpdateManager.RestartApp();
             }
         } 
