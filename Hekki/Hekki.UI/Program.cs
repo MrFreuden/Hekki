@@ -32,15 +32,7 @@ namespace Hekki.Hekki.UI
 
         private static void OnAppRun(SemanticVersion version, IAppTools tools, bool firstRun)
         {
-            //Task.Run(async () =>
-            //{
-            //    using (var mgr = UpdateManager.GitHubUpdateManager("https://github.com/MrFreuden/Hekki"))
-            //    {
-            //        await mgr.Result.UpdateApp();
-            //    }
-            //});
             tools.SetProcessAppUserModelId();
-            // show a welcome message when the app is first installed
             if (firstRun) MessageBox.Show("Thanks for installing my application!");
         }
 
@@ -49,7 +41,6 @@ namespace Hekki.Hekki.UI
             using var mgr = UpdateManager.GitHubUpdateManager("https://github.com/MrFreuden/Hekki");
             var newVersion = await mgr.Result.UpdateApp();
 
-            // optionally restart the app automatically, or ask the user if/when they want to restart
             if (newVersion != null)
             {
                 UpdateManager.RestartApp();

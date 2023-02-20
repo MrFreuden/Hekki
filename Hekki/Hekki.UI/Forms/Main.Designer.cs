@@ -49,7 +49,7 @@
             // 
             // School
             // 
-            this.School.Location = new System.Drawing.Point(637, 334);
+            this.School.Location = new System.Drawing.Point(344, 61);
             this.School.Name = "School";
             this.School.Size = new System.Drawing.Size(204, 86);
             this.School.TabIndex = 1;
@@ -69,7 +69,7 @@
             // 
             // Junior
             // 
-            this.Junior.Location = new System.Drawing.Point(343, 334);
+            this.Junior.Location = new System.Drawing.Point(344, 236);
             this.Junior.Name = "Junior";
             this.Junior.Size = new System.Drawing.Size(204, 86);
             this.Junior.TabIndex = 3;
