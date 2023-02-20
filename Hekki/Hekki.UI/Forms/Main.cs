@@ -5,7 +5,6 @@ namespace Hekki
         public Main()
         {
             InitializeComponent();
-            numbersOfKarts.Text = "1\n2\n3\n4\n5\n6\n7\n8";
         }
 
         private void Sprint_Click(object sender, EventArgs e)
@@ -61,6 +60,16 @@ namespace Hekki
             EveryOnEveryReg win6 = new(karts);
             win6.Closed += (s, args) => this.Close();
             win6.Show();
+        }
+
+        private void numbersOfKarts_TextChanged(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void numbersOfKarts_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            e.Handled = !char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar);
         }
     }
 }

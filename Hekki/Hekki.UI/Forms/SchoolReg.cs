@@ -7,11 +7,17 @@ namespace Hekki
     {
         private static School _school = new();
         private static List<int> numbersKarts;
+
         public SchoolReg(List<int> karts)
         {
             InitializeComponent();
             numbersKarts = karts;
             numbersOfKarts.Lines = numbersKarts.ConvertAll<string>(delegate (int i) { return i.ToString(); }).ToArray();
+        }
+
+        private void numbersOfKarts_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            e.Handled = !char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar);
         }
 
         private void DoQual_Click(object sender, EventArgs e)

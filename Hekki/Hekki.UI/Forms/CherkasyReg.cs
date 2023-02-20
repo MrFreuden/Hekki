@@ -6,12 +6,18 @@ namespace Hekki
     {
         private static Cherkasy _cherkasy = new();
         private static List<int> _numbersKarts;
+
         public CherkasyReg(List<int> karts)
         {
             InitializeComponent();
             
             _numbersKarts = karts;
             numbersOfKarts.Lines = _numbersKarts.ConvertAll<string>(delegate (int i) { return i.ToString(); }).ToArray();
+        }
+
+        private void numbersOfKarts_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            e.Handled = !char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar);
         }
 
         private void DoQual1_Click(object sender, EventArgs e)
