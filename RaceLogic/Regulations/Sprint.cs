@@ -49,7 +49,7 @@ namespace RaceLogic.Regulations
             }
             else
             {
-                if (pilots.Count < 19)
+                if (pilots.Count < 22)
                 {
                     var k1 = ExcelWorker.FindKeyCellByValue("Карт", null);
                     var k2 = ExcelWorker.FindKeyCellByValue("Пилоты", null);

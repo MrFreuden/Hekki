@@ -1,5 +1,7 @@
 ﻿using ExcelController;
+using Microsoft.Office.Interop.Excel;
 using RaceLogic.Regulations;
+using System.Text.RegularExpressions;
 
 namespace Hekki
 {
@@ -87,6 +89,19 @@ namespace Hekki
         private void SortByLique_Click(object sender, EventArgs e)
         {
             _sprint.SortTwoLiques(numbersKarts);
+        }
+
+        private void numbersOfKarts_TextChanged(object sender, EventArgs e)
+        {
+            numbersKarts.Clear();
+            foreach (string line in numbersOfKarts.Lines)
+            {
+                if (string.IsNullOrEmpty(line))
+                {
+                    continue;
+                }
+                numbersKarts.Add(Int32.Parse(line));
+            }    
         }
     }
 }

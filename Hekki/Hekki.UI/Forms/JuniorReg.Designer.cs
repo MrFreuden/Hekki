@@ -34,7 +34,6 @@
             this.DoRace1 = new System.Windows.Forms.Button();
             this.DoRace2 = new System.Windows.Forms.Button();
             this.DoFinal = new System.Windows.Forms.Button();
-            this.RebuilKarts = new System.Windows.Forms.Button();
             this.RebuildPilots = new System.Windows.Forms.Button();
             this.ReadScores = new System.Windows.Forms.Button();
             this.SortScores = new System.Windows.Forms.Button();
@@ -103,16 +102,6 @@
             this.DoFinal.UseVisualStyleBackColor = true;
             this.DoFinal.Click += new System.EventHandler(this.DoFinal_Click);
             // 
-            // RebuilKarts
-            // 
-            this.RebuilKarts.Location = new System.Drawing.Point(188, 335);
-            this.RebuilKarts.Name = "RebuilKarts";
-            this.RebuilKarts.Size = new System.Drawing.Size(128, 83);
-            this.RebuilKarts.TabIndex = 8;
-            this.RebuilKarts.Text = "Пересобрать карты";
-            this.RebuilKarts.UseVisualStyleBackColor = true;
-            this.RebuilKarts.Click += new System.EventHandler(this.RebuilKarts_Click);
-            // 
             // RebuildPilots
             // 
             this.RebuildPilots.Location = new System.Drawing.Point(339, 335);
@@ -169,6 +158,8 @@
             this.numbersOfKarts.Name = "numbersOfKarts";
             this.numbersOfKarts.Size = new System.Drawing.Size(125, 162);
             this.numbersOfKarts.TabIndex = 14;
+            this.numbersOfKarts.Text = "";
+            this.numbersOfKarts.TextChanged += new System.EventHandler(this.numbersOfKarts_TextChanged);
             this.numbersOfKarts.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.numbersOfKarts_KeyPress);
             // 
             // JuniorReg
@@ -182,7 +173,6 @@
             this.Controls.Add(this.SortScores);
             this.Controls.Add(this.ReadScores);
             this.Controls.Add(this.RebuildPilots);
-            this.Controls.Add(this.RebuilKarts);
             this.Controls.Add(this.DoFinal);
             this.Controls.Add(this.DoRace2);
             this.Controls.Add(this.DoRace1);
@@ -203,7 +193,6 @@
         private Button DoRace1;
         private Button DoRace2;
         private Button DoFinal;
-        private Button RebuilKarts;
         private Button RebuildPilots;
         private Button ReadScores;
         private Button SortScores;

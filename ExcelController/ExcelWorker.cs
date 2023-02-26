@@ -64,7 +64,7 @@ namespace ExcelController
             }
         }
 
-        public static void CleanData(Range rangeToClean = null, int countBellow = 45, bool debugMode = true)
+        public static void CleanData(Range rangeToClean = null, int countBellow = 50)
         {
             List<IList<Range>> keyCells = new()
             {
@@ -74,15 +74,11 @@ namespace ExcelController
                 FindKeyCellByValue("Карт", rangeToClean),
                 FindKeyCellByValue("Пилоты", rangeToClean),
                 FindKeyCellByValue("Штраф", rangeToClean),
-                FindKeyCellByValue("Время", rangeToClean)
-            };
-
-            if (debugMode)
-            {
-                //keyCells.Add(FindKeyCellByValue("Имя", rangeToClean));
-                //keyCells.Add(FindKeyCellByValue("Лига", rangeToClean));
-                keyCells.Add(FindKeyCellByValue("Очки", rangeToClean));
-            }
+                FindKeyCellByValue("Время", rangeToClean),
+                //FindKeyCellByValue("Имя", rangeToClean),
+                //FindKeyCellByValue("Лига", rangeToClean),
+                FindKeyCellByValue("Очки", rangeToClean)
+        };
 
             for (int j = 0; j < keyCells.Count; j++)
             {
@@ -219,8 +215,8 @@ namespace ExcelController
             return pilotsLiques;
         }
 
-        public static List<List<string>> ReadNamesInRace(int pilotsCount, 
-            int[] indexesNeededCols, 
+        public static List<List<string>> ReadNamesInRace(int pilotsCount,
+            int[] indexesNeededCols,
             int countBreaker = 50)
         {
             var pilotsNames = new List<List<string>>();
@@ -247,9 +243,9 @@ namespace ExcelController
             return pilotsNames;
         }
 
-        public static List<List<string>> ReadResultsInRace(string keyWord, 
-            int pilotsCount, 
-            out int[] cols, 
+        public static List<List<string>> ReadResultsInRace(string keyWord,
+            int pilotsCount,
+            out int[] cols,
             int countBreaker = 50)
         {
             var pilotsData = new List<List<string>>();
@@ -332,7 +328,7 @@ namespace ExcelController
             }
         }
 
-        public static void WriteResultsInTotalBoard(string keyWord, List<List<string>> pilotsResultsData)
+        public static void WriteResultsInTB(string keyWord, List<List<string>> pilotsResultsData)
         {
             var keyCells = FindKeyCellByValue(keyWord, GetHeadersTB());
             for (int i = 0; i < keyCells.Count; i++)

@@ -2,17 +2,18 @@ namespace Hekki
 {
     public partial class Main : Form
     {
+        private static List<int> karts = new();
+
         public Main()
         {
             InitializeComponent();
+            foreach (string line in numbersOfKarts.Lines)
+                karts.Add(Int32.Parse(line));
         }
 
         private void Sprint_Click(object sender, EventArgs e)
         {
             this.Hide();
-            List<int> karts = new();
-            foreach (string i in numbersOfKarts.Lines)
-                karts.Add(Int32.Parse(i));
             SprintReg win2 = new(karts);
             win2.Closed += (s, args) => this.Close();
             win2.Show();
@@ -21,9 +22,6 @@ namespace Hekki
         private void Cherkasy_Click(object sender, EventArgs e)
         {
             this.Hide();
-            List<int> karts = new();
-            foreach (string i in numbersOfKarts.Lines)
-                karts.Add(Int32.Parse(i));
             CherkasyReg win3 = new(karts);
             win3.Closed += (s, args) => this.Close();
             win3.Show();
@@ -32,9 +30,6 @@ namespace Hekki
         private void School_Click(object sender, EventArgs e)
         {
             this.Hide();
-            List<int> karts = new();
-            foreach (string i in numbersOfKarts.Lines)
-                karts.Add(Int32.Parse(i));
             SchoolReg win4 = new(karts);
             win4.Closed += (s, args) => this.Close();
             win4.Show();
@@ -43,9 +38,6 @@ namespace Hekki
         private void Junior_Click(object sender, EventArgs e)
         {
             this.Hide();
-            List<int> karts = new();
-            foreach (string i in numbersOfKarts.Lines)
-                karts.Add(Int32.Parse(i));
             JuniorReg win5 = new(karts);
             win5.Closed += (s, args) => this.Close();
             win5.Show();
@@ -54,9 +46,6 @@ namespace Hekki
         private void EveryOnEvery_Click(object sender, EventArgs e)
         {
             this.Hide();
-            List<int> karts = new();
-            foreach (string i in numbersOfKarts.Lines)
-                karts.Add(Int32.Parse(i));
             EveryOnEveryReg win6 = new(karts);
             win6.Closed += (s, args) => this.Close();
             win6.Show();
@@ -64,7 +53,15 @@ namespace Hekki
 
         private void numbersOfKarts_TextChanged(object sender, EventArgs e)
         {
-            
+            karts.Clear();
+            foreach (string line in numbersOfKarts.Lines)
+            {
+                if (string.IsNullOrEmpty(line))
+                {
+                    continue;
+                }
+                karts.Add(Int32.Parse(line));
+            }
         }
 
         private void numbersOfKarts_KeyPress(object sender, KeyPressEventArgs e)

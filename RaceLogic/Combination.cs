@@ -7,6 +7,7 @@ namespace RaceLogic
     {
         private static Random rnd = new();
         private static List<List<int>> allCombinations;
+        private static List<List<int>> tempForDelete;
 
         public static List<int> GetAvaibleCombo(List<List<int>> usedKarts, List<int> numberKarts)
         {
@@ -17,6 +18,7 @@ namespace RaceLogic
             {
                 if (usedKarts[i].Count < 1)
                     continue;
+                combinations = combinations.OrderBy(x => x[i]).ToList();
                 DeleteCombinations(combinations, usedKarts[i], i);
             }
 
@@ -69,15 +71,18 @@ namespace RaceLogic
             List<int> numbers, 
             int position)
         {
-            combinations = combinations.OrderBy(x => x[position]).ToList();
-
             for (int i = 0; i < numbers.Count; i++)
             {
                 var firstIndex = BinSearchStartIndex(combinations, numbers[i], 
                                                         position, 0, combinations.Count - 1);
+                if (firstIndex == -1)
+                {
+                    continue;
+                }
                 var lastIndex = BinSearchLastIndex(combinations, numbers[i], 
                                                         position, 0, combinations.Count - 1);
                 var length = lastIndex - firstIndex + 1;
+                
                 combinations.RemoveRange(firstIndex, length);
             }
         }

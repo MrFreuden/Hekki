@@ -88,5 +88,18 @@ namespace Hekki
             _junior.SortTimeInRace();
             _junior.SortTimeInTB();
         }
+
+        private void numbersOfKarts_TextChanged(object sender, EventArgs e)
+        {
+            numbersKarts.Clear();
+            foreach (string line in numbersOfKarts.Lines)
+            {
+                if (string.IsNullOrEmpty(line))
+                {
+                    continue;
+                }
+                numbersKarts.Add(Int32.Parse(line));
+            }
+        }
     }
 }

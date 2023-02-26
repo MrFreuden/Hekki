@@ -4,15 +4,15 @@ namespace Hekki
 {
     public partial class CherkasyReg : Form
     {
-        private static Cherkasy _cherkasy = new();
-        private static List<int> _numbersKarts;
+        private static Cherkasy cherkasy = new();
+        private static List<int> numbersKarts;
 
         public CherkasyReg(List<int> karts)
         {
             InitializeComponent();
             
-            _numbersKarts = karts;
-            numbersOfKarts.Lines = _numbersKarts.ConvertAll<string>(delegate (int i) { return i.ToString(); }).ToArray();
+            numbersKarts = karts;
+            numbersOfKarts.Lines = numbersKarts.ConvertAll<string>(delegate (int i) { return i.ToString(); }).ToArray();
         }
 
         private void numbersOfKarts_KeyPress(object sender, KeyPressEventArgs e)
@@ -23,32 +23,32 @@ namespace Hekki
         private void DoQual1_Click(object sender, EventArgs e)
         {
             
-            _cherkasy.DoQualRace(_numbersKarts);
-            _cherkasy.WriteUsedKarts();
+            cherkasy.DoQualRace(numbersKarts);
+            cherkasy.WriteUsedKarts();
         }
 
         private void DoHeat1_Click(object sender, EventArgs e)
         {
-            _cherkasy.DoOneRace(_numbersKarts);
-            _cherkasy.WriteUsedKarts();
+            cherkasy.DoOneRace(numbersKarts);
+            cherkasy.WriteUsedKarts();
         }
 
         private void DoQual2_Click(object sender, EventArgs e)
         {
-            _cherkasy.DoQualRace(_numbersKarts);
-            _cherkasy.WriteUsedKarts();
+            cherkasy.DoQualRace(numbersKarts);
+            cherkasy.WriteUsedKarts();
         }
 
         private void DoHeat2_Click(object sender, EventArgs e)
         {
-            _cherkasy.DoOneRace(_numbersKarts);
-            _cherkasy.WriteUsedKarts();
+            cherkasy.DoOneRace(numbersKarts);
+            cherkasy.WriteUsedKarts();
         }
 
         private void DoFinal_Click(object sender, EventArgs e)
         {
-            _cherkasy.DoFinal(_numbersKarts);
-            _cherkasy.WriteUsedKarts();
+            cherkasy.DoFinal(numbersKarts);
+            cherkasy.WriteUsedKarts();
         }
 
         private void Clear_Click(object sender, EventArgs e)
@@ -58,43 +58,56 @@ namespace Hekki
 
         private void RebuilKarts_Click(object sender, EventArgs e)
         {
-            _numbersKarts.Clear();
+            numbersKarts.Clear();
             foreach (string i in numbersOfKarts.Lines)
-                _numbersKarts.Add(Int32.Parse(i));
+                numbersKarts.Add(Int32.Parse(i));
         }
 
         private void RebuildPilots_Click(object sender, EventArgs e)
         {
-            _cherkasy.ReBuildPilots();
+            cherkasy.ReBuildPilots();
         }
 
         private void DeleteKartsFromLastRace_Click(object sender, EventArgs e)
         {
             ExcelWorker.DeleteLastUsedKartsInTotalBoard();
-            _cherkasy.ReBuildPilots();
+            cherkasy.ReBuildPilots();
         }
 
         private void ReadScores_Click(object sender, EventArgs e)
         {
-            var scores = _cherkasy.GetScores();
-            _cherkasy.WriteScores(scores);
+            var scores = cherkasy.GetScores();
+            cherkasy.WriteScores(scores);
         }
 
         private void SortScores_Click(object sender, EventArgs e)
         {
-            _cherkasy.SortScores();
+            cherkasy.SortScores();
         }
 
         private void ReadTimes_Click(object sender, EventArgs e)
         {
-            var times = _cherkasy.GetTimes();
-            _cherkasy.WriteTimes(times);
+            var times = cherkasy.GetTimes();
+            cherkasy.WriteTimes(times);
         }
 
         private void SortTimes_Click(object sender, EventArgs e)
         {
-            _cherkasy.SortTimeInTB();
-            _cherkasy.SortTimeInRace();
+            cherkasy.SortTimeInTB();
+            cherkasy.SortTimeInRace();
+        }
+
+        private void numbersOfKarts_TextChanged(object sender, EventArgs e)
+        {
+            numbersKarts.Clear();
+            foreach (string line in numbersOfKarts.Lines)
+            {
+                if (string.IsNullOrEmpty(line))
+                {
+                    continue;
+                }
+                numbersKarts.Add(Int32.Parse(line));
+            }
         }
     }
 }

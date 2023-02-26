@@ -30,7 +30,6 @@
         {
             this.Clear = new System.Windows.Forms.Button();
             this.numbersOfKarts = new System.Windows.Forms.RichTextBox();
-            this.RebuilKarts = new System.Windows.Forms.Button();
             this.RebuildPilots = new System.Windows.Forms.Button();
             this.ReadTimes = new System.Windows.Forms.Button();
             this.SortTimes = new System.Windows.Forms.Button();
@@ -55,17 +54,9 @@
             this.numbersOfKarts.Name = "numbersOfKarts";
             this.numbersOfKarts.Size = new System.Drawing.Size(125, 162);
             this.numbersOfKarts.TabIndex = 15;
+            this.numbersOfKarts.Text = "";
+            this.numbersOfKarts.TextChanged += new System.EventHandler(this.numbersOfKarts_TextChanged);
             this.numbersOfKarts.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.numbersOfKarts_KeyPress);
-            // 
-            // RebuilKarts
-            // 
-            this.RebuilKarts.Location = new System.Drawing.Point(185, 322);
-            this.RebuilKarts.Name = "RebuilKarts";
-            this.RebuilKarts.Size = new System.Drawing.Size(128, 83);
-            this.RebuilKarts.TabIndex = 23;
-            this.RebuilKarts.Text = "Пересобрать карты";
-            this.RebuilKarts.UseVisualStyleBackColor = true;
-            this.RebuilKarts.Click += new System.EventHandler(this.RebuilKarts_Click);
             // 
             // RebuildPilots
             // 
@@ -138,7 +129,6 @@
             this.Controls.Add(this.SortTimes);
             this.Controls.Add(this.ReadTimes);
             this.Controls.Add(this.RebuildPilots);
-            this.Controls.Add(this.RebuilKarts);
             this.Controls.Add(this.numbersOfKarts);
             this.Controls.Add(this.Clear);
             this.Name = "SchoolReg";
@@ -151,7 +141,6 @@
 
         private Button Clear;
         private RichTextBox numbersOfKarts;
-        private Button RebuilKarts;
         private Button RebuildPilots;
         private Button ReadTimes;
         private Button SortTimes;
