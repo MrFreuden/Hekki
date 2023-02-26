@@ -85,13 +85,23 @@ namespace RaceLogic
 
         private static void DoAssignmentByCombo(List<Pilot> group, List<int> numbersOfKarts, int numberRace)
         {
-            var combo = Combination.GetAvaibleCombo(numbersOfKarts, group);
+            var combo = Combination.GetAvaibleCombo(GetUsedKartsFromGroup(group), numbersOfKarts);
             if (combo.Count == 0)
                 return;
             for (int i = 0; i < group.Count; i++)
             {
                 group[i].AddNumberKart(combo[i]);
             }
+        }
+
+        private static List<List<int>> GetUsedKartsFromGroup(List<Pilot> group) 
+        {
+            var usedKarts = new List<List<int>>();
+            for (int i = 0; i < group.Count; i++)
+            {
+                usedKarts.Add(group[i].GetNumbersKarts());
+            }
+            return usedKarts;
         }
 
         public static List<List<Pilot>> DivideByGroup(List<Pilot> pilots, List<int> numbersOfKarts)

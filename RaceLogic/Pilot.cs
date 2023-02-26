@@ -53,8 +53,8 @@
 
         public void AddNumberKart(int numberKart)
         {
-            if (numberKart == 0)
-                throw new Exception();
+            //if (numberKart == 0)
+            //    throw new Exception();
             _usedKarts.Add(numberKart);
         }
 

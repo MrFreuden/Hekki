@@ -14,6 +14,7 @@ namespace RaceLogic.Regulations
         public void DoThreeRaces(List<int> numbersKarts)
         {
             pilots.Clear();
+            ExcelWorker.CleanData();
             List<string> pilotsNames = ExcelWorker.ReadNamesInTotalBoard();
             foreach (var pilotName in pilotsNames)
                 pilots.Add(new Pilot(pilotName));
@@ -22,7 +23,6 @@ namespace RaceLogic.Regulations
 
             for (int i = 0; i < 3; i++)
                 Race.StartHeatRace(pilots, numbersKarts, i);
-
         }
         public void DoOneRace(List<int> numbersKarts)
         {

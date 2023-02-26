@@ -1,90 +1,34 @@
-﻿namespace RaceLogic
+﻿using System;
+using System.Diagnostics;
+
+namespace RaceLogic
 {
     public class Combination
     {
         private static Random rnd = new();
+        private static List<List<int>> allCombinations;
 
-        private static IEnumerable<List<int>> AllCombinations(List<int> arg, List<int> awithout)
+        public static List<int> GetAvaibleCombo(List<List<int>> usedKarts, List<int> numberKarts)
         {
-            if (arg.Count == 1)
+            CalculateAllCombinations(numberKarts);
+            var combinations = allCombinations.ToList();
+
+            for (int i = 0; i < usedKarts.Count; i++)
             {
-                var result = new List<List<int>>();
-                result.Add(new List<int>());
-                result[0].Add(arg[0]);
-                return result;
-            }
-            else
-            {
-                var result = new List<List<int>>();
-
-                foreach (var first in arg)
-                {
-                    var others0 = new List<int>(arg.Except(new int[1] { first }));
-                    awithout.Add(first);
-                    var others = new List<int>(others0.Except(awithout));
-
-                    var combinations = AllCombinations(others, awithout);
-                    awithout.Remove(first);
-
-                    foreach (var tail in combinations)
-                    {
-                        tail.Insert(0, first);
-                        result.Add(tail);
-                    }
-                }
-                return result;
-            }
-        }
-
-        public static List<int> GetAvaibleCombo(List<int> numbersKarts, List<Pilot> pilots)
-        {
-            var q = rnd.Next(100);
-            var totallist = new List<int>(numbersKarts);
-            var allcombis = AllCombinations(totallist, new List<int>());
-            var allcombi = allcombis.ToList();
-            List<int> spare = new();
-            List<int> nums = new();
-
-            for (int i = 0; i < pilots.Count; i++)
-            {
-                if (allcombi.Count > 0)
-                {
-                    spare = allcombi[rnd.Next(allcombi.Count)];
-                }
-                for (int j = 0; j < pilots[i].GetNumbersKarts().Count; j++)
-                {
-                    nums.Clear();
-
-                    int count = 0;
-                    foreach (var combi in allcombi)
-                    {
-                        if (combi[i] == pilots[i].GetNumbersKarts()[j])
-                        {
-                            nums.Add(count);
-                        }
-                        count++;
-                    }
-                    foreach (int indice in nums.OrderByDescending(v => v))
-                    {
-                        allcombi.RemoveAt(indice);
-                    }
-
-                }
+                if (usedKarts[i].Count < 1)
+                    continue;
+                DeleteCombinations(combinations, usedKarts[i], i);
             }
 
-            if (allcombi.Count == 0)
-            {
-                return spare;
-            }
-            else
-                return allcombi[rnd.Next(allcombi.Count)];
+            return combinations[rnd.Next(combinations.Count)];
         }
 
         public static List<List<int>> GetComboEveryOnEvery(int pilotsCount, int kartsCount)
         {
             List<int> pilotsIndexs = Enumerable.Range(0, pilotsCount).ToList();
-            var items = Shuffle(pilotsIndexs).Select((d, i) => pilotsIndexs.Concat(pilotsIndexs).Skip(i).Take(kartsCount));
-            List<List<int>> combos = new List<List<int>>();
+            var items = Shuffle(pilotsIndexs).Select((d, i) => 
+                                pilotsIndexs.Concat(pilotsIndexs).Skip(i).Take(kartsCount));
+            var combos = new List<List<int>>();
             foreach (var item in items)
             {
                 combos.Add(item.ToList());
@@ -93,24 +37,140 @@
             return combos;
         }
 
+        public static void RedefineRandomWithSeed()
+        {
+            rnd = new Random(1234124535);
+        }
+
+        private static bool IsNumbersKartChanged(List<int> numberKarts)
+        {
+            bool flag;
+            for (int i = 0; i < numberKarts.Count; i++)
+            {
+                flag = allCombinations[0].Contains(numberKarts[i]);
+                if (!flag)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        private static void CalculateAllCombinations(List<int> numberKarts)
+        {
+            if (allCombinations == null || IsNumbersKartChanged(numberKarts))
+            {
+                allCombinations = GenerateCombinations(numberKarts, numberKarts.Count);
+            }
+        }
+
+        private static void DeleteCombinations(
+            List<List<int>> combinations, 
+            List<int> numbers, 
+            int position)
+        {
+            combinations = combinations.OrderBy(x => x[position]).ToList();
+
+            for (int i = 0; i < numbers.Count; i++)
+            {
+                var firstIndex = BinSearchStartIndex(combinations, numbers[i], 
+                                                        position, 0, combinations.Count - 1);
+                var lastIndex = BinSearchLastIndex(combinations, numbers[i], 
+                                                        position, 0, combinations.Count - 1);
+                var length = lastIndex - firstIndex + 1;
+                combinations.RemoveRange(firstIndex, length);
+            }
+        }
+
+        private static List<List<int>> GenerateCombinations(List<int> numbers, int length)
+        {
+            var result = new List<List<int>>();
+
+            GenerateCombinationsRecursive(numbers, length, new List<int>(), result);
+
+            return result;
+        }
+
+        private static void GenerateCombinationsRecursive(
+            List<int> numbers, 
+            int length, 
+            List<int> currentCombination, 
+            List<List<int>> result)
+        {
+            if (currentCombination.Count == length)
+            {
+                result.Add(currentCombination);
+            }
+            else
+            {
+                foreach (int number in numbers)
+                {
+                    if (!currentCombination.Contains(number))
+                    {
+                        var newCombination = new List<int>(currentCombination)
+                        {
+                            number
+                        };
+                        GenerateCombinationsRecursive(numbers, length, newCombination, result);
+                    }
+                }
+            }
+        }
+
+        private static int BinSearchStartIndex(
+            List<List<int>> array, 
+            int value, 
+            int position, 
+            int left, 
+            int right)
+        {
+            if (left == right - 1)
+            {
+                if (array[right][position] == value)
+                {
+                    return array[left][position] == value ? left : right;
+                }
+                return -1;
+            }
+
+            var m = (left + right) / 2;
+            if (array[m][position] < value)
+                return BinSearchStartIndex(array, value, position, m, right);
+            return BinSearchStartIndex(array, value, position, left, m);
+        }
+
+        private static int BinSearchLastIndex(
+            List<List<int>> array,
+            int value,
+            int position,
+            int left, 
+            int right)
+        {
+            if (left == right - 1)
+            {
+                if (array[left][position] == value)
+                {
+                    return array[right][position] == value ? right : left;
+                }
+                return -1;
+            }
+
+            var m = (left + right) / 2;
+            if (array[m][position] > value)
+                return BinSearchLastIndex(array, value, position, left, m);
+            return BinSearchLastIndex(array, value, position, m, right);
+        }
+
         private static IList<T> Shuffle<T>(IList<T> list)
         {
-
             int n = list.Count;
             while (n > 1)
             {
                 n--;
                 int k = rnd.Next(n + 1);
-                T value = list[k];
-                list[k] = list[n];
-                list[n] = value;
+                (list[n], list[k]) = (list[k], list[n]);
             }
             return list;
-        }
-
-        public static void RedefineRandomWithSeed()
-        {
-            rnd = new Random(1234124535);
         }
     }
 }

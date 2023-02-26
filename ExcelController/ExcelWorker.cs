@@ -5,7 +5,7 @@ namespace ExcelController
 {
     public class ExcelWorker
     {
-        public const int MAXkarts = 8;
+        public const int MAXkarts = 10;
         public static Application excel = GetExcel();
         private static int count = 0;
 
