@@ -153,6 +153,7 @@ namespace RaceLogic
         private List<List<string>> GetDataFromRace(string nameOfColumns)
         {
             var namesInOrder = ExcelWorker.ReadNamesInTotalBoard();
+            pilotsCount = namesInOrder.Count;
             var scoresInRace = ExcelWorker.ReadResultsInRace(nameOfColumns, pilotsCount, out int[] cols);
             var namesInRace = ExcelWorker.ReadNamesInRace(pilotsCount, cols);
             return GetSortedDataInOrdenNames(scoresInRace, namesInRace, namesInOrder);
