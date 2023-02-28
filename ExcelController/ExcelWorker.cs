@@ -161,7 +161,7 @@ namespace ExcelController
                 {
                     splitedNumbers.RemoveAt(splitedNumbers.Count - 1);
                 }
-                for (int j = 0, k = 0; j < splitedNumbers.Count - 1; j++, k++)
+                for (int j = 0, k = 0; j < splitedNumbers.Count; j++, k++)
                 {
                     karts[q].Add(Int32.Parse(splitedNumbers[k]));
                 }
