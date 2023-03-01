@@ -35,7 +35,7 @@ namespace RaceLogic.Regulations
             int numberRace = pilots[0].GetNumbersKarts().Count;
             pilots = Race.MakePilotsFromTotalBoard(pilots.Count);
             int countGroups = (int)Math.Ceiling((double)pilots.Count / numbersKarts.Count);
-            Race.StartFinalRace(pilots, numbersKarts, numberRace, countGroups);
+            Race.StartFinalRace(pilots, numbersKarts, numberRace);
 
         }
 

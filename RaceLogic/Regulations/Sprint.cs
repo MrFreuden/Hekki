@@ -49,7 +49,7 @@ namespace RaceLogic.Regulations
             }
             else
             {
-                if (pilots.Count < 22)
+                if (pilots.Count < 21)
                 {
                     var k1 = ExcelWorker.FindKeyCellByValue("Карт", null);
                     var k2 = ExcelWorker.FindKeyCellByValue("Пилоты", null);
@@ -69,7 +69,7 @@ namespace RaceLogic.Regulations
             {
                 pilots.RemoveAt(0);
             }
-            Race.StartFinalAmators(pilots, numbersKarts, numberRace);
+            Race.StartFinalRace(pilots, numbersKarts, numberRace);
         }
 
         public void WriteUsedKartsAmators()

@@ -157,7 +157,7 @@ namespace ExcelController
 
                 string numbers = keyCells[0].Cells[i, 1].Value.ToString();
                 var splitedNumbers = numbers.Split(' ').ToList();
-                if (splitedNumbers[splitedNumbers.Count - 1] == " ")
+                if (string.IsNullOrEmpty(splitedNumbers[splitedNumbers.Count - 1]))
                 {
                     splitedNumbers.RemoveAt(splitedNumbers.Count - 1);
                 }
