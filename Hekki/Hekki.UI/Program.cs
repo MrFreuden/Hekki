@@ -1,3 +1,6 @@
+using Squirrel;
+using System.Threading.Tasks;
+
 namespace Hekki.Hekki.UI
 {
     internal static class Program
@@ -6,12 +9,43 @@ namespace Hekki.Hekki.UI
         ///  The main entry point for the application.
         /// </summary>
         [STAThread]
-        static void Main()
+        static async Task Main()
         {
-            // To customize application configuration such as set high DPI settings or default font,
-            // see https://aka.ms/applicationconfiguration.
+            await UpdateMyApp();
+            SquirrelAwareApp.HandleEvents(
+                onInitialInstall: OnAppInstall,
+                onAppUninstall: OnAppUninstall,
+                onEveryRun: OnAppRun);
             ApplicationConfiguration.Initialize();
             Application.Run(new Main());
         }
+
+        private static void OnAppInstall(SemanticVersion version, IAppTools tools)
+        {
+            tools.CreateShortcutForThisExe(ShortcutLocation.StartMenu | ShortcutLocation.Desktop);
+        }
+
+        private static void OnAppUninstall(SemanticVersion version, IAppTools tools)
+        {
+            tools.RemoveShortcutForThisExe(ShortcutLocation.StartMenu | ShortcutLocation.Desktop);
+        }
+
+        private static void OnAppRun(SemanticVersion version, IAppTools tools, bool firstRun)
+        {
+            tools.SetProcessAppUserModelId();
+            if (firstRun) MessageBox.Show("Thanks for installing my application!");
+        }
+
+        private static async Task UpdateMyApp()
+        {
+            using var mgr = UpdateManager.GitHubUpdateManager("https://github.com/MrFreuden/Hekki");
+            var newVersion = await mgr.Result.UpdateApp();
+
+            if (newVersion != null)
+            {
+                MessageBox.Show("Доступно новое обновление. Сейчас перезапутим программу.");
+                UpdateManager.RestartApp();
+            }
+        } 
     }
 }

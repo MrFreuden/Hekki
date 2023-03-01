@@ -5,8 +5,9 @@ namespace Hekki
 {
     public partial class EveryOnEveryReg : Form
     {
-        private static EveryOnEvery _every = new();
+        private static EveryOnEvery every = new();
         private static List<int> numbersKarts;
+
         public EveryOnEveryReg(List<int> karts)
         {
             InitializeComponent();
@@ -14,9 +15,14 @@ namespace Hekki
             numbersOfKarts.Lines = numbersKarts.ConvertAll<string>(delegate (int i) { return i.ToString(); }).ToArray();
         }
 
+        private void numbersOfKarts_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            e.Handled = !char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar);
+        }
+
         private void DoRaces_Click(object sender, EventArgs e)
         {
-            _every.DoRaces(numbersKarts);
+            every.DoRaces(numbersKarts);
         }
 
         private void Clear_Click(object sender, EventArgs e)
@@ -34,23 +40,36 @@ namespace Hekki
 
         private void ReadScores_Click(object sender, EventArgs e)
         {
-            var scores = _every.GetScores(numbersKarts);
-            _every.WriteScores(scores);
+            var scores = every.GetScores(numbersKarts);
+            every.WriteScores(scores);
         }
 
         private void SortScores_Click(object sender, EventArgs e)
         {
-            _every.SortScores();
+            every.SortScores();
         }
 
         private void RebuildPilots_Click(object sender, EventArgs e)
         {
-            _every.ReBuildPilots();
+            every.ReBuildPilots();
         }
 
         private void EveryOnEveryReg_Load(object sender, EventArgs e)
         {
 
+        }
+
+        private void numbersOfKarts_TextChanged(object sender, EventArgs e)
+        {
+            numbersKarts.Clear();
+            foreach (string line in numbersOfKarts.Lines)
+            {
+                if (string.IsNullOrEmpty(line))
+                {
+                    continue;
+                }
+                numbersKarts.Add(Int32.Parse(line));
+            }
         }
     }
 }

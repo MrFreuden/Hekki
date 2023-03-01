@@ -6,11 +6,17 @@ namespace Hekki
     {
         private static Junior _junior = new();
         private static List<int> numbersKarts;
+
         public JuniorReg(List<int> karts)
         {
             InitializeComponent();
             numbersKarts = karts;
             numbersOfKarts.Lines = numbersKarts.ConvertAll<string>(delegate (int i) { return i.ToString(); }).ToArray();
+        }
+
+        private void numbersOfKarts_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            e.Handled = !char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar);
         }
 
         private void DoQualRandom_Click(object sender, EventArgs e)
@@ -81,6 +87,19 @@ namespace Hekki
         {
             _junior.SortTimeInRace();
             _junior.SortTimeInTB();
+        }
+
+        private void numbersOfKarts_TextChanged(object sender, EventArgs e)
+        {
+            numbersKarts.Clear();
+            foreach (string line in numbersOfKarts.Lines)
+            {
+                if (string.IsNullOrEmpty(line))
+                {
+                    continue;
+                }
+                numbersKarts.Add(Int32.Parse(line));
+            }
         }
     }
 }

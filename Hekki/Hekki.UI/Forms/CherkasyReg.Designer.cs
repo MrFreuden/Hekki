@@ -35,7 +35,6 @@
             this.DoQual2 = new System.Windows.Forms.Button();
             this.DoHeat2 = new System.Windows.Forms.Button();
             this.DoFinal = new System.Windows.Forms.Button();
-            this.RebuilKarts = new System.Windows.Forms.Button();
             this.RebuildPilots = new System.Windows.Forms.Button();
             this.ReadScores = new System.Windows.Forms.Button();
             this.SortScores = new System.Windows.Forms.Button();
@@ -61,6 +60,8 @@
             this.numbersOfKarts.Size = new System.Drawing.Size(125, 162);
             this.numbersOfKarts.TabIndex = 15;
             this.numbersOfKarts.Text = "";
+            this.numbersOfKarts.TextChanged += new System.EventHandler(this.numbersOfKarts_TextChanged);
+            this.numbersOfKarts.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.numbersOfKarts_KeyPress);
             // 
             // DoQual1
             // 
@@ -111,16 +112,6 @@
             this.DoFinal.Text = "Распределить Финал";
             this.DoFinal.UseVisualStyleBackColor = true;
             this.DoFinal.Click += new System.EventHandler(this.DoFinal_Click);
-            // 
-            // RebuilKarts
-            // 
-            this.RebuilKarts.Location = new System.Drawing.Point(179, 329);
-            this.RebuilKarts.Name = "RebuilKarts";
-            this.RebuilKarts.Size = new System.Drawing.Size(128, 83);
-            this.RebuilKarts.TabIndex = 21;
-            this.RebuilKarts.Text = "Пересобрать карты";
-            this.RebuilKarts.UseVisualStyleBackColor = true;
-            this.RebuilKarts.Click += new System.EventHandler(this.RebuilKarts_Click);
             // 
             // RebuildPilots
             // 
@@ -193,7 +184,6 @@
             this.Controls.Add(this.SortScores);
             this.Controls.Add(this.ReadScores);
             this.Controls.Add(this.RebuildPilots);
-            this.Controls.Add(this.RebuilKarts);
             this.Controls.Add(this.DoFinal);
             this.Controls.Add(this.DoHeat2);
             this.Controls.Add(this.DoQual2);
@@ -216,7 +206,6 @@
         private Button DoQual2;
         private Button DoHeat2;
         private Button DoFinal;
-        private Button RebuilKarts;
         private Button RebuildPilots;
         private Button ReadScores;
         private Button SortScores;

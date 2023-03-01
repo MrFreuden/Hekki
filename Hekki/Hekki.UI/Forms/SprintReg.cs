@@ -1,5 +1,7 @@
 ﻿using ExcelController;
+using Microsoft.Office.Interop.Excel;
 using RaceLogic.Regulations;
+using System.Text.RegularExpressions;
 
 namespace Hekki
 {
@@ -7,11 +9,17 @@ namespace Hekki
     {
         private static Sprint _sprint = new();
         private static List<int> numbersKarts;
+
         public SprintReg(List<int> karts)
         {
             InitializeComponent();
             numbersKarts = karts;
             numbersOfKarts.Lines = numbersKarts.ConvertAll<string>(delegate (int i) { return i.ToString(); }).ToArray();
+        }
+
+        private void numbersOfKarts_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            e.Handled = !char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar);
         }
 
         private void DoOneRace_Click(object sender, EventArgs e)
@@ -81,6 +89,19 @@ namespace Hekki
         private void SortByLique_Click(object sender, EventArgs e)
         {
             _sprint.SortTwoLiques(numbersKarts);
+        }
+
+        private void numbersOfKarts_TextChanged(object sender, EventArgs e)
+        {
+            numbersKarts.Clear();
+            foreach (string line in numbersOfKarts.Lines)
+            {
+                if (string.IsNullOrEmpty(line))
+                {
+                    continue;
+                }
+                numbersKarts.Add(Int32.Parse(line));
+            }    
         }
     }
 }

@@ -14,6 +14,7 @@ namespace RaceLogic.Regulations
         public void DoThreeRaces(List<int> numbersKarts)
         {
             pilots.Clear();
+            ExcelWorker.CleanData();
             List<string> pilotsNames = ExcelWorker.ReadNamesInTotalBoard();
             foreach (var pilotName in pilotsNames)
                 pilots.Add(new Pilot(pilotName));
@@ -22,7 +23,6 @@ namespace RaceLogic.Regulations
 
             for (int i = 0; i < 3; i++)
                 Race.StartHeatRace(pilots, numbersKarts, i);
-
         }
         public void DoOneRace(List<int> numbersKarts)
         {
@@ -49,7 +49,7 @@ namespace RaceLogic.Regulations
             }
             else
             {
-                if (pilots.Count < 19)
+                if (pilots.Count < 21)
                 {
                     var k1 = ExcelWorker.FindKeyCellByValue("Карт", null);
                     var k2 = ExcelWorker.FindKeyCellByValue("Пилоты", null);
@@ -69,7 +69,7 @@ namespace RaceLogic.Regulations
             {
                 pilots.RemoveAt(0);
             }
-            Race.StartFinalAmators(pilots, numbersKarts, numberRace);
+            Race.StartFinalRace(pilots, numbersKarts, numberRace);
         }
 
         public void WriteUsedKartsAmators()

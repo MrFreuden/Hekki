@@ -34,7 +34,6 @@
             this.ReadScores = new System.Windows.Forms.Button();
             this.SortScores = new System.Windows.Forms.Button();
             this.ReplaceKart = new System.Windows.Forms.Button();
-            this.RebuilKarts = new System.Windows.Forms.Button();
             this.RebuildPilots = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
@@ -55,6 +54,8 @@
             this.numbersOfKarts.Size = new System.Drawing.Size(125, 162);
             this.numbersOfKarts.TabIndex = 15;
             this.numbersOfKarts.Text = "";
+            this.numbersOfKarts.TextChanged += new System.EventHandler(this.numbersOfKarts_TextChanged);
+            this.numbersOfKarts.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.numbersOfKarts_KeyPress);
             // 
             // DoRaces
             // 
@@ -95,16 +96,6 @@
             this.ReplaceKart.Text = "Заменить карт";
             this.ReplaceKart.UseVisualStyleBackColor = true;
             // 
-            // RebuilKarts
-            // 
-            this.RebuilKarts.Location = new System.Drawing.Point(180, 324);
-            this.RebuilKarts.Name = "RebuilKarts";
-            this.RebuilKarts.Size = new System.Drawing.Size(128, 83);
-            this.RebuilKarts.TabIndex = 27;
-            this.RebuilKarts.Text = "Пересобрать карты";
-            this.RebuilKarts.UseVisualStyleBackColor = true;
-            this.RebuilKarts.Click += new System.EventHandler(this.RebuilKarts_Click);
-            // 
             // RebuildPilots
             // 
             this.RebuildPilots.Location = new System.Drawing.Point(329, 324);
@@ -121,7 +112,6 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(969, 524);
             this.Controls.Add(this.RebuildPilots);
-            this.Controls.Add(this.RebuilKarts);
             this.Controls.Add(this.ReplaceKart);
             this.Controls.Add(this.SortScores);
             this.Controls.Add(this.ReadScores);
@@ -143,7 +133,6 @@
         private Button ReadScores;
         private Button SortScores;
         private Button ReplaceKart;
-        private Button RebuilKarts;
         private Button RebuildPilots;
     }
 }

@@ -211,7 +211,7 @@ namespace ExcelWorkerTest
             }
 
             // Act
-            ExcelWorker.WriteResultsInTotalBoard(
+            ExcelWorker.WriteResultsInTB(
                 "Хит",
                 pilotsScores);
 
@@ -243,7 +243,7 @@ namespace ExcelWorkerTest
             }
 
             // Act
-            ExcelWorker.WriteResultsInTotalBoard(
+            ExcelWorker.WriteResultsInTB(
                 "Best Lap",
                 pilotsTimes);
 

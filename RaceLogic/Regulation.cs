@@ -12,33 +12,24 @@ namespace RaceLogic
 
         public virtual List<List<string>> GetTimes()
         {
-            var namesInOrder = ExcelWorker.ReadNamesInTotalBoard();
-            pilotsCount = namesInOrder.Count;
-            //var timesInRace = ExcelWorker.ReadTimesInRace(namesInOrder.Count, out int[] cols);
-            var timesInRace = ExcelWorker.ReadResultsInRace("Время", pilotsCount, out int[] cols);
-            var namesInRace = ExcelWorker.ReadNamesInRace(namesInOrder.Count, cols);
-            return GetSortedDataInOrdenNames(timesInRace, namesInRace, namesInOrder);
+            return GetDataFromRace("Время");
         }
 
         public void WriteTimes(List<List<string>> times)
         {
-            ExcelWorker.WriteResultsInTotalBoard("Best Lap" ,times);
+            ExcelWorker.WriteResultsInTB("Best Lap" ,times);
             AddTimesToPilots(times);
         }
 
         public virtual List<List<string>> GetScores()
         {
-            var namesInOrder = ExcelWorker.ReadNamesInTotalBoard();
-            pilotsCount = namesInOrder.Count;
-            //var scoresInRace = ExcelWorker.ReadScoresInRace(pilotsCount, out int[] cols);
-            var scoresInRace = ExcelWorker.ReadResultsInRace("Итого", pilotsCount, out int[] cols);
-            var namesInRace = ExcelWorker.ReadNamesInRace(pilotsCount, cols);
-            return GetSortedDataInOrdenNames(scoresInRace, namesInRace, namesInOrder);
+            return GetDataFromRace("Итого");
         }
+
 
         public void WriteScores(List<List<string>> score)
         {
-            ExcelWorker.WriteResultsInTotalBoard("Хит", score);
+            ExcelWorker.WriteResultsInTB("Хит", score);
             AddScoresToPilots(score);
         }
 
@@ -84,7 +75,7 @@ namespace RaceLogic
                 var index = pilots.FindIndex(x => x.Name == name);
                 if (index == -1)
                     continue;
-                karts.Add(pilots[index].GetAllNumbersKarts());
+                karts.Add(pilots[index].GetAllNumbersKartsAsString());
             }
             ExcelWorker.WriteDataInCol("Номера", karts, countMargin);
         }
@@ -111,8 +102,6 @@ namespace RaceLogic
                 var firstCellCol = keyCells[i][1, j].Column;
 
                 Range rangeToSort = ExcelWorker.excel.Range[ExcelWorker.excel.Cells[firstCellRow + 1, firstCellCol + 1], keyCells[i][50]];
-
-
                 rangeToSort.Sort(rangeToSort.Columns[(j - 1) * -1], XlSortOrder.xlAscending);
             }
         }
@@ -120,7 +109,6 @@ namespace RaceLogic
         public virtual void SortScores()
         {
             var keyCells = ExcelWorker.FindKeyCellByValue("ВСЕГО", null);
-
             for (int i = 0; i < keyCells.Count; i++)
             {
                 int j = 0;
@@ -160,6 +148,15 @@ namespace RaceLogic
                     pilots[j].AddScore(data[j][i]);
                 }
             }
+        }
+
+        private List<List<string>> GetDataFromRace(string nameOfColumns)
+        {
+            var namesInOrder = ExcelWorker.ReadNamesInTotalBoard();
+            pilotsCount = namesInOrder.Count;
+            var scoresInRace = ExcelWorker.ReadResultsInRace(nameOfColumns, pilotsCount, out int[] cols);
+            var namesInRace = ExcelWorker.ReadNamesInRace(pilotsCount, cols);
+            return GetSortedDataInOrdenNames(scoresInRace, namesInRace, namesInOrder);
         }
     }
 }

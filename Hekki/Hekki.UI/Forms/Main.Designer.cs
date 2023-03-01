@@ -49,7 +49,7 @@
             // 
             // School
             // 
-            this.School.Location = new System.Drawing.Point(606, 51);
+            this.School.Location = new System.Drawing.Point(344, 61);
             this.School.Name = "School";
             this.School.Size = new System.Drawing.Size(204, 86);
             this.School.TabIndex = 1;
@@ -69,7 +69,7 @@
             // 
             // Junior
             // 
-            this.Junior.Location = new System.Drawing.Point(346, 236);
+            this.Junior.Location = new System.Drawing.Point(344, 236);
             this.Junior.Name = "Junior";
             this.Junior.Size = new System.Drawing.Size(204, 86);
             this.Junior.TabIndex = 3;
@@ -93,7 +93,9 @@
             this.numbersOfKarts.Name = "numbersOfKarts";
             this.numbersOfKarts.Size = new System.Drawing.Size(125, 162);
             this.numbersOfKarts.TabIndex = 15;
-            this.numbersOfKarts.Text = "";
+            this.numbersOfKarts.Text = "11\n12\n13\n14\n15\n16\n17\n18\n19\n20";
+            this.numbersOfKarts.TextChanged += new System.EventHandler(this.numbersOfKarts_TextChanged);
+            this.numbersOfKarts.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.numbersOfKarts_KeyPress);
             // 
             // Main
             // 

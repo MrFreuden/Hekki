@@ -5,7 +5,7 @@ namespace ExcelController
 {
     public class ExcelWorker
     {
-        public const int MAXkarts = 8;
+        public const int MAXkarts = 10;
         public static Application excel = GetExcel();
         private static int count = 0;
 
@@ -64,7 +64,7 @@ namespace ExcelController
             }
         }
 
-        public static void CleanData(Range rangeToClean = null, int countBellow = 45, bool debugMode = true)
+        public static void CleanData(Range rangeToClean = null, int countBellow = 50)
         {
             List<IList<Range>> keyCells = new()
             {
@@ -74,15 +74,11 @@ namespace ExcelController
                 FindKeyCellByValue("Карт", rangeToClean),
                 FindKeyCellByValue("Пилоты", rangeToClean),
                 FindKeyCellByValue("Штраф", rangeToClean),
-                FindKeyCellByValue("Время", rangeToClean)
-            };
-
-            if (debugMode)
-            {
-                keyCells.Add(FindKeyCellByValue("Имя", rangeToClean));
-                keyCells.Add(FindKeyCellByValue("Лига", rangeToClean));
-                keyCells.Add(FindKeyCellByValue("Очки", rangeToClean));
-            }
+                FindKeyCellByValue("Время", rangeToClean),
+                //FindKeyCellByValue("Имя", rangeToClean),
+                //FindKeyCellByValue("Лига", rangeToClean),
+                FindKeyCellByValue("Очки", rangeToClean)
+        };
 
             for (int j = 0; j < keyCells.Count; j++)
             {
@@ -91,7 +87,6 @@ namespace ExcelController
                     string q = keyCells[j][i][2].Address.Replace("$", String.Empty);
                     string s = keyCells[j][i][countBellow].Address.Replace("$", String.Empty);
                     var aras = excel.get_Range(q, s);
-                    //aras.Interior.Color = Microsoft.Office.Interop.Excel.XlRgbColor.rgbWhite;
                     aras.ClearContents();
                 }
             }
@@ -161,9 +156,14 @@ namespace ExcelController
                 karts.Add(new List<int>());
 
                 string numbers = keyCells[0].Cells[i, 1].Value.ToString();
-                for (int j = 0, k = 0; j < numbers.Length; j++, k++)
+                var splitedNumbers = numbers.Split(' ').ToList();
+                if (string.IsNullOrEmpty(splitedNumbers[splitedNumbers.Count - 1]))
                 {
-                    karts[q].Add(numbers[k] - '0');
+                    splitedNumbers.RemoveAt(splitedNumbers.Count - 1);
+                }
+                for (int j = 0, k = 0; j < splitedNumbers.Count; j++, k++)
+                {
+                    karts[q].Add(Int32.Parse(splitedNumbers[k]));
                 }
                 i++;
                 q++;
@@ -215,8 +215,8 @@ namespace ExcelController
             return pilotsLiques;
         }
 
-        public static List<List<string>> ReadNamesInRace(int pilotsCount, 
-            int[] indexesNeededCols, 
+        public static List<List<string>> ReadNamesInRace(int pilotsCount,
+            int[] indexesNeededCols,
             int countBreaker = 50)
         {
             var pilotsNames = new List<List<string>>();
@@ -243,9 +243,9 @@ namespace ExcelController
             return pilotsNames;
         }
 
-        public static List<List<string>> ReadResultsInRace(string keyWord, 
-            int pilotsCount, 
-            out int[] cols, 
+        public static List<List<string>> ReadResultsInRace(string keyWord,
+            int pilotsCount,
+            out int[] cols,
             int countBreaker = 50)
         {
             var pilotsData = new List<List<string>>();
@@ -328,7 +328,7 @@ namespace ExcelController
             }
         }
 
-        public static void WriteResultsInTotalBoard(string keyWord, List<List<string>> pilotsResultsData)
+        public static void WriteResultsInTB(string keyWord, List<List<string>> pilotsResultsData)
         {
             var keyCells = FindKeyCellByValue(keyWord, GetHeadersTB());
             for (int i = 0; i < keyCells.Count; i++)
@@ -357,7 +357,7 @@ namespace ExcelController
             {
                 string numbers = "";
                 for (int j = 0; j < numberKarts[i].Count; j++)
-                    numbers += numberKarts[i][j].ToString();
+                    numbers += numberKarts[i][j].ToString() + " ";
                 keyCells[0][k].Value = numbers;
                 k++;
             }
