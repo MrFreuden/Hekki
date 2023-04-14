@@ -8,6 +8,7 @@ namespace RaceLogic.Regulations
     {
         private static int proCountFinal;
         private static int amatorsCountFinal;
+        private static int proCount;
         public static int TotalRacesCount;
         public static int maxKarts;
 
@@ -64,8 +65,8 @@ namespace RaceLogic.Regulations
         public void DoFinalAmators(List<int> numbersKarts, int numberRace)
         {
             Race.ReBuildCountPilotsInFirstGroup(numbersKarts);
-            pilots = Race.MakePilotsFromTotalBoard(proCountFinal + amatorsCountFinal);
-            for (int i = 0; i < proCountFinal; i++)
+            pilots = Race.MakePilotsFromTotalBoard(proCount + amatorsCountFinal);
+            for (int i = 0; i < proCount; i++)
             {
                 pilots.RemoveAt(0);
             }
@@ -74,7 +75,7 @@ namespace RaceLogic.Regulations
 
         public void WriteUsedKartsAmators()
         {
-            WriteUsedKarts(proCountFinal);
+            WriteUsedKarts(proCount);
         }
 
         public void SortTwoLiques(List<int> numbersKarts)
@@ -94,15 +95,16 @@ namespace RaceLogic.Regulations
             var c2 = rangeToSort.Columns[9];
             rangeToSort.Sort(c1, XlSortOrder.xlDescending, c2, Type.Missing, XlSortOrder.xlDescending);
 
-            w += proCountFinal;
+            proCount = pilots.FindAll(x => x.Ligue == "Pro").Count;
+            w += proCount;
 
             rangeToSort = ExcelWorker.excel.Range[firstCell + w.ToString(), lastCell];
             rangeToSort.Sort(c1, XlSortOrder.xlAscending, c2, Type.Missing, XlSortOrder.xlDescending);
 
-            w += amatorsCountFinal;
+            //w += amatorsCountFinal;
 
-            rangeToSort = ExcelWorker.excel.Range[firstCell + w.ToString(), lastCell];
-            rangeToSort.Sort(c2, XlSortOrder.xlDescending);
+            //rangeToSort = ExcelWorker.excel.Range[firstCell + w.ToString(), lastCell];
+            //rangeToSort.Sort(c2, XlSortOrder.xlDescending);
         }
 
         public override List<List<string>> GetScores()
