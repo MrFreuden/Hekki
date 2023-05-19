@@ -22,27 +22,9 @@ namespace Hekki
             e.Handled = !char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar);
         }
 
-        private void DoOneRace_Click(object sender, EventArgs e)
-        {
-            _sprint.DoOneRace(numbersKarts);
-            _sprint.WriteUsedKarts();
-        }
-
-        private void DoThreeRaces_Click(object sender, EventArgs e)
-        {
-            _sprint.DoThreeRaces(numbersKarts);
-            _sprint.WriteUsedKarts();
-        }
-
-        private void DoSemiFinal_Click(object sender, EventArgs e)
-        {
-            _sprint.DoNextRace(numbersKarts, 3);
-            _sprint.WriteUsedKarts();
-        }
-
         private void DoFinalPro_Click(object sender, EventArgs e)
         {
-            _sprint.DoNextRace(numbersKarts, 4);
+            _sprint.DoFinalPro(numbersKarts, 4);
             _sprint.WriteUsedKarts();
         }
 
@@ -55,13 +37,6 @@ namespace Hekki
         private void Clear_Click(object sender, EventArgs e)
         {
             ExcelWorker.CleanData();
-        }
-
-        private void RebuilKarts_Click(object sender, EventArgs e)
-        {
-            numbersKarts.Clear();
-            foreach (string i in numbersOfKarts.Lines)
-                numbersKarts.Add(Int32.Parse(i));
         }
 
         private void RebuildPilots_Click(object sender, EventArgs e)
@@ -101,7 +76,49 @@ namespace Hekki
                     continue;
                 }
                 numbersKarts.Add(Int32.Parse(line));
-            }    
+            }
+        }
+
+        private void DoQualRandom_Click(object sender, EventArgs e)
+        {
+            _sprint.DoQualRandom(numbersKarts);
+            _sprint.WriteUsedKarts();
+        }
+
+        private void DoQualByList_Click(object sender, EventArgs e)
+        {
+            _sprint.DoQualByList(numbersKarts);
+            _sprint.WriteUsedKarts();
+        }
+
+        private void ReadTimes_Click(object sender, EventArgs e)
+        {
+            var times = _sprint.GetTimes();
+            _sprint.WriteTimes(times);
+        }
+
+        private void SortTimes_Click(object sender, EventArgs e)
+        {
+            _sprint.SortTimeInTB();
+            _sprint.SortTimeInRace();
+        }
+
+        private void DoHeat1_Click(object sender, EventArgs e)
+        {
+            _sprint.DoOneRace(numbersKarts);
+            _sprint.WriteUsedKarts();
+        }
+
+        private void DoHeat2_Click(object sender, EventArgs e)
+        {
+            _sprint.DoOneRace(numbersKarts);
+            _sprint.WriteUsedKarts();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            _sprint.DoOneRace(numbersKarts);
+            _sprint.WriteUsedKarts();
         }
     }
 }

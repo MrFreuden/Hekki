@@ -12,54 +12,94 @@ namespace RaceLogic.Regulations
         public static int TotalRacesCount;
         public static int maxKarts;
 
-        public void DoThreeRaces(List<int> numbersKarts)
-        {
-            pilots.Clear();
-            ExcelWorker.CleanData();
-            List<string> pilotsNames = ExcelWorker.ReadNamesInTotalBoard();
-            foreach (var pilotName in pilotsNames)
-                pilots.Add(new Pilot(pilotName));
-            totalPilots = pilots.Count;
-            TotalRacesCount = totalPilots > 16 ? 3 : 4;
+        //public void DoThreeRaces(List<int> numbersKarts)
+        //{
+        //    pilots.Clear();
+        //    ExcelWorker.CleanData();
+        //    List<string> pilotsNames = ExcelWorker.ReadNamesInTotalBoard();
+        //    foreach (var pilotName in pilotsNames)
+        //        pilots.Add(new Pilot(pilotName));
+        //    totalPilots = pilots.Count;
+        //    TotalRacesCount = totalPilots > 16 ? 3 : 4;
 
-            for (int i = 0; i < 3; i++)
-                Race.StartHeatRace(pilots, numbersKarts, i);
-        }
+        //    for (int i = 0; i < 3; i++)
+        //        Race.StartHeatRace(pilots, numbersKarts, i);
+        //}
+        //public void DoOneRace(List<int> numbersKarts)
+        //{
+        //    pilots.Clear();
+        //    Race.ReBuildCountPilotsInFirstGroup(numbersKarts);
+        //    List<string> pilotsNames = ExcelWorker.ReadNamesInTotalBoard();
+        //    foreach (var pilotName in pilotsNames)
+        //        pilots.Add(new Pilot(pilotName));
+        //    pilots = Race.MakePilotsFromTotalBoard(pilots.Count);
+        //    totalPilots = pilots.Count;
+        //    TotalRacesCount = totalPilots > 16 ? 3 : 4;
+
+        //    Race.StartHeatRace(pilots, numbersKarts, pilots[0].KartsCount);
+
+        //}
+
+        //public void DoNextRace(List<int> numbersKarts, int numberRace)
+        //{
+        //    Race.ReBuildCountPilotsInFirstGroup(numbersKarts);
+        //    if (numberRace == 3)
+        //    {
+        //        pilots = Race.MakePilotsFromTotalBoard(Race.CountPilotsInFirstGroup * 2);
+        //        Race.StartSemiRace(pilots, numbersKarts, numberRace);
+        //    }
+        //    else
+        //    {
+        //        if (pilots.Count < 21)
+        //        {
+        //            var k1 = ExcelWorker.FindKeyCellByValue("Карт", null);
+        //            var k2 = ExcelWorker.FindKeyCellByValue("Пилоты", null);
+        //            k1[3][2] = 0.ToString();
+        //            k2[3][2] = 0.ToString();
+        //        }
+        //        pilots = Race.MakePilotsFromTotalBoard(proCountFinal);
+        //        Race.StartFinalRace(pilots, numbersKarts, numberRace);
+        //    }
+        //}
+
         public void DoOneRace(List<int> numbersKarts)
         {
+            int numberRace = pilots[0].GetNumbersKarts().Count;
+            pilots = Race.MakePilotsFromTotalBoard(pilots.Count);
+            int countGroups = (int)Math.Ceiling((double)pilots.Count / numbersKarts.Count);
+            Race.StartFinalRace(pilots, numbersKarts, numberRace);
+        }
+
+        public void DoQualRandom(List<int> numbersKarts)
+        {
             pilots.Clear();
-            Race.ReBuildCountPilotsInFirstGroup(numbersKarts);
             List<string> pilotsNames = ExcelWorker.ReadNamesInTotalBoard();
             foreach (var pilotName in pilotsNames)
                 pilots.Add(new Pilot(pilotName));
-            pilots = Race.MakePilotsFromTotalBoard(pilots.Count);
             totalPilots = pilots.Count;
-            TotalRacesCount = totalPilots > 16 ? 3 : 4;
 
-            Race.StartHeatRace(pilots, numbersKarts, pilots[0].KartsCount);
+            pilots = Race.MakePilotsFromTotalBoard(pilots.Count);
+            Race.StartHeatRace(pilots, numbersKarts, 0);
 
         }
 
-        public void DoNextRace(List<int> numbersKarts, int numberRace)
+        public void DoQualByList(List<int> numbersKarts)
         {
-            Race.ReBuildCountPilotsInFirstGroup(numbersKarts);
-            if (numberRace == 3)
-            {
-                pilots = Race.MakePilotsFromTotalBoard(Race.CountPilotsInFirstGroup * 2);
-                Race.StartSemiRace(pilots, numbersKarts, numberRace);
-            }
-            else
-            {
-                if (pilots.Count < 21)
-                {
-                    var k1 = ExcelWorker.FindKeyCellByValue("Карт", null);
-                    var k2 = ExcelWorker.FindKeyCellByValue("Пилоты", null);
-                    k1[3][2] = 0.ToString();
-                    k2[3][2] = 0.ToString();
-                }
-                pilots = Race.MakePilotsFromTotalBoard(proCountFinal);
-                Race.StartFinalRace(pilots, numbersKarts, numberRace);
-            }
+            pilots.Clear();
+            List<string> pilotsNames = ExcelWorker.ReadNamesInTotalBoard();
+            foreach (var pilotName in pilotsNames)
+                pilots.Add(new Pilot(pilotName));
+            totalPilots = pilots.Count;
+
+            pilots = Race.MakePilotsFromTotalBoard(pilots.Count);
+            Race.StartFinalRace(pilots, numbersKarts, 0);
+
+        }
+        
+        public void DoFinalPro(List<int> numbersKarts, int numberRace)
+        {
+            pilots = Race.MakePilotsFromTotalBoard(proCountFinal);
+            Race.StartFinalRace(pilots, numbersKarts, numberRace);
         }
 
         public void DoFinalAmators(List<int> numbersKarts, int numberRace)
@@ -110,7 +150,7 @@ namespace RaceLogic.Regulations
         public override List<List<string>> GetScores()
         {
             var scores = base.GetScores();
-            if (scores[0].Count > 5)
+            if (scores[0].Count > 4)
             {
                 var amators = scores.Where(x => x[x.Count - 1] != "0").ToList();
                 foreach (var pilotScores in amators)
