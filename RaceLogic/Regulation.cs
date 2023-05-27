@@ -126,6 +126,7 @@ namespace RaceLogic
             List<string> pilotsNames = ExcelWorker.ReadNamesInTotalBoard();
             pilots = Race.MakePilotsFromTotalBoard(pilotsNames.Count);
             totalPilots = pilots.Count;
+            pilotsCount = pilots.Count;
         }
 
         protected void AddTimesToPilots(List<List<string>> data)
