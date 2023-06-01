@@ -83,7 +83,7 @@ namespace RaceLogic.Regulations
 
             Range rangeToSort = ExcelWorker.excel.Range[firstCell + w.ToString(), lastCell];
             var c1 = rangeToSort.Columns[1];
-            var c2 = rangeToSort.Columns[11];
+            var c2 = rangeToSort.Columns[12];
             rangeToSort.Sort(c1, XlSortOrder.xlDescending, c2, Type.Missing, XlSortOrder.xlDescending);
 
             proCount = pilots.FindAll(x => x.Ligue == "Pro").Count;

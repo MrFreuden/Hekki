@@ -29,90 +29,96 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Main));
-            this.Cherkasy = new System.Windows.Forms.Button();
-            this.School = new System.Windows.Forms.Button();
-            this.Sprint = new System.Windows.Forms.Button();
-            this.Junior = new System.Windows.Forms.Button();
-            this.EveryOnEvery = new System.Windows.Forms.Button();
-            this.numbersOfKarts = new System.Windows.Forms.RichTextBox();
-            this.SuspendLayout();
+            Cherkasy = new Button();
+            School = new Button();
+            Sprint = new Button();
+            Junior = new Button();
+            EveryOnEvery = new Button();
+            numbersOfKarts = new RichTextBox();
+            SuspendLayout();
             // 
             // Cherkasy
             // 
-            this.Cherkasy.Location = new System.Drawing.Point(61, 61);
-            this.Cherkasy.Name = "Cherkasy";
-            this.Cherkasy.Size = new System.Drawing.Size(204, 86);
-            this.Cherkasy.TabIndex = 0;
-            this.Cherkasy.Text = "Cherkasy";
-            this.Cherkasy.UseVisualStyleBackColor = true;
-            this.Cherkasy.Click += new System.EventHandler(this.Cherkasy_Click);
+            Cherkasy.Location = new Point(76, 76);
+            Cherkasy.Margin = new Padding(4, 4, 4, 4);
+            Cherkasy.Name = "Cherkasy";
+            Cherkasy.Size = new Size(255, 108);
+            Cherkasy.TabIndex = 0;
+            Cherkasy.Text = "Cherkasy";
+            Cherkasy.UseVisualStyleBackColor = true;
+            Cherkasy.Click += Cherkasy_Click;
             // 
             // School
             // 
-            this.School.Location = new System.Drawing.Point(344, 61);
-            this.School.Name = "School";
-            this.School.Size = new System.Drawing.Size(204, 86);
-            this.School.TabIndex = 1;
-            this.School.Text = "School";
-            this.School.UseVisualStyleBackColor = true;
-            this.School.Click += new System.EventHandler(this.School_Click);
+            School.Location = new Point(430, 76);
+            School.Margin = new Padding(4, 4, 4, 4);
+            School.Name = "School";
+            School.Size = new Size(255, 108);
+            School.TabIndex = 1;
+            School.Text = "School";
+            School.UseVisualStyleBackColor = true;
+            School.Click += School_Click;
             // 
             // Sprint
             // 
-            this.Sprint.Location = new System.Drawing.Point(61, 236);
-            this.Sprint.Name = "Sprint";
-            this.Sprint.Size = new System.Drawing.Size(204, 86);
-            this.Sprint.TabIndex = 2;
-            this.Sprint.Text = "Sprint";
-            this.Sprint.UseVisualStyleBackColor = true;
-            this.Sprint.Click += new System.EventHandler(this.Sprint_Click);
+            Sprint.Location = new Point(76, 295);
+            Sprint.Margin = new Padding(4, 4, 4, 4);
+            Sprint.Name = "Sprint";
+            Sprint.Size = new Size(255, 108);
+            Sprint.TabIndex = 2;
+            Sprint.Text = "Sprint";
+            Sprint.UseVisualStyleBackColor = true;
+            Sprint.Click += Sprint_Click;
             // 
             // Junior
             // 
-            this.Junior.Location = new System.Drawing.Point(344, 236);
-            this.Junior.Name = "Junior";
-            this.Junior.Size = new System.Drawing.Size(204, 86);
-            this.Junior.TabIndex = 3;
-            this.Junior.Text = "Junior";
-            this.Junior.UseVisualStyleBackColor = true;
-            this.Junior.Click += new System.EventHandler(this.Junior_Click);
+            Junior.Location = new Point(430, 295);
+            Junior.Margin = new Padding(4, 4, 4, 4);
+            Junior.Name = "Junior";
+            Junior.Size = new Size(255, 108);
+            Junior.TabIndex = 3;
+            Junior.Text = "Junior";
+            Junior.UseVisualStyleBackColor = true;
+            Junior.Click += Junior_Click;
             // 
             // EveryOnEvery
             // 
-            this.EveryOnEvery.Location = new System.Drawing.Point(637, 236);
-            this.EveryOnEvery.Name = "EveryOnEvery";
-            this.EveryOnEvery.Size = new System.Drawing.Size(204, 86);
-            this.EveryOnEvery.TabIndex = 4;
-            this.EveryOnEvery.Text = "Every On Every";
-            this.EveryOnEvery.UseVisualStyleBackColor = true;
-            this.EveryOnEvery.Click += new System.EventHandler(this.EveryOnEvery_Click);
+            EveryOnEvery.Location = new Point(796, 295);
+            EveryOnEvery.Margin = new Padding(4, 4, 4, 4);
+            EveryOnEvery.Name = "EveryOnEvery";
+            EveryOnEvery.Size = new Size(255, 108);
+            EveryOnEvery.TabIndex = 4;
+            EveryOnEvery.Text = "Every On Every";
+            EveryOnEvery.UseVisualStyleBackColor = true;
+            EveryOnEvery.Click += EveryOnEvery_Click;
             // 
             // numbersOfKarts
             // 
-            this.numbersOfKarts.Location = new System.Drawing.Point(61, 350);
-            this.numbersOfKarts.Name = "numbersOfKarts";
-            this.numbersOfKarts.Size = new System.Drawing.Size(125, 162);
-            this.numbersOfKarts.TabIndex = 15;
-            this.numbersOfKarts.Text = "11\n12\n13\n14\n15\n16\n17\n18\n19\n20";
-            this.numbersOfKarts.TextChanged += new System.EventHandler(this.numbersOfKarts_TextChanged);
-            this.numbersOfKarts.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.numbersOfKarts_KeyPress);
+            numbersOfKarts.Location = new Point(76, 438);
+            numbersOfKarts.Margin = new Padding(4, 4, 4, 4);
+            numbersOfKarts.Name = "numbersOfKarts";
+            numbersOfKarts.Size = new Size(155, 202);
+            numbersOfKarts.TabIndex = 15;
+            numbersOfKarts.Text = "1\n2\n3\n4\n5\n6\n7\n8\n9\n10";
+            numbersOfKarts.TextChanged += numbersOfKarts_TextChanged;
+            numbersOfKarts.KeyPress += numbersOfKarts_KeyPress;
             // 
             // Main
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(969, 524);
-            this.Controls.Add(this.numbersOfKarts);
-            this.Controls.Add(this.EveryOnEvery);
-            this.Controls.Add(this.Junior);
-            this.Controls.Add(this.Sprint);
-            this.Controls.Add(this.School);
-            this.Controls.Add(this.Cherkasy);
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Name = "Main";
-            this.Text = "Hekki";
-            this.ResumeLayout(false);
-
+            AutoScaleDimensions = new SizeF(10F, 25F);
+            AutoScaleMode = AutoScaleMode.Font;
+            ClientSize = new Size(1211, 655);
+            Controls.Add(numbersOfKarts);
+            Controls.Add(EveryOnEvery);
+            Controls.Add(Junior);
+            Controls.Add(Sprint);
+            Controls.Add(School);
+            Controls.Add(Cherkasy);
+            Icon = (Icon)resources.GetObject("$this.Icon");
+            Margin = new Padding(4, 4, 4, 4);
+            Name = "Main";
+            Text = "Hekki";
+            ResumeLayout(false);
         }
 
         #endregion
