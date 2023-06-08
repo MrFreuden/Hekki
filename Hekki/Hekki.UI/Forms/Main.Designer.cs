@@ -107,11 +107,11 @@
             // versionNumber
             // 
             versionNumber.AutoSize = true;
-            versionNumber.Location = new Point(894, 76);
+            versionNumber.Location = new Point(1056, 25);
             versionNumber.Name = "versionNumber";
-            versionNumber.Size = new Size(59, 25);
+            versionNumber.Size = new Size(69, 25);
             versionNumber.TabIndex = 16;
-            versionNumber.Text = "label1";
+            versionNumber.Text = "Версия";
             // 
             // Main
             // 

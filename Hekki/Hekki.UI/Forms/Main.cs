@@ -1,3 +1,5 @@
+using System.Diagnostics;
+
 namespace Hekki
 {
     public partial class Main : Form
@@ -7,8 +9,10 @@ namespace Hekki
         public Main()
         {
             InitializeComponent();
-            var version = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version;
-            versionNumber.Text = String.Format("Версия {0}", version);
+            System.Reflection.Assembly executingAssembly = System.Reflection.Assembly.GetExecutingAssembly();
+            var fieVersionInfo = FileVersionInfo.GetVersionInfo(executingAssembly.Location);
+            var version = fieVersionInfo.FileVersion;
+            versionNumber.Text = String.Format("Версия {0}", version.Remove(version.Length - 2));
             foreach (string line in numbersOfKarts.Lines)
                 karts.Add(Int32.Parse(line));
         }
