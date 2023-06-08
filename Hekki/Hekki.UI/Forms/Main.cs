@@ -7,6 +7,8 @@ namespace Hekki
         public Main()
         {
             InitializeComponent();
+            var version = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version;
+            versionNumber.Text = String.Format("Версия {0}", version);
             foreach (string line in numbersOfKarts.Lines)
                 karts.Add(Int32.Parse(line));
         }

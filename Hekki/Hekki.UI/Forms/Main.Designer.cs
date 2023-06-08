@@ -35,12 +35,13 @@
             Junior = new Button();
             EveryOnEvery = new Button();
             numbersOfKarts = new RichTextBox();
+            versionNumber = new Label();
             SuspendLayout();
             // 
             // Cherkasy
             // 
             Cherkasy.Location = new Point(76, 76);
-            Cherkasy.Margin = new Padding(4, 4, 4, 4);
+            Cherkasy.Margin = new Padding(4);
             Cherkasy.Name = "Cherkasy";
             Cherkasy.Size = new Size(255, 108);
             Cherkasy.TabIndex = 0;
@@ -51,7 +52,7 @@
             // School
             // 
             School.Location = new Point(430, 76);
-            School.Margin = new Padding(4, 4, 4, 4);
+            School.Margin = new Padding(4);
             School.Name = "School";
             School.Size = new Size(255, 108);
             School.TabIndex = 1;
@@ -62,7 +63,7 @@
             // Sprint
             // 
             Sprint.Location = new Point(76, 295);
-            Sprint.Margin = new Padding(4, 4, 4, 4);
+            Sprint.Margin = new Padding(4);
             Sprint.Name = "Sprint";
             Sprint.Size = new Size(255, 108);
             Sprint.TabIndex = 2;
@@ -73,7 +74,7 @@
             // Junior
             // 
             Junior.Location = new Point(430, 295);
-            Junior.Margin = new Padding(4, 4, 4, 4);
+            Junior.Margin = new Padding(4);
             Junior.Name = "Junior";
             Junior.Size = new Size(255, 108);
             Junior.TabIndex = 3;
@@ -84,7 +85,7 @@
             // EveryOnEvery
             // 
             EveryOnEvery.Location = new Point(796, 295);
-            EveryOnEvery.Margin = new Padding(4, 4, 4, 4);
+            EveryOnEvery.Margin = new Padding(4);
             EveryOnEvery.Name = "EveryOnEvery";
             EveryOnEvery.Size = new Size(255, 108);
             EveryOnEvery.TabIndex = 4;
@@ -95,7 +96,7 @@
             // numbersOfKarts
             // 
             numbersOfKarts.Location = new Point(76, 438);
-            numbersOfKarts.Margin = new Padding(4, 4, 4, 4);
+            numbersOfKarts.Margin = new Padding(4);
             numbersOfKarts.Name = "numbersOfKarts";
             numbersOfKarts.Size = new Size(155, 202);
             numbersOfKarts.TabIndex = 15;
@@ -103,11 +104,21 @@
             numbersOfKarts.TextChanged += numbersOfKarts_TextChanged;
             numbersOfKarts.KeyPress += numbersOfKarts_KeyPress;
             // 
+            // versionNumber
+            // 
+            versionNumber.AutoSize = true;
+            versionNumber.Location = new Point(894, 76);
+            versionNumber.Name = "versionNumber";
+            versionNumber.Size = new Size(59, 25);
+            versionNumber.TabIndex = 16;
+            versionNumber.Text = "label1";
+            // 
             // Main
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1211, 655);
+            Controls.Add(versionNumber);
             Controls.Add(numbersOfKarts);
             Controls.Add(EveryOnEvery);
             Controls.Add(Junior);
@@ -115,10 +126,11 @@
             Controls.Add(School);
             Controls.Add(Cherkasy);
             Icon = (Icon)resources.GetObject("$this.Icon");
-            Margin = new Padding(4, 4, 4, 4);
+            Margin = new Padding(4);
             Name = "Main";
             Text = "Hekki";
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
@@ -129,5 +141,6 @@
         private Button Junior;
         private Button EveryOnEvery;
         private RichTextBox numbersOfKarts;
+        private Label versionNumber;
     }
 }
