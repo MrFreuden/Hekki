@@ -1,7 +1,5 @@
 ﻿using ExcelController;
-using Microsoft.Office.Interop.Excel;
 using RaceLogic.Regulations;
-using System.Text.RegularExpressions;
 
 namespace Hekki
 {
@@ -13,6 +11,7 @@ namespace Hekki
         public SprintReg(List<int> karts)
         {
             InitializeComponent();
+            Icon = Icon.ExtractAssociatedIcon(Application.ExecutablePath);
             numbersKarts = karts;
             numbersOfKarts.Lines = numbersKarts.ConvertAll<string>(delegate (int i) { return i.ToString(); }).ToArray();
         }

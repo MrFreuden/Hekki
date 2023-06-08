@@ -11,6 +11,7 @@ namespace Hekki
         public SchoolReg(List<int> karts)
         {
             InitializeComponent();
+            Icon = Icon.ExtractAssociatedIcon(Application.ExecutablePath);
             numbersKarts = karts;
             numbersOfKarts.Lines = numbersKarts.ConvertAll<string>(delegate (int i) { return i.ToString(); }).ToArray();
         }
