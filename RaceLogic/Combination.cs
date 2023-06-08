@@ -46,16 +46,7 @@ namespace RaceLogic
 
         private static bool IsNumbersKartChanged(List<int> numberKarts)
         {
-            bool flag;
-            for (int i = 0; i < numberKarts.Count; i++)
-            {
-                flag = allCombinations[0].Contains(numberKarts[i]);
-                if (!flag)
-                {
-                    return true;
-                }
-            }
-            return false;
+            return !Enumerable.SequenceEqual(numberKarts, allCombinations[0]);
         }
 
         private static void CalculateAllCombinations(List<int> numberKarts)
