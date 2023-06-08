@@ -6,10 +6,11 @@
   "compilationOptions": {},
   "targets": {
     ".NETCoreApp,Version=v6.0": {
-      "Hekki/1.0.0": {
+      "Hekki/0.0.21": {
         "dependencies": {
           "Clowd.Squirrel": "2.9.42",
           "ExcelController": "1.0.0",
+          "MinVer": "4.3.0",
           "RaceLogic": "1.0.0"
         },
         "runtime": {
@@ -27,6 +28,7 @@
           }
         }
       },
+      "MinVer/4.3.0": {},
       "SharpCompress/0.31.0": {
         "runtime": {
           "lib/net5.0/SharpCompress.dll": {
@@ -51,7 +53,7 @@
     }
   },
   "libraries": {
-    "Hekki/1.0.0": {
+    "Hekki/0.0.21": {
       "type": "project",
       "serviceable": false,
       "sha512": ""
@@ -62,6 +64,13 @@
       "sha512": "sha512-bM7h3tqoenZD+tmiV7pUnFdJ/o1oOrC21PaS8crMDRDOuGB4YqsgzlUKFD1g8X6z64IRBqzlUwEKzpsFyFc0mQ==",
       "path": "clowd.squirrel/2.9.42",
       "hashPath": "clowd.squirrel.2.9.42.nupkg.sha512"
+    },
+    "MinVer/4.3.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-YNVAW3loCFW4kTwensApaZUl+7xREK75QQNOFSbsbXx2sCSm9/IHBjUHsJGn3u0UA5r/sAqrdYBNUlOFfLhUrA==",
+      "path": "minver/4.3.0",
+      "hashPath": "minver.4.3.0.nupkg.sha512"
     },
     "SharpCompress/0.31.0": {
       "type": "package",
