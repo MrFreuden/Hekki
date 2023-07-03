@@ -131,7 +131,7 @@ namespace RaceLogic
             var pilots = new List<Pilot>();
             var names = ExcelWorker.ReadNamesInTotalBoard();
             var kartsMerged = ExcelWorker.ReadUsedKartsInTotalBoard();
-            var scoresMerged = ExcelWorker.ReadResultsInTB("Хит", countPilots);
+            var scoresMerged = ExcelWorker.ReadResultsInTB("Хіт", countPilots);
             var timesMerged = ExcelWorker.ReadResultsInTB("Best Lap", countPilots);
             var liques = ExcelWorker.ReadLique(countPilots);
             for (int i = 0; i < countPilots; i++)
@@ -227,7 +227,7 @@ namespace RaceLogic
                     karts[i].Add(pilot.GetNumberKartByRace(numberRace));
                 }
             }
-            ExcelWorker.WriteInfoDataInRace("Пилоты", names);
+            ExcelWorker.WriteInfoDataInRace("Пілоти", names);
             ExcelWorker.WriteInfoDataInRace("Карт", karts);
         }
     }

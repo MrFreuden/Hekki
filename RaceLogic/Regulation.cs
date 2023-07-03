@@ -12,7 +12,7 @@ namespace RaceLogic
 
         public virtual List<List<string>> GetTimes()
         {
-            return GetDataFromRace("Время");
+            return GetDataFromRace("Час");
         }
 
         public void WriteTimes(List<List<string>> times)
@@ -23,13 +23,13 @@ namespace RaceLogic
 
         public virtual List<List<string>> GetScores()
         {
-            return GetDataFromRace("Итого");
+            return GetDataFromRace("Разом");
         }
 
 
         public void WriteScores(List<List<string>> score)
         {
-            ExcelWorker.WriteResultsInTB("Хит", score);
+            ExcelWorker.WriteResultsInTB("Хіт", score);
             AddScoresToPilots(score);
         }
 
@@ -93,7 +93,7 @@ namespace RaceLogic
 
         public virtual void SortTimeInRace()
         {
-            var keyCells = ExcelWorker.FindKeyCellByValue("ВРЕМЯ", null);
+            var keyCells = ExcelWorker.FindKeyCellByValue("ЧАС", null);
             for (int i = 0; i < keyCells.Count; i++)
             {
                 int j = 0;
@@ -108,7 +108,7 @@ namespace RaceLogic
 
         public virtual void SortScores()
         {
-            var keyCells = ExcelWorker.FindKeyCellByValue("ВСЕГО", null);
+            var keyCells = ExcelWorker.FindKeyCellByValue("Сума", null);
             for (int i = 0; i < keyCells.Count; i++)
             {
                 int j = 0;

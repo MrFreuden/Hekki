@@ -75,7 +75,7 @@ namespace RaceLogic.Regulations
             DefineCountPilotsInFinals();
 
             string firstCell = "C";
-            var keyCell = ExcelWorker.FindKeyCellByValue("ВСЕГО", null);
+            var keyCell = ExcelWorker.FindKeyCellByValue("Сума", null);
             var address = keyCell[0].Address;
             string lastCell = address[1].ToString();
             lastCell += (3 + pilots.Count).ToString();

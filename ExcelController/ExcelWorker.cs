@@ -31,7 +31,7 @@ namespace ExcelController
         {
             searchedRange ??= excel.get_Range("A1", "XFD1048576");
 
-            var finded = searchedRange.Find(value);
+            var finded = searchedRange.Find(value) ?? throw new Exception("Поиск по слову {" + value + "} не выполнен. Попробуйте переименовать ячейки в таблице.");
             var firstAdress = finded.Address;
             while (excel.Cells[finded.Row + 1, finded.Column].Value != null && needEmpty)
             {
@@ -70,13 +70,13 @@ namespace ExcelController
             {
                 FindKeyCellByValue("Номера", rangeToClean),
                 FindKeyCellByValue("Best Lap", rangeToClean),
-                FindKeyCellByValue("ХИТ", rangeToClean),
+                FindKeyCellByValue("ХІТ", rangeToClean),
                 FindKeyCellByValue("Карт", rangeToClean),
-                FindKeyCellByValue("Пилоты", rangeToClean),
+                FindKeyCellByValue("Пілоти", rangeToClean),
                 FindKeyCellByValue("Штраф", rangeToClean),
-                FindKeyCellByValue("Время", rangeToClean),
-                //FindKeyCellByValue("Имя", rangeToClean),
-                //FindKeyCellByValue("Лига", rangeToClean),
+                FindKeyCellByValue("Час", rangeToClean),
+                //FindKeyCellByValue("Им'я", rangeToClean),
+                //FindKeyCellByValue("Ліга", rangeToClean),
                 FindKeyCellByValue("Очки", rangeToClean)
         };
 
@@ -95,7 +95,7 @@ namespace ExcelController
         public static Range GetTBRange(int countPilots)
         {
             var keyCells = FindKeyCellByValue("№", null);
-            var keyCells2 = FindKeyCellByValue("Всего", null);
+            var keyCells2 = FindKeyCellByValue("Сума", null);
             string ad1 = keyCells[0][2, 3].Address.Replace("$", String.Empty);
             string ad2 = keyCells2[0].Address.Replace("$", String.Empty);
             ad2 = ad2[0] + (ad2[1] + countPilots.ToString());
@@ -129,7 +129,7 @@ namespace ExcelController
 
         public static List<string> ReadNamesInTotalBoard()
         {
-            var keyCells = FindKeyCellByValue("Имя", null);
+            var keyCells = FindKeyCellByValue("Им'я", null);
             List<string> names = new();
 
             int i = 2;
@@ -205,7 +205,7 @@ namespace ExcelController
         public static List<string> ReadLique(int countPilots)
         {
             List<string> pilotsLiques = new();
-            var keyCells = FindKeyCellByValue("Лига", null);
+            var keyCells = FindKeyCellByValue("Ліга", null);
             if (keyCells.Count == 0)
                 return pilotsLiques;
 
@@ -220,7 +220,7 @@ namespace ExcelController
             int countBreaker = 50)
         {
             var pilotsNames = new List<List<string>>();
-            var keyScore = FindKeyCellByValue("Пилоты", null);
+            var keyScore = FindKeyCellByValue("Пілоти", null);
             for (int j = 0, k = 0; j < keyScore.Count; j++)
             {
                 if (!(indexesNeededCols.Contains(keyScore[j].Column)))
@@ -254,7 +254,7 @@ namespace ExcelController
             for (int j = 0; j < keyCells.Count; j++)
             {
                 var startIndexKey = keyCells[j].Row + 1;
-                int columnIndexName = GetIndexNearColLeft("Пилоты", keyCells[j].Row, keyCells[j][startIndexKey - 1].Column);
+                int columnIndexName = GetIndexNearColLeft("Пілоти", keyCells[j].Row, keyCells[j][startIndexKey - 1].Column);
                 cols[j] = columnIndexName;
 
                 if (Convert.ToString(excel.Cells[startIndexKey, columnIndexName].Value) == null)
@@ -276,12 +276,12 @@ namespace ExcelController
         public static List<List<string>> ReadScoresInRaceEveryOnEvery(int pilotsCount, int countInGroup, out int[] cols)
         {
             var pilotsScores = new List<List<string>>();
-            var keyScore = FindKeyCellByValue("Итого", null);
+            var keyScore = FindKeyCellByValue("Разом", null);
             cols = new int[keyScore.Count];
             for (int j = 0; j < pilotsCount; j++)
             {
                 var startIndexScore = keyScore[j].Row + 1;
-                int columnIndexName = GetIndexNearColLeft("Пилоты", keyScore[j].Row, keyScore[j][startIndexScore - 1].Column);
+                int columnIndexName = GetIndexNearColLeft("Пілоти", keyScore[j].Row, keyScore[j][startIndexScore - 1].Column);
                 cols[j] = columnIndexName;
                 pilotsScores.Add(new List<string>());
                 for (int i = 0; i < countInGroup; startIndexScore++)
@@ -398,7 +398,7 @@ namespace ExcelController
         private static Range GetHeadersTB()
         {
             var keyCells = FindKeyCellByValue("№", null);
-            var keyCells2 = FindKeyCellByValue("Всего", null);
+            var keyCells2 = FindKeyCellByValue("Сума", null);
             string ad1 = keyCells[0].Address.Replace("$", String.Empty);
             string ad2 = keyCells2[0].Address.Replace("$", String.Empty);
             return excel.get_Range(ad1, ad2);
