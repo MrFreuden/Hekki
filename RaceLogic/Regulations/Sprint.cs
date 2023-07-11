@@ -12,6 +12,57 @@ namespace RaceLogic.Regulations
         public static int TotalRacesCount;
         public static int maxKarts;
 
+        public void DoThreeRaces(List<int> numbersKarts)
+        {
+            pilots.Clear();
+            ExcelWorker.CleanData();
+            List<string> pilotsNames = ExcelWorker.ReadNamesInTotalBoard();
+            foreach (var pilotName in pilotsNames)
+                pilots.Add(new Pilot(pilotName));
+            totalPilots = pilots.Count;
+            TotalRacesCount = totalPilots > 16 ? 3 : 4;
+
+            for (int i = 0; i < 3; i++)
+                Race.StartHeatRace(pilots, numbersKarts, i);
+        }
+
+        public void DoOneOldRace(List<int> numbersKarts)
+        {
+            pilots.Clear();
+            Race.ReBuildCountPilotsInFirstGroup(numbersKarts);
+            List<string> pilotsNames = ExcelWorker.ReadNamesInTotalBoard();
+            foreach (var pilotName in pilotsNames)
+                pilots.Add(new Pilot(pilotName));
+            pilots = Race.MakePilotsFromTotalBoard(pilots.Count);
+            totalPilots = pilots.Count;
+            TotalRacesCount = totalPilots > 16 ? 3 : 4;
+
+            Race.StartHeatRace(pilots, numbersKarts, pilots[0].KartsCount);
+
+        }
+
+        public void DoNextRace(List<int> numbersKarts, int numberRace)
+        {
+            Race.ReBuildCountPilotsInFirstGroup(numbersKarts);
+            if (numberRace == 3)
+            {
+                pilots = Race.MakePilotsFromTotalBoard(Race.CountPilotsInFirstGroup * 2);
+                Race.StartSemiRace(pilots, numbersKarts, numberRace);
+            }
+            else
+            {
+                if (pilots.Count < 21)
+                {
+                    var k1 = ExcelWorker.FindKeyCellByValue("Карт", null);
+                    var k2 = ExcelWorker.FindKeyCellByValue("Пилоты", null);
+                    k1[3][2] = 0.ToString();
+                    k2[3][2] = 0.ToString();
+                }
+                pilots = Race.MakePilotsFromTotalBoard(proCountFinal);
+                Race.StartFinalRace(pilots, numbersKarts, numberRace);
+            }
+        }
+
         public void DoOneRace(List<int> numbersKarts)
         {
             int numberRace = pilots[0].GetNumbersKarts().Count;
@@ -19,6 +70,7 @@ namespace RaceLogic.Regulations
             int countGroups = (int)Math.Ceiling((double)pilots.Count / numbersKarts.Count);
             Race.StartFinalRace(pilots, numbersKarts, numberRace);
         }
+
 
         public void DoQualRandom(List<int> numbersKarts)
         {
@@ -84,6 +136,30 @@ namespace RaceLogic.Regulations
             Range rangeToSort = ExcelWorker.excel.Range[firstCell + w.ToString(), lastCell];
             var c1 = rangeToSort.Columns[1];
             var c2 = rangeToSort.Columns[12];
+            rangeToSort.Sort(c1, XlSortOrder.xlDescending, c2, Type.Missing, XlSortOrder.xlDescending);
+
+            proCount = pilots.FindAll(x => x.Ligue == "Pro").Count;
+            w += proCount;
+
+            rangeToSort = ExcelWorker.excel.Range[firstCell + w.ToString(), lastCell];
+            rangeToSort.Sort(c1, XlSortOrder.xlAscending, c2, Type.Missing, XlSortOrder.xlDescending);
+        }
+
+        public void SortTwoLiquesOld(List<int> numbersKarts)
+        {
+            pilots = Race.MakePilotsFromTotalBoard(totalPilots);
+            DefineCountPilotsInFinals();
+
+            string firstCell = "C";
+            var keyCell = ExcelWorker.FindKeyCellByValue("Сума", null);
+            var address = keyCell[0].Address;
+            string lastCell = address[1].ToString();
+            lastCell += (3 + pilots.Count).ToString();
+            int w = 4;
+
+            Range rangeToSort = ExcelWorker.excel.Range[firstCell + w.ToString(), lastCell];
+            var c1 = rangeToSort.Columns[1];
+            var c2 = rangeToSort.Columns[9];
             rangeToSort.Sort(c1, XlSortOrder.xlDescending, c2, Type.Missing, XlSortOrder.xlDescending);
 
             proCount = pilots.FindAll(x => x.Ligue == "Pro").Count;

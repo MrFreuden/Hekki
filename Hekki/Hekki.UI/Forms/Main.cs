@@ -74,5 +74,13 @@ namespace Hekki
         {
             e.Handled = !char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar);
         }
+
+        private void SprintOld_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            SprintOldReg win7 = new(karts);
+            win7.Closed += (s, args) => this.Close();
+            win7.Show();
+        }
     }
 }

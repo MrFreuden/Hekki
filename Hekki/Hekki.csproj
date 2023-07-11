@@ -39,4 +39,10 @@
     <ProjectReference Include="..\RaceLogic\RaceLogic.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Update="Hekki.UI\Forms\SprintOldReg.cs">
+      <SubType>Form</SubType>
+    </Compile>
+  </ItemGroup>
+
 </Project>

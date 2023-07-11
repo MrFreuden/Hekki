@@ -36,6 +36,7 @@
             EveryOnEvery = new Button();
             numbersOfKarts = new RichTextBox();
             versionNumber = new Label();
+            SprintOld = new Button();
             SuspendLayout();
             // 
             // Cherkasy
@@ -113,11 +114,23 @@
             versionNumber.TabIndex = 16;
             versionNumber.Text = "Версия";
             // 
+            // SprintOld
+            // 
+            SprintOld.Location = new Point(796, 76);
+            SprintOld.Margin = new Padding(4);
+            SprintOld.Name = "SprintOld";
+            SprintOld.Size = new Size(255, 108);
+            SprintOld.TabIndex = 17;
+            SprintOld.Text = "SprintOld";
+            SprintOld.UseVisualStyleBackColor = true;
+            SprintOld.Click += SprintOld_Click;
+            // 
             // Main
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1211, 655);
+            Controls.Add(SprintOld);
             Controls.Add(versionNumber);
             Controls.Add(numbersOfKarts);
             Controls.Add(EveryOnEvery);
@@ -142,5 +155,6 @@
         private Button EveryOnEvery;
         private RichTextBox numbersOfKarts;
         private Label versionNumber;
+        private Button SprintOld;
     }
 }
