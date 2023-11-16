@@ -399,6 +399,11 @@ namespace ExcelController
         {
             var keyCells = FindKeyCellByValue("№", null);
             var keyCells2 = FindKeyCellByValue("Сума", null);
+            //переписать метод без if
+            if(keyCells2.Count == 0)
+            {
+                keyCells2 = FindKeyCellByValue("Best Lap", null);
+            }
             string ad1 = keyCells[0].Address.Replace("$", String.Empty);
             string ad2 = keyCells2[0].Address.Replace("$", String.Empty);
             return excel.get_Range(ad1, ad2);

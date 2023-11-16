@@ -101,7 +101,7 @@
             numbersOfKarts.Name = "numbersOfKarts";
             numbersOfKarts.Size = new Size(155, 202);
             numbersOfKarts.TabIndex = 15;
-            numbersOfKarts.Text = "1\n2\n3\n4\n5\n6\n7\n8\n9\n10";
+            numbersOfKarts.Text = "11\n12\n13\n14\n15\n16\n17\n18\n19\n20";
             numbersOfKarts.TextChanged += numbersOfKarts_TextChanged;
             numbersOfKarts.KeyPress += numbersOfKarts_KeyPress;
             // 
