@@ -82,5 +82,13 @@ namespace Hekki
             win7.Closed += (s, args) => this.Close();
             win7.Show();
         }
+
+        private void TestNew_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            TestNewReg win8 = new(karts);
+            win8.Closed += (s, args) => this.Close();
+            win8.Show();
+        }
     }
 }

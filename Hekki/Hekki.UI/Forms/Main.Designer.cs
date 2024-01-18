@@ -37,6 +37,7 @@
             numbersOfKarts = new RichTextBox();
             versionNumber = new Label();
             SprintOld = new Button();
+            TestNew = new Button();
             SuspendLayout();
             // 
             // Cherkasy
@@ -125,11 +126,23 @@
             SprintOld.UseVisualStyleBackColor = true;
             SprintOld.Click += SprintOld_Click;
             // 
+            // TestNew
+            // 
+            TestNew.Location = new Point(430, 473);
+            TestNew.Margin = new Padding(4);
+            TestNew.Name = "TestNew";
+            TestNew.Size = new Size(255, 108);
+            TestNew.TabIndex = 18;
+            TestNew.Text = "TestNew";
+            TestNew.UseVisualStyleBackColor = true;
+            TestNew.Click += TestNew_Click;
+            // 
             // Main
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1211, 655);
+            Controls.Add(TestNew);
             Controls.Add(SprintOld);
             Controls.Add(versionNumber);
             Controls.Add(numbersOfKarts);
@@ -156,5 +169,6 @@
         private RichTextBox numbersOfKarts;
         private Label versionNumber;
         private Button SprintOld;
+        private Button TestNew;
     }
 }
