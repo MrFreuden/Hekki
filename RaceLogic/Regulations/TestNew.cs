@@ -45,8 +45,14 @@ namespace RaceLogic.Regulations
                 return;
             }
             Race.ReBuildCountPilotsInFirstGroup(numbersKarts);
-
-            pilots = Race.MakePilotsFromTotalBoard(Race.CountPilotsInFirstGroup * 2);
+            if (pilots.Count < numbersKarts.Count * 2 && pilotsCount % 2 > 0)
+            {
+                pilots = Race.MakePilotsFromTotalBoard(pilots.Count);
+            }
+            else
+            {
+                pilots = Race.MakePilotsFromTotalBoard(Race.CountPilotsInFirstGroup * 2);
+            }
             Race.StartSemiRace(pilots, numbersKarts, 4);
         }
 
