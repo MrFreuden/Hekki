@@ -36,7 +36,7 @@ namespace RaceLogic.Regulations
 
         public void DoNextRace(List<int> numbersKarts)
         {
-            if (pilots.Count < 10)
+            if (pilots.Count < numbersKarts.Count)
             {
                 var k1 = ExcelWorker.FindKeyCellByValue("Карт", null);
                 var k2 = ExcelWorker.FindKeyCellByValue("Пілоти", null);
