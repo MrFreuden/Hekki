@@ -65,7 +65,6 @@ namespace RaceLogic.Regulations
 
         public void DoFinalDead(List<int> numbersKarts)
         {
-            Race.ReBuildCountPilotsInFirstGroup(numbersKarts);
             int numberRace = pilots[0].GetNumbersKarts().Count;
             if (pilots.Count <= 8)
             {
@@ -73,7 +72,7 @@ namespace RaceLogic.Regulations
             }
             else
             {
-                pilots = Race.MakePilotsFromTotalBoard(Race.CountPilotsInFirstGroup);
+                pilots = Race.MakePilotsFromTotalBoard(8);
             }
             
             Race.StartFinalRace(pilots, numbersKarts, numberRace);
@@ -82,16 +81,6 @@ namespace RaceLogic.Regulations
 
         public void SortTimeDead()
         {
-            if (pilots.Count <= 8)
-            {
-                pilots = Race.MakePilotsFromTotalBoard(pilots.Count);
-            }
-            else
-            {
-                pilots = Race.MakePilotsFromTotalBoard(Race.CountPilotsInFirstGroup);
-            }
-            pilots = Race.MakePilotsFromTotalBoard(totalPilots);
-
             string firstCell = "C";
             var keyCell = ExcelWorker.FindKeyCellByValue("Усього", null);
             var address = keyCell[0].Address;
@@ -100,7 +89,6 @@ namespace RaceLogic.Regulations
             int w = 4;
 
             Range rangeToSort = ExcelWorker.excel.Range[firstCell + w.ToString(), lastCell];
-            var c1 = rangeToSort.Columns[1];
             var c2 = rangeToSort.Columns[6];
             rangeToSort.Sort(c2, XlSortOrder.xlAscending);
         }
