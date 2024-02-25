@@ -102,5 +102,25 @@ namespace Hekki
                 numbersKarts.Add(Int32.Parse(line));
             }
         }
+
+        private void DoFinalDed_Click(object sender, EventArgs e)
+        {
+            _junior.DoFinalDead(numbersKarts);
+            _junior.WriteUsedKarts();
+        }
+
+        private void DoQualDead_Click(object sender, EventArgs e)
+        {
+            for (int i = 0; i < 2; i++)
+            {
+                _junior.DoQualDead(numbersKarts, i);
+                _junior.WriteUsedKarts();
+            }
+        }
+
+        private void SortTimeDead_Click(object sender, EventArgs e)
+        {
+            _junior.SortTimeDead();
+        }
     }
 }

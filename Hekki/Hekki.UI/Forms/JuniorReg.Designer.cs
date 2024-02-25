@@ -28,161 +28,212 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.Clear = new System.Windows.Forms.Button();
-            this.DoQualRandom = new System.Windows.Forms.Button();
-            this.DoQualByList = new System.Windows.Forms.Button();
-            this.DoRace1 = new System.Windows.Forms.Button();
-            this.DoRace2 = new System.Windows.Forms.Button();
-            this.DoFinal = new System.Windows.Forms.Button();
-            this.RebuildPilots = new System.Windows.Forms.Button();
-            this.ReadScores = new System.Windows.Forms.Button();
-            this.SortScores = new System.Windows.Forms.Button();
-            this.ReadTimes = new System.Windows.Forms.Button();
-            this.SortTimes = new System.Windows.Forms.Button();
-            this.numbersOfKarts = new System.Windows.Forms.RichTextBox();
-            this.SuspendLayout();
+            Clear = new Button();
+            DoQualRandom = new Button();
+            DoQualByList = new Button();
+            DoRace1 = new Button();
+            DoRace2 = new Button();
+            DoFinal = new Button();
+            RebuildPilots = new Button();
+            ReadScores = new Button();
+            SortScores = new Button();
+            ReadTimes = new Button();
+            SortTimes = new Button();
+            numbersOfKarts = new RichTextBox();
+            DoFinalDed = new Button();
+            DoQualDead = new Button();
+            SortTimeDead = new Button();
+            SuspendLayout();
             // 
             // Clear
             // 
-            this.Clear.Location = new System.Drawing.Point(188, 443);
-            this.Clear.Name = "Clear";
-            this.Clear.Size = new System.Drawing.Size(128, 54);
-            this.Clear.TabIndex = 1;
-            this.Clear.Text = "Очистить";
-            this.Clear.UseVisualStyleBackColor = true;
-            this.Clear.Click += new System.EventHandler(this.Clear_Click);
+            Clear.Location = new Point(235, 554);
+            Clear.Margin = new Padding(4);
+            Clear.Name = "Clear";
+            Clear.Size = new Size(160, 68);
+            Clear.TabIndex = 1;
+            Clear.Text = "Очистить";
+            Clear.UseVisualStyleBackColor = true;
+            Clear.Click += Clear_Click;
             // 
             // DoQualRandom
             // 
-            this.DoQualRandom.Location = new System.Drawing.Point(39, 22);
-            this.DoQualRandom.Name = "DoQualRandom";
-            this.DoQualRandom.Size = new System.Drawing.Size(170, 91);
-            this.DoQualRandom.TabIndex = 3;
-            this.DoQualRandom.Text = "Распределить Квалу случайно";
-            this.DoQualRandom.UseVisualStyleBackColor = true;
-            this.DoQualRandom.Click += new System.EventHandler(this.DoQualRandom_Click);
+            DoQualRandom.Location = new Point(49, 28);
+            DoQualRandom.Margin = new Padding(4);
+            DoQualRandom.Name = "DoQualRandom";
+            DoQualRandom.Size = new Size(212, 114);
+            DoQualRandom.TabIndex = 3;
+            DoQualRandom.Text = "Распределить Квалу случайно";
+            DoQualRandom.UseVisualStyleBackColor = true;
+            DoQualRandom.Click += DoQualRandom_Click;
             // 
             // DoQualByList
             // 
-            this.DoQualByList.Location = new System.Drawing.Point(39, 128);
-            this.DoQualByList.Name = "DoQualByList";
-            this.DoQualByList.Size = new System.Drawing.Size(170, 91);
-            this.DoQualByList.TabIndex = 4;
-            this.DoQualByList.Text = "Распределить Квалу По списку";
-            this.DoQualByList.UseVisualStyleBackColor = true;
-            this.DoQualByList.Click += new System.EventHandler(this.DoQualByList_Click);
+            DoQualByList.Location = new Point(49, 160);
+            DoQualByList.Margin = new Padding(4);
+            DoQualByList.Name = "DoQualByList";
+            DoQualByList.Size = new Size(212, 114);
+            DoQualByList.TabIndex = 4;
+            DoQualByList.Text = "Распределить Квалу По списку";
+            DoQualByList.UseVisualStyleBackColor = true;
+            DoQualByList.Click += DoQualByList_Click;
             // 
             // DoRace1
             // 
-            this.DoRace1.Location = new System.Drawing.Point(297, 79);
-            this.DoRace1.Name = "DoRace1";
-            this.DoRace1.Size = new System.Drawing.Size(170, 91);
-            this.DoRace1.TabIndex = 5;
-            this.DoRace1.Text = "Распределить Гонку 1";
-            this.DoRace1.UseVisualStyleBackColor = true;
-            this.DoRace1.Click += new System.EventHandler(this.DoRace1_Click);
+            DoRace1.Location = new Point(371, 99);
+            DoRace1.Margin = new Padding(4);
+            DoRace1.Name = "DoRace1";
+            DoRace1.Size = new Size(212, 114);
+            DoRace1.TabIndex = 5;
+            DoRace1.Text = "Распределить Гонку 1";
+            DoRace1.UseVisualStyleBackColor = true;
+            DoRace1.Click += DoRace1_Click;
             // 
             // DoRace2
             // 
-            this.DoRace2.Location = new System.Drawing.Point(508, 79);
-            this.DoRace2.Name = "DoRace2";
-            this.DoRace2.Size = new System.Drawing.Size(170, 91);
-            this.DoRace2.TabIndex = 6;
-            this.DoRace2.Text = "Распределить Гонку 2";
-            this.DoRace2.UseVisualStyleBackColor = true;
-            this.DoRace2.Click += new System.EventHandler(this.DoRace2_Click);
+            DoRace2.Location = new Point(635, 99);
+            DoRace2.Margin = new Padding(4);
+            DoRace2.Name = "DoRace2";
+            DoRace2.Size = new Size(212, 114);
+            DoRace2.TabIndex = 6;
+            DoRace2.Text = "Распределить Гонку 2";
+            DoRace2.UseVisualStyleBackColor = true;
+            DoRace2.Click += DoRace2_Click;
             // 
             // DoFinal
             // 
-            this.DoFinal.Location = new System.Drawing.Point(720, 79);
-            this.DoFinal.Name = "DoFinal";
-            this.DoFinal.Size = new System.Drawing.Size(170, 91);
-            this.DoFinal.TabIndex = 7;
-            this.DoFinal.Text = "Распределить Финал";
-            this.DoFinal.UseVisualStyleBackColor = true;
-            this.DoFinal.Click += new System.EventHandler(this.DoFinal_Click);
+            DoFinal.Location = new Point(900, 99);
+            DoFinal.Margin = new Padding(4);
+            DoFinal.Name = "DoFinal";
+            DoFinal.Size = new Size(212, 114);
+            DoFinal.TabIndex = 7;
+            DoFinal.Text = "Распределить Финал";
+            DoFinal.UseVisualStyleBackColor = true;
+            DoFinal.Click += DoFinal_Click;
             // 
             // RebuildPilots
             // 
-            this.RebuildPilots.Location = new System.Drawing.Point(339, 335);
-            this.RebuildPilots.Name = "RebuildPilots";
-            this.RebuildPilots.Size = new System.Drawing.Size(128, 83);
-            this.RebuildPilots.TabIndex = 9;
-            this.RebuildPilots.Text = "Пересобрать пилотов";
-            this.RebuildPilots.UseVisualStyleBackColor = true;
-            this.RebuildPilots.Click += new System.EventHandler(this.RebuildPilots_Click);
+            RebuildPilots.Location = new Point(424, 419);
+            RebuildPilots.Margin = new Padding(4);
+            RebuildPilots.Name = "RebuildPilots";
+            RebuildPilots.Size = new Size(160, 104);
+            RebuildPilots.TabIndex = 9;
+            RebuildPilots.Text = "Пересобрать пилотов";
+            RebuildPilots.UseVisualStyleBackColor = true;
+            RebuildPilots.Click += RebuildPilots_Click;
             // 
             // ReadScores
             // 
-            this.ReadScores.Location = new System.Drawing.Point(639, 325);
-            this.ReadScores.Name = "ReadScores";
-            this.ReadScores.Size = new System.Drawing.Size(128, 83);
-            this.ReadScores.TabIndex = 10;
-            this.ReadScores.Text = "Перенести балы в общую таблицу";
-            this.ReadScores.UseVisualStyleBackColor = true;
-            this.ReadScores.Click += new System.EventHandler(this.ReadScores_Click);
+            ReadScores.Location = new Point(799, 406);
+            ReadScores.Margin = new Padding(4);
+            ReadScores.Name = "ReadScores";
+            ReadScores.Size = new Size(160, 104);
+            ReadScores.TabIndex = 10;
+            ReadScores.Text = "Перенести балы в общую таблицу";
+            ReadScores.UseVisualStyleBackColor = true;
+            ReadScores.Click += ReadScores_Click;
             // 
             // SortScores
             // 
-            this.SortScores.Location = new System.Drawing.Point(791, 325);
-            this.SortScores.Name = "SortScores";
-            this.SortScores.Size = new System.Drawing.Size(128, 83);
-            this.SortScores.TabIndex = 11;
-            this.SortScores.Text = "Сортировать общую таблицу по балам";
-            this.SortScores.UseVisualStyleBackColor = true;
-            this.SortScores.Click += new System.EventHandler(this.SortScores_Click);
+            SortScores.Location = new Point(989, 406);
+            SortScores.Margin = new Padding(4);
+            SortScores.Name = "SortScores";
+            SortScores.Size = new Size(160, 104);
+            SortScores.TabIndex = 11;
+            SortScores.Text = "Сортировать общую таблицу по балам";
+            SortScores.UseVisualStyleBackColor = true;
+            SortScores.Click += SortScores_Click;
             // 
             // ReadTimes
             // 
-            this.ReadTimes.Location = new System.Drawing.Point(639, 414);
-            this.ReadTimes.Name = "ReadTimes";
-            this.ReadTimes.Size = new System.Drawing.Size(128, 83);
-            this.ReadTimes.TabIndex = 12;
-            this.ReadTimes.Text = "Перенести время в общую таблицу";
-            this.ReadTimes.UseVisualStyleBackColor = true;
-            this.ReadTimes.Click += new System.EventHandler(this.ReadTimes_Click);
+            ReadTimes.Location = new Point(799, 518);
+            ReadTimes.Margin = new Padding(4);
+            ReadTimes.Name = "ReadTimes";
+            ReadTimes.Size = new Size(160, 104);
+            ReadTimes.TabIndex = 12;
+            ReadTimes.Text = "Перенести время в общую таблицу";
+            ReadTimes.UseVisualStyleBackColor = true;
+            ReadTimes.Click += ReadTimes_Click;
             // 
             // SortTimes
             // 
-            this.SortTimes.Location = new System.Drawing.Point(791, 414);
-            this.SortTimes.Name = "SortTimes";
-            this.SortTimes.Size = new System.Drawing.Size(128, 83);
-            this.SortTimes.TabIndex = 13;
-            this.SortTimes.Text = "Сортировать времена";
-            this.SortTimes.UseVisualStyleBackColor = true;
-            this.SortTimes.Click += new System.EventHandler(this.SortTimes_Click);
+            SortTimes.Location = new Point(989, 518);
+            SortTimes.Margin = new Padding(4);
+            SortTimes.Name = "SortTimes";
+            SortTimes.Size = new Size(160, 104);
+            SortTimes.TabIndex = 13;
+            SortTimes.Text = "Сортировать времена";
+            SortTimes.UseVisualStyleBackColor = true;
+            SortTimes.Click += SortTimes_Click;
             // 
             // numbersOfKarts
             // 
-            this.numbersOfKarts.Location = new System.Drawing.Point(30, 335);
-            this.numbersOfKarts.Name = "numbersOfKarts";
-            this.numbersOfKarts.Size = new System.Drawing.Size(125, 162);
-            this.numbersOfKarts.TabIndex = 14;
-            this.numbersOfKarts.Text = "";
-            this.numbersOfKarts.TextChanged += new System.EventHandler(this.numbersOfKarts_TextChanged);
-            this.numbersOfKarts.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.numbersOfKarts_KeyPress);
+            numbersOfKarts.Location = new Point(38, 419);
+            numbersOfKarts.Margin = new Padding(4);
+            numbersOfKarts.Name = "numbersOfKarts";
+            numbersOfKarts.Size = new Size(155, 202);
+            numbersOfKarts.TabIndex = 14;
+            numbersOfKarts.Text = "";
+            numbersOfKarts.TextChanged += numbersOfKarts_TextChanged;
+            numbersOfKarts.KeyPress += numbersOfKarts_KeyPress;
+            // 
+            // DoFinalDed
+            // 
+            DoFinalDed.Location = new Point(837, 243);
+            DoFinalDed.Margin = new Padding(4);
+            DoFinalDed.Name = "DoFinalDed";
+            DoFinalDed.Size = new Size(212, 114);
+            DoFinalDed.TabIndex = 15;
+            DoFinalDed.Text = "Распределить Финал Дед";
+            DoFinalDed.UseVisualStyleBackColor = true;
+            DoFinalDed.Click += DoFinalDed_Click;
+            // 
+            // DoQualDead
+            // 
+            DoQualDead.Location = new Point(372, 248);
+            DoQualDead.Margin = new Padding(4);
+            DoQualDead.Name = "DoQualDead";
+            DoQualDead.Size = new Size(212, 114);
+            DoQualDead.TabIndex = 16;
+            DoQualDead.Text = "Распределить Квалу Дед";
+            DoQualDead.UseVisualStyleBackColor = true;
+            DoQualDead.Click += DoQualDead_Click;
+            // 
+            // SortTimeDead
+            // 
+            SortTimeDead.Location = new Point(635, 248);
+            SortTimeDead.Margin = new Padding(4);
+            SortTimeDead.Name = "SortTimeDead";
+            SortTimeDead.Size = new Size(160, 104);
+            SortTimeDead.TabIndex = 17;
+            SortTimeDead.Text = "Сортировать времена Дед";
+            SortTimeDead.UseVisualStyleBackColor = true;
+            SortTimeDead.Click += SortTimeDead_Click;
             // 
             // JuniorReg
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(969, 524);
-            this.Controls.Add(this.numbersOfKarts);
-            this.Controls.Add(this.SortTimes);
-            this.Controls.Add(this.ReadTimes);
-            this.Controls.Add(this.SortScores);
-            this.Controls.Add(this.ReadScores);
-            this.Controls.Add(this.RebuildPilots);
-            this.Controls.Add(this.DoFinal);
-            this.Controls.Add(this.DoRace2);
-            this.Controls.Add(this.DoRace1);
-            this.Controls.Add(this.DoQualByList);
-            this.Controls.Add(this.DoQualRandom);
-            this.Controls.Add(this.Clear);
-            this.Name = "JuniorReg";
-            this.Text = "JuniorReg";
-            this.ResumeLayout(false);
-
+            AutoScaleDimensions = new SizeF(10F, 25F);
+            AutoScaleMode = AutoScaleMode.Font;
+            ClientSize = new Size(1211, 655);
+            Controls.Add(SortTimeDead);
+            Controls.Add(DoQualDead);
+            Controls.Add(DoFinalDed);
+            Controls.Add(numbersOfKarts);
+            Controls.Add(SortTimes);
+            Controls.Add(ReadTimes);
+            Controls.Add(SortScores);
+            Controls.Add(ReadScores);
+            Controls.Add(RebuildPilots);
+            Controls.Add(DoFinal);
+            Controls.Add(DoRace2);
+            Controls.Add(DoRace1);
+            Controls.Add(DoQualByList);
+            Controls.Add(DoQualRandom);
+            Controls.Add(Clear);
+            Margin = new Padding(4);
+            Name = "JuniorReg";
+            Text = "JuniorReg";
+            ResumeLayout(false);
         }
 
         #endregion
@@ -199,5 +250,8 @@
         private Button ReadTimes;
         private Button SortTimes;
         private RichTextBox numbersOfKarts;
+        private Button DoFinalDed;
+        private Button DoQualDead;
+        private Button SortTimeDead;
     }
 }

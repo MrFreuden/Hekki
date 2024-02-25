@@ -98,7 +98,9 @@ namespace ExcelController
             var keyCells2 = FindKeyCellByValue("Сума", null);
             string ad1 = keyCells[0][2, 3].Address.Replace("$", String.Empty);
             string ad2 = keyCells2[0].Address.Replace("$", String.Empty);
-            ad2 = ad2[0] + (ad2[1] + countPilots.ToString());
+            var t = ad2[1];
+            var t2 = ad2[0];
+            ad2 = ad2[0] + (ad2[1] - '0' + countPilots).ToString();
             return excel.get_Range(ad1, ad2);
         }
 
