@@ -89,7 +89,7 @@ namespace RaceLogic.Regulations
             int w = 4;
 
             Range rangeToSort = ExcelWorker.excel.Range[firstCell + w.ToString(), lastCell];
-            var c2 = rangeToSort.Columns[6];
+            var c2 = rangeToSort.Columns[keyCell[0].Column];
             rangeToSort.Sort(c2, XlSortOrder.xlAscending);
         }
     }
