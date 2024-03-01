@@ -78,19 +78,5 @@ namespace RaceLogic.Regulations
             Race.StartFinalRace(pilots, numbersKarts, numberRace);
 
         }
-
-        public void SortTimeDead()
-        {
-            string firstCell = "C";
-            var keyCell = ExcelWorker.FindKeyCellByValue("Усього", null);
-            var address = keyCell[0].Address;
-            string lastCell = address[1].ToString();
-            lastCell += (3 + pilots.Count).ToString();
-            int w = 4;
-
-            Range rangeToSort = ExcelWorker.excel.Range[firstCell + w.ToString(), lastCell];
-            var c2 = rangeToSort.Columns[keyCell[0].Column];
-            rangeToSort.Sort(c2, XlSortOrder.xlAscending);
-        }
     }
 }

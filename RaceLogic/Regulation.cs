@@ -106,6 +106,20 @@ namespace RaceLogic
             }
         }
 
+        public virtual void SortTimeDead()
+        {
+            string firstCell = "C";
+            var keyCell = ExcelWorker.FindKeyCellByValue("Усього", null);
+            var address = keyCell[0].Address;
+            string lastCell = address[1].ToString();
+            lastCell += (3 + pilots.Count).ToString();
+            int w = 4;
+
+            Range rangeToSort = ExcelWorker.excel.Range[firstCell + w.ToString(), lastCell];
+            var c2 = rangeToSort.Columns[keyCell[0].Column - 2];
+            rangeToSort.Sort(c2, XlSortOrder.xlAscending);
+        }
+
         public virtual void SortScores()
         {
             var keyCells = ExcelWorker.FindKeyCellByValue("Сума", null);
