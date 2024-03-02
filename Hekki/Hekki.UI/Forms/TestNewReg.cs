@@ -115,5 +115,10 @@ namespace Hekki
             testNew.DoNextRace(numbersKarts);
             testNew.WriteUsedKarts();
         }
+
+        private void SortTimeDead_Click(object sender, EventArgs e)
+        {
+            testNew.SortTimeDead();
+        }
     }
 }

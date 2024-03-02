@@ -22,7 +22,7 @@ namespace Hekki
 
         private void DoQual1_Click(object sender, EventArgs e)
         {
-            
+
             cherkasy.DoQualRace(numbersKarts);
             cherkasy.WriteUsedKarts();
         }
@@ -108,6 +108,11 @@ namespace Hekki
                 }
                 numbersKarts.Add(Int32.Parse(line));
             }
+        }
+
+        private void SortTimeDead_Click(object sender, EventArgs e)
+        {
+            cherkasy.SortTimeDead();
         }
     }
 }
