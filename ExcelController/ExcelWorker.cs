@@ -75,7 +75,7 @@ namespace ExcelController
                 FindKeyCellByValue("Пілоти", rangeToClean),
                 FindKeyCellByValue("Штраф", rangeToClean),
                 FindKeyCellByValue("Час", rangeToClean),
-                //FindKeyCellByValue("Им'я", rangeToClean),
+                //FindKeyCellByValue("Ім'я", rangeToClean),
                 //FindKeyCellByValue("Ліга", rangeToClean),
                 FindKeyCellByValue("Очки", rangeToClean)
         };
@@ -131,7 +131,7 @@ namespace ExcelController
 
         public static List<string> ReadNamesInTotalBoard()
         {
-            var keyCells = FindKeyCellByValue("Им'я", null);
+            var keyCells = FindKeyCellByValue("Ім'я", null);
             List<string> names = new();
 
             int i = 2;
