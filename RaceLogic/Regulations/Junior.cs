@@ -9,7 +9,7 @@ namespace RaceLogic.Regulations
         public void DoQualRandom(List<int> numbersKarts)
         {
             pilots.Clear();
-            List<string> pilotsNames = ExcelWorker.ReadNamesInTotalBoard();
+            List<string> pilotsNames = ExcelRead.ReadNamesInTotalBoard();
             foreach (var pilotName in pilotsNames)
                 pilots.Add(new Pilot(pilotName));
             totalPilots = pilots.Count;
@@ -22,7 +22,7 @@ namespace RaceLogic.Regulations
         public void DoQualDead(List<int> numbersKarts, int numberOfRace)
         {
             pilots.Clear();
-            List<string> pilotsNames = ExcelWorker.ReadNamesInTotalBoard();
+            List<string> pilotsNames = ExcelRead.ReadNamesInTotalBoard();
             foreach (var pilotName in pilotsNames)
                 pilots.Add(new Pilot(pilotName));
             totalPilots = pilots.Count;
@@ -35,7 +35,7 @@ namespace RaceLogic.Regulations
         public void DoQualByList(List<int> numbersKarts)
         {
             pilots.Clear();
-            List<string> pilotsNames = ExcelWorker.ReadNamesInTotalBoard();
+            List<string> pilotsNames = ExcelRead.ReadNamesInTotalBoard();
             foreach (var pilotName in pilotsNames)
                 pilots.Add(new Pilot(pilotName));
             totalPilots = pilots.Count;

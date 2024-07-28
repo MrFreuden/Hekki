@@ -7,28 +7,26 @@ namespace ExcelWorkerTest
     [TestFixture]
     public class WriterTests
     {
-        private static Fixture _fixture = new();
-        private ExcelWorker excelWorker;
-        private List<string> namesFromTxt;
-        private int countValues;
+        private static readonly Fixture _fixture = new();
+        private ExcelWorker _excelWorker;
+        private List<string> _namesFromTxt;
+        private int _countValues;
 
         [OneTimeSetUp]
         public void Setup()
         {
-            excelWorker = new();
-            countValues = GetCountOfPilosValues();
-            namesFromTxt = ExcelWorker.ReadTestNamesFromTxt();
-            namesFromTxt.RemoveRange(0, namesFromTxt.Count - countValues);
+            _excelWorker = new ExcelWorker();
+            _countValues = GetCountOfPilosValues();
+            _namesFromTxt = ExcelRead.ReadTestNamesFromTxt().Take(_countValues).ToList();
 
             ExcelWorker.excel.ActiveWorkbook.Sheets["ExcelTests"].Select();
-            ExcelWorker.CleanData();
+            ExcelWrite.CleanData();
         }
 
         private int GetCountOfPilosValues()
         {
             var fixtureForCountValues = new Fixture();
-            fixtureForCountValues.Customizations.Add(
-                new RandomNumericSequenceGenerator(8, 40));
+            fixtureForCountValues.Customizations.Add(new RandomNumericSequenceGenerator(8, 40));
             return fixtureForCountValues.Create<int>();
         }
 
@@ -36,275 +34,218 @@ namespace ExcelWorkerTest
         public void WriteLique_MethodIsInvoked_ExcelCorrectValue()
         {
             // Arrange
-            var liqueLabels = new List<string>(2) { "Am", "Pro" };
-            Random rnd = new();
-            List<string> pilotsLiques = new();
-            for (int i = 0; i < countValues; i++)
-            {
-                pilotsLiques.Add(liqueLabels[rnd.Next(0, 2)]);
-            }
+            var liqueLabels = new List<string> { "Am", "Pro" };
+            var pilotsLiques = Enumerable.Range(0, _countValues)
+                                         .Select(_ => liqueLabels[_fixture.Create<int>() % 2])
+                                         .ToList();
 
             // Act
-            ExcelWorker.WriteDataInCol(
-                "Лига",
-                pilotsLiques);
+            ExcelWrite.WriteDataInCol("Ліга", pilotsLiques);
 
             // Assert
-            int row = 4;
-            for (int i = 0; i < countValues; i++, row++)
-            {
-                Assert.AreEqual(ExcelWorker.excel.Cells[row, 3].Value.ToString(), pilotsLiques[i]);
-            }
+            AssertColumnValues("Ліга", pilotsLiques);
         }
 
         [Test]
         public void WriteNamesInRace_MethodIsInvoked_ExcelCorrectValue()
         {
             // Arrange
-            List<List<string>> pilotsNamesByGroup = new();
-            int countGroups = (int)Math.Ceiling((double)countValues / ExcelWorker.MAXkarts);
-            for (int i = 0; i < countGroups; i++)
-                pilotsNamesByGroup.Add(new List<string>());
-
-            for (int i = 0, j = 0; j < countValues; i++, j++)
-            {
-                if (i == countGroups)
-                    i = 0;
-                pilotsNamesByGroup[i].Add(namesFromTxt[j]);
-            }
-            int numberRace = 0;
+            var pilotsNamesByGroup = GroupValues(_namesFromTxt, ExcelWorker.MAXkarts);
 
             // Act
-            ExcelWorker.WriteInfoDataInRace(
-                "Пилоты",
-                pilotsNamesByGroup);
+            ExcelWrite.WriteInfoDataInRace("Пілоти", pilotsNamesByGroup);
 
             // Assert
-            int row = 4;
-            int col = 19;
-            for (int i = 0, j = 0; row < ExcelWorker.MAXkarts * countGroups + 4; i++, row++)
-            {
-                if (i % ExcelWorker.MAXkarts == 0 && i != 0)
-                {
-                    j++;
-                    row--;
-                    i = -1;
-                    continue;
-                }
-                var ex = Convert.ToString(ExcelWorker.excel.Cells[row, col].Value);
-                ex ??= "";
-                var val = pilotsNamesByGroup[j][i].ToString();
-                Assert.AreEqual(ex, val);
-            }
+            AssertGroupedValues("Пілоти", pilotsNamesByGroup);
         }
 
         [Test]
         public void WriteKartsInRace_MethodIsInvoked_ExcelCorrectValue()
         {
             // Arrange
-            var fixture = new Fixture();
-            fixture.Customizations.Add(new RandomNumericSequenceGenerator(1, 8));
-            List<List<string>> pilotsKartsByGroup = new();
-
-            int countGroups = (int)Math.Ceiling((double)countValues / ExcelWorker.MAXkarts);
-            for (int i = 0; i < countGroups; i++)
-                pilotsKartsByGroup.Add(new List<string>());
-
-            for (int i = 0, j = 0; j < countValues; i++, j++)
-            {
-                if (i == countGroups)
-                    i = 0;
-                var val = fixture.Create<int>();
-                pilotsKartsByGroup[i].Add(val.ToString());
-            }
-            int numberRace = 0;
+            var pilotsKartsByGroup = GroupValues(GenerateRandomValues(_countValues, 1, 8), ExcelWorker.MAXkarts);
 
             // Act
-            ExcelWorker.WriteInfoDataInRace(
-                "Карт",
-                pilotsKartsByGroup);
+            ExcelWrite.WriteInfoDataInRace("Карт", pilotsKartsByGroup);
 
             // Assert
-            int row = 4;
-            int col = 17;
-            for (int i = 0, j = 0; row < ExcelWorker.MAXkarts * countGroups + 4; i++, row++)
-            {
-                if (i % ExcelWorker.MAXkarts == 0 && i != 0)
-                {
-                    j++;
-                    row--;
-                    i = -1;
-                    continue;
-                }
-                var ex = Convert.ToString(ExcelWorker.excel.Cells[row, col].Value);
-                ex ??= "";
-                var val = pilotsKartsByGroup[j][i].ToString();
-                Assert.AreEqual(ex, val);
-            }
+            AssertGroupedValues("Карт", pilotsKartsByGroup);
         }
 
         [Test]
         public void WriteUsedKarts_MethodIsInvoked_ExcelCorrectValue()
         {
             // Arrange
-            var fixture = new Fixture();
-            fixture.Customizations.Add(new RandomNumericSequenceGenerator(1, 8));
-            List<string> pilotsKarts = new();
-            for (int i = 0; i < countValues; i++)
-            {
-                pilotsKarts.Add(Convert.ToString(fixture.Create<int>()));
-            }
+            var pilotsKarts = GenerateRandomValues(_countValues, 1, 8);
+
             // Act
-            ExcelWorker.WriteDataInCol(
-                "Номера",
-                pilotsKarts);
+            ExcelWrite.WriteDataInCol("Номера", pilotsKarts);
 
             // Assert
-            int row = 4;
-            for (int i = 0; i < countValues; i++, row++)
-            {
-                Assert.AreEqual(ExcelWorker.excel.Cells[row, 4].Value.ToString(), pilotsKarts[i]);
-            }
+            AssertColumnValues("Номера", pilotsKarts);
         }
 
         [Test, Order(1)]
         public void WriteUsedKartsAmators_MethodIsInvoked_ExcelCorrectValue()
         {
             // Arrange
-            List<string> pilotsKarts = new();
-            int countMargin = 4;
-            var fixture = new Fixture();
-            fixture.Customizations.Add(new RandomNumericSequenceGenerator(1, 8));
-            int count = fixture.Create<int>();
-            for (int i = 0; i < count; i++)
-            {
-                pilotsKarts.Add(Convert.ToString(fixture.Create<int>()));
-            }
+            var pilotsKarts = GenerateRandomValues(_countValues, 1, 8);
 
             // Act
-            ExcelWorker.WriteDataInCol(
-                "Номера",
-                pilotsKarts,
-                countMargin);
+            ExcelWrite.WriteDataInCol("Номера", pilotsKarts);
 
             // Assert
-            int row = 4 + countMargin;
-            for (int i = 0; i < count; i++, row++)
-            {
-                Assert.AreEqual(ExcelWorker.excel.Cells[row, 4].Value.ToString(), pilotsKarts[i]);
-            }
+            AssertColumnValues("Номера", pilotsKarts);
         }
 
         [Test]
         public void WriteScoreInTotalBoard_MethodIsInvoked_CorrectValue()
         {
             // Arrange
-            List<List<string>> pilotsScores = new();
-
-            for (int i = 0; i < countValues; i++)
-            {
-                pilotsScores.Add(new List<string>());
-                for (int j = 0; j < 5; j++)
-                {
-                    pilotsScores[i].Add(_fixture.Create<int>().ToString());
-                }
-            }
+            var pilotsScores = GenerateRandomMatrix(_countValues, 4);
 
             // Act
-            ExcelWorker.WriteResultsInTB(
-                "Хит",
-                pilotsScores);
+            ExcelWrite.WriteResultsInTB("Хіт", pilotsScores);
 
             // Assert
-            int row = 4;
-            for (int i = 0; i < countValues; i++, row++)
-            {
-                int col = 9;
-                for (int j = 0; j < 5; j++, col++)
-                {
-                    Assert.AreEqual(ExcelWorker.excel.Cells[row, col].Value.ToString(), pilotsScores[i][j]);
-                }
-            }
+            AssertMatrixValues("Хіт", pilotsScores);
         }
 
         [Test]
         public void WriteTimeInTotalBoard_MethodIsInvoked_CorrectValue()
         {
             // Arrange
-            List<List<string>> pilotsTimes = new();
-
-            for (int i = 0; i < countValues; i++)
-            {
-                pilotsTimes.Add(new List<string>());
-                for (int j = 0; j < 3; j++)
-                {
-                    pilotsTimes[i].Add(_fixture.Create<int>().ToString());
-                }
-            }
+            var pilotsTimes = GenerateRandomMatrix(_countValues, 2);
 
             // Act
-            ExcelWorker.WriteResultsInTB(
-                "Best Lap",
-                pilotsTimes);
+            ExcelWrite.WriteResultsInTB("Best Lap", pilotsTimes);
 
             // Assert
-            int row = 4;
-            for (int i = 0; i < countValues; i++, row++)
-            {
-                int col = 6;
-                for (int j = 0; j < 3; j++, col++)
-                {
-                    Assert.AreEqual(ExcelWorker.excel.Cells[row, col].Value.ToString(), pilotsTimes[i][j]);
-                }
-            }
+            AssertMatrixValues("Best Lap", pilotsTimes);
         }
 
         [Test]
         public void WriteNamesInTotalBoard_MethodIsInvoked_ExcelCorrectValue()
         {
             // Arrange
-            List<string> names = namesFromTxt;
+            var names = _namesFromTxt;
 
             // Act
-            ExcelWorker.WriteDataInCol(
-                "Имя",
-                names);
+            ExcelWrite.WriteDataInCol("Ім'я", names);
 
             // Assert
-            int row = 4;
-            for (int i = 0; i < names.Count; i++, row++)
-            {
-                Assert.AreEqual(ExcelWorker.excel.Cells[row, 5].Value.ToString(), names[i]);
-            }
+            AssertColumnValues("Ім'я", names);
         }
 
         [Test]
         public void WriteUsedKartsInTotalBoard_MethodIsInvoked_ExcelCorrectValue()
         {
             // Arrange
-            List<List<int>> numberKarts = new();
-            var fixture = new Fixture();
-            fixture.Customizations.Add(new RandomNumericSequenceGenerator(1, 8));
-            for (int i = 0; i < countValues; i++)
-            {
-                numberKarts.Add(new List<int>());
-                for (int j = 0; j < 1; j++)
-                {
-                    numberKarts[i].Add(fixture.Create<int>());
-                }
-            }
-
+            var numberKarts = GenerateRandomIntMatrix(_countValues, 1);
 
             // Act
-            ExcelWorker.WriteUsedKartsInTotalBoard(
-                numberKarts);
+            ExcelWrite.WriteUsedKartsInTotalBoard(numberKarts);
 
             // Assert
-            int row = 4;
-            for (int i = 0; i < countValues; i++, row++)
+            AssertMatrixValues("Номера", numberKarts);
+        }
+
+        private void AssertColumnValues(string columnName, List<string> expectedValues, int startRow = 4)
+        {
+            int column = GetColumnIndexByName(columnName);
+            for (int i = 0; i < expectedValues.Count; i++)
             {
-                Assert.AreEqual(ExcelWorker.excel.Cells[row, 4].Value.ToString(), numberKarts[i][0].ToString());
+                Assert.AreEqual(expectedValues[i], ExcelWorker.excel.Cells[startRow + i, column].Value.ToString());
             }
+        }
+
+        private void AssertGroupedValues(string columnName, List<List<string>> groupedValues, int startRow = 4)
+        {
+            int column = GetColumnIndexByName(columnName);
+            int row = startRow;
+            foreach (var group in groupedValues)
+            {
+                foreach (var value in group)
+                {
+                    Assert.AreEqual(value, ExcelWorker.excel.Cells[row++, column].Value.ToString());
+                }
+            }
+        }
+
+        private void AssertMatrixValues(string columnName, List<List<int>> matrixValues, int startRow = 4)
+        {
+            int startColumn = GetColumnIndexByName(columnName);
+            for (int i = 0; i < matrixValues.Count; i++)
+            {
+                for (int j = 0; j < matrixValues[i].Count; j++)
+                {
+                    Assert.AreEqual(matrixValues[i][j].ToString(), ExcelWorker.excel.Cells[startRow + i, startColumn + j].Value.ToString());
+                }
+            }
+        }
+
+        private void AssertMatrixValues(string columnName, List<List<string>> matrixValues, int startRow = 4)
+        {
+            int startColumn = GetColumnIndexByName(columnName);
+            for (int i = 0; i < matrixValues.Count; i++)
+            {
+                for (int j = 0; j < matrixValues[i].Count; j++)
+                {
+                    Assert.AreEqual(matrixValues[i][j], ExcelWorker.excel.Cells[startRow + i, startColumn + j].Value.ToString());
+                }
+            }
+        }
+
+        private int GetColumnIndexByName(string columnName)
+        {
+            var columnIndices = new Dictionary<string, int>
+            {
+                { "Ліга", 3 },
+                { "Пілоти", 18 },
+                { "Карт", 17 },
+                { "Номера", 4 },
+                { "Ім'я", 5 },
+                { "Хіт", 9 },
+                { "Best Lap", 6 }
+            };
+
+            return columnIndices[columnName];
+        }
+
+        private List<List<string>> GenerateRandomMatrix(int rows, int cols)
+        {
+            return Enumerable.Range(0, rows)
+                             .Select(_ => GenerateRandomValues(cols, 1, 100))
+                             .ToList();
+        }
+
+        private List<string> GenerateRandomValues(int count, int minValue, int maxValue)
+        {
+            var fixture = new Fixture();
+            fixture.Customizations.Add(new RandomNumericSequenceGenerator(minValue, maxValue));
+            return Enumerable.Range(0, count).Select(_ => fixture.Create<int>().ToString()).ToList();
+        }
+
+        private List<List<int>> GenerateRandomIntMatrix(int rows, int cols)
+        {
+            return Enumerable.Range(0, rows)
+                             .Select(_ => GenerateRandomIntValues(cols, 1, 100))
+                             .ToList();
+        }
+
+        private List<int> GenerateRandomIntValues(int count, int minValue, int maxValue)
+        {
+            var fixture = new Fixture();
+            fixture.Customizations.Add(new RandomNumericSequenceGenerator(minValue, maxValue));
+            return Enumerable.Range(0, count).Select(_ => fixture.Create<int>()).ToList();
+        }
+
+        private List<List<string>> GroupValues(List<string> values, int groupSize)
+        {
+            return values.Select((value, index) => new { value, index })
+                         .GroupBy(x => x.index / groupSize)
+                         .Select(g => g.Select(x => x.value).ToList())
+                         .ToList();
         }
     }
 }

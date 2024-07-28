@@ -16,7 +16,7 @@ namespace ExcelWorkerTest
         public void Setup()
         {
             ExcelWorker.excel.ActiveWorkbook.Sheets["ExcelTests"].Select();
-            namesFromTxt = ExcelWorker.ReadNamesInTotalBoard();
+            namesFromTxt = ExcelRead.ReadNamesInTotalBoard();
             countPilots = namesFromTxt.Count;
         }
 
@@ -26,7 +26,7 @@ namespace ExcelWorkerTest
             // Arrange
             
             // Act
-            var sut = ExcelWorker.ReadNamesInTotalBoard();
+            var sut = ExcelRead.ReadNamesInTotalBoard();
             // Assert
             int row = 4;
             for (int i = 0; i < sut.Count; i++, row++)
@@ -41,7 +41,7 @@ namespace ExcelWorkerTest
             // Arrange
 
             // Act
-            var sut = ExcelWorker.ReadUsedKartsInTotalBoard();
+            var sut = ExcelRead.ReadUsedKartsInTotalBoard();
 
             // Assert
             int row = 4;
@@ -60,7 +60,7 @@ namespace ExcelWorkerTest
             // Arrange
 
             // Act
-            var sut = ExcelWorker.ReadResultsInTB(
+            var sut = ExcelRead.ReadResultsInTB(
                 "Хит",
                 countPilots);
 
@@ -83,7 +83,7 @@ namespace ExcelWorkerTest
             // Arrange
 
             // Act
-            var sut = ExcelWorker.ReadResultsInTB(
+            var sut = ExcelRead.ReadResultsInTB(
                 "Best Lap",
                 countPilots);
 
@@ -105,7 +105,7 @@ namespace ExcelWorkerTest
             // Arrange
 
             // Act
-            var sut = ExcelWorker.ReadLique(
+            var sut = ExcelRead.ReadLique(
                 countPilots);
 
             // Assert
@@ -122,22 +122,18 @@ namespace ExcelWorkerTest
             // Arrange
 
             // Act
-            var sut = ExcelWorker.ReadResultsInRace(
-                "Итого",
+            var sut = ExcelRead.ReadResultsInRace(
+                "Разом",
                 countPilots, 
                 out int[] cols);
 
             // Assert
-            int col = 23;
+            int col = 22;
             for (int i = 0; i < 1; i++)
             {
                 int row = 4;
                 for (int j = 0; j < countPilots; row++)
                 {
-                    if (ExcelWorker.excel.Cells[row, col].Value.ToString() == "0")
-                    {
-                        continue;
-                    }
                     Assert.AreEqual(ExcelWorker.excel.Cells[row, col].Value.ToString(), sut[i][j]);
                     j++;
                 }
@@ -150,10 +146,10 @@ namespace ExcelWorkerTest
             // Arrange
             ExcelWorker.excel.ActiveWorkbook.Sheets["every"].Select();
             int countInGroup = 8;
-            int pilotsCount = ExcelWorker.ReadNamesInTotalBoard().Count;
+            int pilotsCount = ExcelRead.ReadNamesInTotalBoard().Count;
 
             // Act
-            var sut = ExcelWorker.ReadScoresInRaceEveryOnEvery(
+            var sut = ExcelRead.ReadScoresInRaceEveryOnEvery(
                 pilotsCount,
                 countInGroup,
                 out int[] cols);
@@ -195,7 +191,7 @@ namespace ExcelWorkerTest
             // Arrange
 
             // Act
-            var sut = ExcelWorker.ReadResultsInRace(
+            var sut = ExcelRead.ReadResultsInRace(
                 "Время",
                 countPilots, 
                 out int[] cols);
@@ -221,14 +217,14 @@ namespace ExcelWorkerTest
         public void ReadNamesInRace_MethodIsInvoked_CorrectValue()
         {
             // Arrange
-            int[] indexesNeededCols = new[] {19};
+            int[] indexesNeededCols = new[] {18};
             // Act
-            var sut = ExcelWorker.ReadNamesInRace(
+            var sut = ExcelRead.ReadNamesInRace(
                 countPilots,
                 indexesNeededCols);
 
             // Assert
-            int col = 19;
+            int col = 18;
             for (int i = 0; i < 1; i++)
             {
                 int row = 4;

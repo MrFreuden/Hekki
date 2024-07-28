@@ -25,7 +25,7 @@ namespace RaceLogic.Regulations
             }
 
             pilots.Clear();
-            List<string> pilotsNames = ExcelWorker.ReadNamesInTotalBoard();
+            List<string> pilotsNames = ExcelRead.ReadNamesInTotalBoard();
             foreach (var pilotName in pilotsNames)
                 pilots.Add(new Pilot(pilotName));
             totalPilots = pilots.Count;

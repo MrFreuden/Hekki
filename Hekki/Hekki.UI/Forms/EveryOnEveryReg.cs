@@ -28,8 +28,8 @@ namespace Hekki
 
         private void Clear_Click(object sender, EventArgs e)
         {
-            ExcelWorker.CleanData(null, 11);
-            ExcelWorker.CleanData(ExcelWorker.GetTBRange(45));
+            ExcelWrite.CleanData(null, 11);
+            ExcelWrite.CleanData(ExcelHelper.GetTBRange(45));
         }
 
         private void RebuilKarts_Click(object sender, EventArgs e)

@@ -118,7 +118,7 @@ namespace RaceLogic
 
         public static void ReBuildCountPilotsInFirstGroup(List<int> numbers)
         {
-            var pilotsNames = ExcelWorker.ReadNamesInTotalBoard();
+            var pilotsNames = ExcelRead.ReadNamesInTotalBoard();
             var pilots = new List<Pilot>();
             foreach (var pilotName in pilotsNames)
                 pilots.Add(new Pilot(pilotName));
@@ -129,11 +129,11 @@ namespace RaceLogic
         public static List<Pilot> MakePilotsFromTotalBoard(int countPilots)
         {
             var pilots = new List<Pilot>();
-            var names = ExcelWorker.ReadNamesInTotalBoard();
-            var kartsMerged = ExcelWorker.ReadUsedKartsInTotalBoard();
-            var scoresMerged = ExcelWorker.ReadResultsInTB("Хіт", countPilots);
-            var timesMerged = ExcelWorker.ReadResultsInTB("Best Lap", countPilots);
-            var liques = ExcelWorker.ReadLique(countPilots);
+            var names = ExcelRead.ReadNamesInTotalBoard();
+            var kartsMerged = ExcelRead.ReadUsedKartsInTotalBoard();
+            var scoresMerged = ExcelRead.ReadResultsInTB("Хіт", countPilots);
+            var timesMerged = ExcelRead.ReadResultsInTB("Best Lap", countPilots);
+            var liques = ExcelRead.ReadLique(countPilots);
             for (int i = 0; i < countPilots; i++)
             {
                 var karts = new List<int>();
@@ -227,8 +227,8 @@ namespace RaceLogic
                     karts[i].Add(pilot.GetNumberKartByRace(numberRace));
                 }
             }
-            ExcelWorker.WriteInfoDataInRace("Пілоти", names);
-            ExcelWorker.WriteInfoDataInRace("Карт", karts);
+            ExcelWrite.WriteInfoDataInRace("Пілоти", names);
+            ExcelWrite.WriteInfoDataInRace("Карт", karts);
         }
     }
 }

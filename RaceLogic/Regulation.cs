@@ -17,7 +17,7 @@ namespace RaceLogic
 
         public void WriteTimes(List<List<string>> times)
         {
-            ExcelWorker.WriteResultsInTB("Best Lap" ,times);
+            ExcelWrite.WriteResultsInTB("Best Lap" ,times);
             AddTimesToPilots(times);
         }
 
@@ -29,7 +29,7 @@ namespace RaceLogic
 
         public void WriteScores(List<List<string>> score)
         {
-            ExcelWorker.WriteResultsInTB("Хіт", score);
+            ExcelWrite.WriteResultsInTB("Хіт", score);
             AddScoresToPilots(score);
         }
 
@@ -68,7 +68,7 @@ namespace RaceLogic
 
         public virtual void WriteUsedKarts(int countMargin = 0)
         {
-            var names = ExcelWorker.ReadNamesInTotalBoard();
+            var names = ExcelRead.ReadNamesInTotalBoard();
             List<string> karts = new();
             foreach (var name in names)
             {
@@ -77,13 +77,13 @@ namespace RaceLogic
                     continue;
                 karts.Add(pilots[index].GetAllNumbersKartsAsString());
             }
-            ExcelWorker.WriteDataInCol("Номера", karts, countMargin);
+            ExcelWrite.WriteDataInCol("Номера", karts, countMargin);
         }
 
         public virtual void SortTimeInTB()
         {
-            var keyCells = ExcelWorker.FindKeyCellByValue("Best Lap", null);
-            var range = ExcelWorker.GetTBRange(pilots.Count);
+            var keyCells = ExcelRead.FindKeyCellByValue("Best Lap", null);
+            var range = ExcelHelper.GetTBRange(pilots.Count);
 
             for (int i = 0; i < keyCells.Count; i++)
             {
@@ -93,7 +93,7 @@ namespace RaceLogic
 
         public virtual void SortTimeInRace()
         {
-            var keyCells = ExcelWorker.FindKeyCellByValue("ЧАС", null);
+            var keyCells = ExcelRead.FindKeyCellByValue("ЧАС", null);
             for (int i = 0; i < keyCells.Count; i++)
             {
                 int j = 0;
@@ -109,7 +109,7 @@ namespace RaceLogic
         public virtual void SortTimeDead()
         {
             string firstCell = "C";
-            var keyCell = ExcelWorker.FindKeyCellByValue("Усього", null);
+            var keyCell = ExcelRead.FindKeyCellByValue("Усього", null);
             var address = keyCell[0].Address;
             string lastCell = address[1].ToString();
             lastCell += (3 + pilots.Count).ToString();
@@ -122,7 +122,7 @@ namespace RaceLogic
 
         public virtual void SortScores()
         {
-            var keyCells = ExcelWorker.FindKeyCellByValue("Сума", null);
+            var keyCells = ExcelRead.FindKeyCellByValue("Сума", null);
             for (int i = 0; i < keyCells.Count; i++)
             {
                 int j = 0;
@@ -137,7 +137,7 @@ namespace RaceLogic
 
         public virtual void ReBuildPilots()
         {
-            List<string> pilotsNames = ExcelWorker.ReadNamesInTotalBoard();
+            List<string> pilotsNames = ExcelRead.ReadNamesInTotalBoard();
             pilots = Race.MakePilotsFromTotalBoard(pilotsNames.Count);
             totalPilots = pilots.Count;
             pilotsCount = pilots.Count;
@@ -167,10 +167,10 @@ namespace RaceLogic
 
         private List<List<string>> GetDataFromRace(string nameOfColumns)
         {
-            var namesInOrder = ExcelWorker.ReadNamesInTotalBoard();
+            var namesInOrder = ExcelRead.ReadNamesInTotalBoard();
             pilotsCount = namesInOrder.Count;
-            var scoresInRace = ExcelWorker.ReadResultsInRace(nameOfColumns, pilotsCount, out int[] cols);
-            var namesInRace = ExcelWorker.ReadNamesInRace(pilotsCount, cols);
+            var scoresInRace = ExcelRead.ReadResultsInRace(nameOfColumns, pilotsCount, out int[] cols);
+            var namesInRace = ExcelRead.ReadNamesInRace(pilotsCount, cols);
             return GetSortedDataInOrdenNames(scoresInRace, namesInRace, namesInOrder);
         }
     }
