@@ -52,7 +52,7 @@ namespace Hekki
 
         private void Clear_Click(object sender, EventArgs e)
         {
-            ExcelWrite.CleanData();
+            ExcelWorker.CleanData();
         }
 
         private void RebuilKarts_Click(object sender, EventArgs e)

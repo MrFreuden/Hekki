@@ -7,7 +7,7 @@ namespace RaceLogic.Regulations
         public void DoRaces(List<int> numbersKarts)
         {
             pilots.Clear();
-            List<string> pilotsNames = ExcelRead.ReadNamesInTotalBoard();
+            List<string> pilotsNames = ExcelWorker.ReadNamesInTotalBoard();
             foreach (var pilotName in pilotsNames)
                 pilots.Add(new Pilot(pilotName));
             totalPilots = pilots.Count;
@@ -19,10 +19,10 @@ namespace RaceLogic.Regulations
 
         public List<List<string>> GetScores(List<int> numbersKarts)
         {
-            var namesInOrder = ExcelRead.ReadNamesInTotalBoard();
+            var namesInOrder = ExcelWorker.ReadNamesInTotalBoard();
             pilotsCount = namesInOrder.Count;
-            var scores = ExcelRead.ReadScoresInRaceEveryOnEvery(pilotsCount, numbersKarts.Count, out int[] cols);
-            var namesInRace = ExcelRead.ReadNamesInRace(numbersKarts.Count, cols, 111);
+            var scores = ExcelWorker.ReadScoresInRaceEveryOnEvery(pilotsCount, numbersKarts.Count, out int[] cols);
+            var namesInRace = ExcelWorker.ReadNamesInRace(numbersKarts.Count, cols, 111);
 
             return GetSortedDataInOrdenNames(scores, namesInRace, namesInOrder, false);
         }

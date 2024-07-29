@@ -15,8 +15,8 @@ namespace RaceLogic.Regulations
         public void DoThreeRaces(List<int> numbersKarts)
         {
             pilots.Clear();
-            ExcelWrite.CleanData();
-            List<string> pilotsNames = ExcelRead.ReadNamesInTotalBoard();
+            ExcelWorker.CleanData();
+            List<string> pilotsNames = ExcelWorker.ReadNamesInTotalBoard();
             foreach (var pilotName in pilotsNames)
                 pilots.Add(new Pilot(pilotName));
             totalPilots = pilots.Count;
@@ -30,7 +30,7 @@ namespace RaceLogic.Regulations
         {
             pilots.Clear();
             Race.ReBuildCountPilotsInFirstGroup(numbersKarts);
-            List<string> pilotsNames = ExcelRead.ReadNamesInTotalBoard();
+            List<string> pilotsNames = ExcelWorker.ReadNamesInTotalBoard();
             foreach (var pilotName in pilotsNames)
                 pilots.Add(new Pilot(pilotName));
             pilots = Race.MakePilotsFromTotalBoard(pilots.Count);
@@ -53,8 +53,8 @@ namespace RaceLogic.Regulations
             {
                 if (pilots.Count < 21)
                 {
-                    var k1 = ExcelRead.FindKeyCellByValue("Карт", null);
-                    var k2 = ExcelRead.FindKeyCellByValue("Пилоты", null);
+                    var k1 = ExcelWorker.FindKeyCellByValue("Карт", null);
+                    var k2 = ExcelWorker.FindKeyCellByValue("Пилоты", null);
                     k1[3][2] = 0.ToString();
                     k2[3][2] = 0.ToString();
                 }
@@ -75,7 +75,7 @@ namespace RaceLogic.Regulations
         public void DoQualRandom(List<int> numbersKarts)
         {
             pilots.Clear();
-            List<string> pilotsNames = ExcelRead.ReadNamesInTotalBoard();
+            List<string> pilotsNames = ExcelWorker.ReadNamesInTotalBoard();
             foreach (var pilotName in pilotsNames)
                 pilots.Add(new Pilot(pilotName));
             totalPilots = pilots.Count;
@@ -88,7 +88,7 @@ namespace RaceLogic.Regulations
         public void DoQualByList(List<int> numbersKarts)
         {
             pilots.Clear();
-            List<string> pilotsNames = ExcelRead.ReadNamesInTotalBoard();
+            List<string> pilotsNames = ExcelWorker.ReadNamesInTotalBoard();
             foreach (var pilotName in pilotsNames)
                 pilots.Add(new Pilot(pilotName));
             totalPilots = pilots.Count;
@@ -127,7 +127,7 @@ namespace RaceLogic.Regulations
             DefineCountPilotsInFinals();
 
             string firstCell = "C";
-            var keyCell = ExcelRead.FindKeyCellByValue("Сума", null);
+            var keyCell = ExcelWorker.FindKeyCellByValue("Сума", null);
             var address = keyCell[0].Address;
             string lastCell = address[1].ToString();
             lastCell += (3 + pilots.Count).ToString();
@@ -151,7 +151,7 @@ namespace RaceLogic.Regulations
             DefineCountPilotsInFinals();
 
             string firstCell = "C";
-            var keyCell = ExcelRead.FindKeyCellByValue("Сума", null);
+            var keyCell = ExcelWorker.FindKeyCellByValue("Сума", null);
             var address = keyCell[0].Address;
             string lastCell = address[1].ToString();
             lastCell += (3 + pilots.Count).ToString();
@@ -190,7 +190,7 @@ namespace RaceLogic.Regulations
 
         public void ReBuildPilots(List<int> numbersKarts)
         {
-            List<string> pilotsNames = ExcelRead.ReadNamesInTotalBoard();
+            List<string> pilotsNames = ExcelWorker.ReadNamesInTotalBoard();
             pilots = Race.MakePilotsFromTotalBoard(pilotsNames.Count);
             totalPilots = pilots.Count;
             pilotsCount = pilots.Count;

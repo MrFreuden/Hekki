@@ -35,7 +35,7 @@ namespace Hekki
 
         private void Clear_Click(object sender, EventArgs e)
         {
-            ExcelWrite.CleanData();
+            ExcelWorker.CleanData();
         }
 
         private void RebuildPilots_Click(object sender, EventArgs e)
@@ -45,7 +45,7 @@ namespace Hekki
 
         private void DeleteKartsFromLastRace_Click(object sender, EventArgs e)
         {
-            ExcelWrite.DeleteLastUsedKartsInTotalBoard();
+            ExcelWorker.DeleteLastUsedKartsInTotalBoard();
             _sprint.ReBuildPilots(numbersKarts);
         }
 

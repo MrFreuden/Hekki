@@ -25,7 +25,7 @@ namespace RaceLogic.Regulations
             }
 
             pilots.Clear();
-            List<string> pilotsNames = ExcelRead.ReadNamesInTotalBoard();
+            List<string> pilotsNames = ExcelWorker.ReadNamesInTotalBoard();
             foreach (var pilotName in pilotsNames)
                 pilots.Add(new Pilot(pilotName));
             totalPilots = pilots.Count;
@@ -38,8 +38,8 @@ namespace RaceLogic.Regulations
         {
             if (pilots.Count < numbersKarts.Count)
             {
-                var k1 = ExcelRead.FindKeyCellByValue("Карт", null);
-                var k2 = ExcelRead.FindKeyCellByValue("Пілоти", null);
+                var k1 = ExcelWorker.FindKeyCellByValue("Карт", null);
+                var k2 = ExcelWorker.FindKeyCellByValue("Пілоти", null);
                 k1[4][2] = 0.ToString();
                 k2[4][2] = 0.ToString();
                 return;
