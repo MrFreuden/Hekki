@@ -1,6 +1,8 @@
-﻿namespace RaceLogic
+﻿using RaceLogic.Interfaces;
+
+namespace RaceLogic
 {
-    public class Pilot
+    public class Pilot : IPilot
     {
         private string _name;
         private List<int> _usedKarts = new();

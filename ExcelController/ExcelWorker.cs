@@ -3,7 +3,7 @@ using Range = Microsoft.Office.Interop.Excel.Range;
 
 namespace ExcelController
 {
-    public class ExcelWorker
+    public class ExcelWorker : IExcelWorker
     {
         public const int MAXkarts = 10;
         public static Application excel = GetExcel();
