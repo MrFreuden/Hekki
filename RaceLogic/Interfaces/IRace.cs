@@ -8,11 +8,16 @@ namespace RaceLogic.Interfaces
 {
     public interface IRace
     {
+        ISortMethod SortMethod { get; }
+        IDevideMethod DevideMethod { get; }
         void MakeHeat();
-        void SortPilots();
-        void SortTimes();
-        void SortScores();
+        void SortBoardByTime();
+        void SortBoardByScore();
         void TransferScoresToBoard();
         void TransferTimesToBoard();
+        void ClearAll();
+        void RebuildAll();
+        void SetSortMethod(ISortMethod sortMethod);
+        void SetDevideMethod(IDevideMethod devideMethod);
     }
 }

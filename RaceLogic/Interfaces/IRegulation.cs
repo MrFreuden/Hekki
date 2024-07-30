@@ -8,7 +8,8 @@ namespace RaceLogic.Interfaces
 {
     public interface IRegulation
     {
-        void SortBy(ISortByResult);
-        void SortFor(ISortForRace);
+        List<List<int>> GetCombos(List<List<IPilot>> pilots);
+        void Sort(List<IPilot> pilots, ISortMethod sortMethod);
+        List<List<IPilot>> Devide(IDevideMethod devideMethod, int groupAmount);
     }
 }

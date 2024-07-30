@@ -4,10 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ExcelController
+namespace RaceLogic
 {
-    public class ExcelReader : IExcelReader
+    public interface IDevideMethod
     {
-
     }
 }

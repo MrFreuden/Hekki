@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace RaceLogic
-{
+{// Взаимодействуем с таблицей Excel
     public class RaceService : IRaceService
     {
         private IExcelHelper _excelHelper;
@@ -43,7 +43,7 @@ namespace RaceLogic
             throw new NotImplementedException();
         }
 
-        public void WriteNamesInRace()
+        public void WriteDataInRace()
         {
             throw new NotImplementedException();
         }
@@ -59,11 +59,6 @@ namespace RaceLogic
         }
 
         public void WriteUsedKartsInBoard()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void WriteUsedKartsInRace()
         {
             throw new NotImplementedException();
         }

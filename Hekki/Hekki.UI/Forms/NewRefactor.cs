@@ -19,7 +19,8 @@ namespace Hekki
             numbersOfKarts.Lines = numbersKarts.ConvertAll<string>(delegate (int i) { return i.ToString(); }).ToArray();
 
             _raceService = new RaceService(new ExcelHelper(), new ExcelReader(), new ExcelWriter(), new ExcelWorker());
-            _race = new Race1(new NewRefactorRegulation(), _raceService, new List<Pilot>(), numbersKarts);
+            var regulation = new NewRefactorRegulation(new GroupDevider());
+            _race = new Race1(regulation, _raceService, new List<Pilot>(), numbersKarts);
         }
 
         private void DoQual1_Click(object sender, EventArgs e)

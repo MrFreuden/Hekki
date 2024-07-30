@@ -13,6 +13,13 @@ namespace RaceLogic
         private IRaceService _service;
         private List<IPilot> _pilots;
         private List<int> _numberKarts;
+        private ISortMethod _sortMethod;
+        private IDevideMethod _devideMethod;
+        private IPilotService _pilotService;
+        private int _groupAmount;
+        public ISortMethod SortMethod => _sortMethod;
+
+        public IDevideMethod DevideMethod => _devideMethod;
 
         public Race1(IRegulation regulation, IRaceService service, IEnumerable<IPilot> pilots, List<int> numberKarts)
         {
@@ -22,22 +29,21 @@ namespace RaceLogic
             _numberKarts = numberKarts;
         }
 
-        public void MakeHeat()
+        
+
+        public void RebuildAll()
         {
             throw new NotImplementedException();
         }
 
-        public void SortPilots()
+        
+
+        public void SortBoardByScore()
         {
             throw new NotImplementedException();
         }
 
-        public void SortScores()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void SortTimes()
+        public void SortBoardByTime()
         {
             throw new NotImplementedException();
         }
@@ -50,6 +56,16 @@ namespace RaceLogic
         public void TransferTimesToBoard()
         {
             throw new NotImplementedException();
+        }
+
+        public void SetDevideMethod(IDevideMethod devideMethod)
+        {
+            _devideMethod = devideMethod;
+        }
+
+        public void SetSortMethod(ISortMethod sortMethod)
+        {
+            _sortMethod = sortMethod;
         }
     }
 }

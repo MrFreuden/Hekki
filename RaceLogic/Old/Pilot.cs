@@ -2,7 +2,7 @@
 
 namespace RaceLogic
 {
-    public class Pilot : IPilot
+    public class Pilot
     {
         private string _name;
         private List<int> _usedKarts = new();
