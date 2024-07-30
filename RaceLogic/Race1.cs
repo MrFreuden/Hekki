@@ -9,7 +9,9 @@ namespace RaceLogic
 {
     public class Race1 : IRace
     {
-        public int MaxKarts { get; }
+        public int KartsCount { get => _numberKarts.Count; }
+        public int PilotsCount { get => _pilots.Count; }
+        public int GroupAmount { get => (int)Math.Ceiling((double)PilotsCount / KartsCount); }
         private IRegulation _regulation;
         private IRaceService _service;
         private List<IPilot> _pilots;
@@ -17,7 +19,6 @@ namespace RaceLogic
         private ISortMethod _sortMethod;
         private IDevideMethod _devideMethod;
         private IPilotService _pilotService;
-        private int _groupAmount;
 
         public ISortMethod SortMethod => _sortMethod;
 
@@ -25,45 +26,43 @@ namespace RaceLogic
 
         public Race1(IRegulation regulation, IRaceService service, IEnumerable<IPilot> pilots, List<int> numberKarts)
         {
-            MaxKarts = 10;  // TODO: передавать из формы. Сделать, что бы можно было менять во время гонки
             _regulation = regulation;
             _service = service;
             _pilots = pilots.ToList();
             _numberKarts = numberKarts;
-            _service.ExcelWriter.GroupAmount = _groupAmount;
         }
 
         public void MakeHeat()
         {
             _regulation.Sort(_pilots, _sortMethod);
-            var devided = _regulation.Devide(_devideMethod, _groupAmount);
+            var devided = _regulation.Devide(_devideMethod, GroupAmount);
             var karts = _regulation.GetCombos(devided);
             _pilotService.AddKarts(devided, karts);
             var names = _pilotService.GetNames(_pilots);
-            _service.ExcelWriter.WriteNamesInRace(names);
-            _service.ExcelWriter.WriteUsedKartsInRace(karts);
+            _service.WriteNamesInRace(names);
+            _service.WriteUsedKartsInRace(karts);
         }
 
         public void SortBoardByScore()
         {
-            _service.ExcelHelper.SortTable("Сума");
+            _service.SortTable("Сума");
         }
 
         public void SortBoardByTime()
         {
-            _service.ExcelHelper.SortTable("Час");
+            _service.SortTable("Час");
         }
 
         public void TransferScoresToBoard()
         {
-            var scores = _service.ExcelReader.ReadScoresInRace();
-            _service.ExcelWriter.WriteScoresInBoard(scores);
+            var scores = _service.ReadColScoresInRace();
+            _service.WriteScoresInBoard(scores);
         }
 
         public void TransferTimesToBoard()
         {
-            var times = _service.ExcelReader.ReadTimesInRace();
-            _service.ExcelWriter.WriteTimesInBoard(times);
+            var times = _service.ReadColTimesInRace();
+            _service.WriteTimesInBoard(times);
         }
 
         public void RebuildAll()
@@ -73,7 +72,7 @@ namespace RaceLogic
 
         public void ClearAll()
         {
-            _service.ExcelHelper.ClearExcelData();
+            _service.ClearExcelData();
         }
 
         public void SetDevideMethod(IDevideMethod devideMethod)

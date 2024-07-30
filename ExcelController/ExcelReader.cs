@@ -27,7 +27,7 @@ namespace ExcelController
             return names;
         }
 
-        public List<List<int>> ReadScoresInBoard()
+        public List<List<int>> ReadColScoresInBoard(int countRows)
         {
             var keyCells = _excelHelper.FindKeyCellByValue("Хіт", _excelHelper.GetHeadersTB());
             if (keyCells.Count == 0)
@@ -39,7 +39,7 @@ namespace ExcelController
             int i = 0;
             int k = 1;
 
-            for (int j = 0; j < countPilots; j++)
+            for (int j = 0; j < countRows; j++)
             {
                 data.Add(new List<int>());
                 for (int q = 0; q < keyCells.Count; q++)
@@ -57,25 +57,31 @@ namespace ExcelController
             return data;
         }
 
-        public List<List<int>> ReadScoresInRace()
+        public List<int> ReadColScoresInRace(int countRows, int startRow)
         {
-            var pilotsData = new List<List<string>>();
             var keyCells = _excelHelper.FindKeyCellByValue("Разом", null);
-            cols = new int[keyCells.Count];
-            for (int j = 0; j < keyCells.Count; j++)
+            var scores = new List<int>();
+            for (int i = startRow; i < countRows; i++)
             {
-                var startIndexKey = keyCells[j].Row + 1;
-                int columnIndexName = _excelHelper.GetIndexNearColLeft("Пілоти", keyCells[j].Row, keyCells[j][startIndexKey - 1].Column);
-                cols[j] = columnIndexName;
+                scores.Add(_excel.Cells[i, keyCells[0].Column].Value);
+            }
+            return scores;
+        }
 
-                if (Convert.ToString(excel.Cells[startIndexKey, columnIndexName].Value) == null)
-                    continue;
-                pilotsData.Add(new List<string>());
-                for (int i = 0; i < pilotsCount && startIndexKey < countBreaker; startIndexKey++)
+        private List<List<int>> ReadColumnsWithOffset(IList<Range> columns, int countRows, int offset)
+        {
+            var pilotsData = new List<List<int>>();
+
+            for (int j = 0; j < columns.Count; j++)
+            {
+                pilotsData.Add(new List<int>());
+                var startIndexKey = columns[j].Row + 1;
+
+                for (int i = 0; i < countRows && startIndexKey < countBreaker; startIndexKey++)
                 {
-                    if (Convert.ToString(excel.Cells[startIndexKey, columnIndexName].Value) == null)
+                    if (Convert.ToString(_excel.Cells[startIndexKey, columnIndexName].Value) == null)
                         continue;
-                    var val = Convert.ToString(excel.Cells[startIndexKey, keyCells[j].Column].Value);
+                    var val = Convert.ToString(_excel.Cells[startIndexKey, columns[j].Column].Value);
 
                     pilotsData[j].Add(val);
                     i++;
@@ -84,7 +90,7 @@ namespace ExcelController
             return pilotsData;
         }
 
-        public List<List<int>> ReadTimesInBoard()
+        public List<List<int>> ReadColTimesInBoard(int countRows)
         {
             var keyCells = _excelHelper.FindKeyCellByValue("Best Lap", _excelHelper.GetHeadersTB());
             if (keyCells.Count == 0)
@@ -96,7 +102,7 @@ namespace ExcelController
             int i = 0;
             int k = 1;
 
-            for (int j = 0; j < countPilots; j++)
+            for (int j = 0; j < countRows; j++)
             {
                 data.Add(new List<int>());
                 for (int q = 0; q < keyCells.Count; q++)
@@ -114,7 +120,7 @@ namespace ExcelController
             return data;
         }
 
-        public List<List<int>> ReadTimesInRace()
+        public List<int> ReadColTimesInRace(int countRows, int startRow)
         {
             var pilotsData = new List<List<string>>();
             var keyCells = FindKeyCellByValue(keyWord, null);

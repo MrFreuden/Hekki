@@ -11,11 +11,11 @@ namespace ExcelController
         List<string> ReadNamesInBoard();
         List<string> ReadLiquesInBoard();
         List<List<int>> ReadUsedKartsInBoard();
-        List<List<int>> ReadTimesInBoard();
-        List<List<int>> ReadScoresInBoard();
+        List<List<int>> ReadColTimesInBoard(int countRows);
+        List<List<int>> ReadColScoresInBoard(int countRows);
         List<List<int>> ReadUsedKartsInRace();
         List<List<string>> ReadNamesInRace();
-        List<List<int>> ReadScoresInRace();
-        List<List<int>> ReadTimesInRace();
+        List<int> ReadColScoresInRace(int countRows, int startRow);
+        List<int> ReadColTimesInRace(int countRows, int startRow);
     }
 }
