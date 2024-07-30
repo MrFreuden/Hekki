@@ -7,13 +7,21 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace RaceLogic
-{// Взаимодействуем с таблицей Excel
+{
     public class RaceService : IRaceService
     {
         private IExcelHelper _excelHelper;
         private IExcelReader _excelReader;
         private IExcelWriter _excelWriter;
         private IExcelWorker _excelWorker;
+
+        public IExcelWorker ExcelWorker => _excelWorker;
+
+        public IExcelWriter ExcelWriter => _excelWriter;
+
+        public IExcelReader ExcelReader => _excelReader;
+
+        public IExcelHelper ExcelHelper => _excelHelper;
 
         public RaceService(IExcelHelper excelHelper, IExcelReader excelReader, IExcelWriter excelWriter, IExcelWorker excelWorker) 
         { 
@@ -23,44 +31,6 @@ namespace RaceLogic
             _excelWorker = excelWorker;
         }
 
-        public List<string> ReadNamesInBoard()
-        {
-            throw new NotImplementedException();
-        }
-
-        public List<string> ReadNamesInRace()
-        {
-            throw new NotImplementedException();
-        }
-
-        public List<int> ReadScoresInRace()
-        {
-            throw new NotImplementedException();
-        }
-
-        public List<string> ReadTimeInRace()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void WriteDataInRace()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void WriteScoreInBoard()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void WriteTimeInBoard()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void WriteUsedKartsInBoard()
-        {
-            throw new NotImplementedException();
-        }
+        
     }
 }

@@ -13,8 +13,5 @@ namespace RaceLogic.Interfaces
         IExcelWriter ExcelWriter { get; }
         IExcelReader ExcelReader { get; }
         IExcelHelper ExcelHelper { get; }
-        
-        
-        
     }
 }

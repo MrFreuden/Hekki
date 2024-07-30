@@ -8,6 +8,7 @@ namespace RaceLogic.Interfaces
 {
     public interface IRace
     {
+        int MaxKarts { get; }
         ISortMethod SortMethod { get; }
         IDevideMethod DevideMethod { get; }
         void MakeHeat();

@@ -8,6 +8,7 @@ namespace ExcelController
 {
     public interface IExcelWriter
     {
+        int GroupAmount { get; set; }
         void WriteNamesInBoard(List<string> names);
         void WriteLiquesInBoard(List<string> liques);
         void WriteUsedKartsInBoard(List<List<int>> karts);
