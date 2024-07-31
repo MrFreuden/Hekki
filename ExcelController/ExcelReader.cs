@@ -22,5 +22,10 @@ namespace ExcelController
             }
             return data;
         }
+
+        public string ReadDataInCell(int startRow, int column)
+        {
+            return _excelWorker.ReadCell(startRow, column);
+        }
     }
 }

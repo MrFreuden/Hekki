@@ -7,7 +7,7 @@ namespace Hekki
     public partial class NewRefactor : Form
     {
         private IRace _race;
-        private IRaceService _raceService;
+        private IRaceDataService _raceService;
         private static TestNew testNew = new();
         private static List<int> numbersKarts;
 
@@ -18,7 +18,7 @@ namespace Hekki
             numbersKarts = karts;
             numbersOfKarts.Lines = numbersKarts.ConvertAll<string>(delegate (int i) { return i.ToString(); }).ToArray();
 
-            _raceService = new RaceService(new ExcelHelper(), new ExcelReader(), new ExcelWriter(), new ExcelWorker());
+            _raceService = new RaceDataService(new ExcelHelper(), new ExcelReader(), new ExcelWriter(), new ExcelWorker());
             var regulation = new NewRefactorRegulation(new GroupDevider());
             _race = new Race1(regulation, _raceService, new List<Pilot>(), numbersKarts);
         }

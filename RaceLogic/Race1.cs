@@ -13,7 +13,7 @@ namespace RaceLogic
         public int PilotsCount { get => _pilots.Count; }
         public int GroupAmount { get => (int)Math.Ceiling((double)PilotsCount / KartsCount); }
         private IRegulation _regulation;
-        private IRaceService _service;
+        private IRaceDataService _service;
         private List<IPilot> _pilots;
         private List<int> _numberKarts;
         private ISortMethod _sortMethod;
@@ -24,7 +24,7 @@ namespace RaceLogic
 
         public IDevideMethod DevideMethod => _devideMethod;
 
-        public Race1(IRegulation regulation, IRaceService service, IEnumerable<IPilot> pilots, List<int> numberKarts)
+        public Race1(IRegulation regulation, IRaceDataService service, IEnumerable<IPilot> pilots, List<int> numberKarts)
         {
             _regulation = regulation;
             _service = service;
