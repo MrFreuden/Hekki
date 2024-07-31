@@ -9,5 +9,6 @@ namespace RaceLogic.Interfaces
     public interface ICombination
     {
         List<int> GetCombo(List<List<int>> usedKarts, List<int> numberKarts);
+        void RedefineRandomWithSeed();
     }
 }
