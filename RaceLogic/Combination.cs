@@ -2,7 +2,7 @@
 
 namespace RaceLogic
 {
-    public class Combo : ICombination
+    public class Combination : ICombination
     {
         private static Random _rnd = new();
         private static List<List<int>> _allCombinations;
