@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RaceLogic
+namespace RaceLogic.Interfaces
 {
-    public interface ISortMethod
+    public interface IDevideMethod
     {
     }
 }

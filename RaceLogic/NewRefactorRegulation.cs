@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using RaceLogic.Interfaces;
 
 namespace RaceLogic
-{// Взаимодействуем с пилотами
+{
     public class NewRefactorRegulation : IRegulation
     {
         private IGroupesDevider _groupesDevider;
