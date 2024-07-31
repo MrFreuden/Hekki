@@ -1,6 +1,6 @@
 ﻿using Range = Microsoft.Office.Interop.Excel.Range;
 
-namespace ExcelController
+namespace ExcelController.Interfaces
 {
     public interface IExcelHelper
     {
@@ -9,5 +9,6 @@ namespace ExcelController
         void SortTable(string nameColumn);
         Range GetHeadersTB();
         int GetIndexNearColLeft(string keyWord, int startRow, int startCol);
+        int GetStartIndexOfEmptyTable(int row, int column);
     }
 }

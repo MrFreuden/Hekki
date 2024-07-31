@@ -1,55 +1,36 @@
-﻿using Application = Microsoft.Office.Interop.Excel.Application;
-using Range = Microsoft.Office.Interop.Excel.Range;
+﻿using ExcelController.Interfaces;
+using Application = Microsoft.Office.Interop.Excel.Application;
 
 
 namespace ExcelController
 {
     public class ExcelWriter : IExcelWriter
     {
-        private readonly Application _excel;
-        private readonly IExcelHelper _excelHelper;
+        private readonly IExcelWorker _excelWorker;
 
-        public ExcelWriter(Application excel, IExcelHelper excelHelper)
+        public ExcelWriter(IExcelWorker excelWorker)
         {
-            _excel = excel;
-            _excelHelper = excelHelper;
+            _excelWorker = excelWorker;
         }
 
-        public int GroupAmount { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-
-        public void WriteLiquesInBoard(List<string> liques)
+        public void WriteDataInColumn<T>(List<T> data, int column, int row)
         {
-            throw new NotImplementedException();
+            foreach (var dat in data)
+            {
+                _excelWorker.WriteCell(row, column, dat.ToString());
+                row++;
+            }
         }
 
-        public void WriteNamesInBoard(List<string> names)
+        public void AppendDataInColumn<T>(List<T> data, int column, int row)
         {
-            throw new NotImplementedException();
-        }
-
-        public void WriteNamesInRace(List<string> names)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void WriteScoresInBoard(List<List<int>> scores)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void WriteTimesInBoard(List<List<int>> times)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void WriteUsedKartsInBoard(List<List<int>> karts)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void WriteUsedKartsInRace(List<List<int>> karts)
-        {
-            throw new NotImplementedException();
+            foreach (var dat in data)
+            {
+                var currentData = dat.ToString();
+                var prewData = _excelWorker.ReadCell(row, column);
+                _excelWorker.WriteCell(row, column, prewData + " " + dat);
+                row++;
+            }
         }
     }
 }

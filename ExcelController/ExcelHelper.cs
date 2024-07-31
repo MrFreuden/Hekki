@@ -1,4 +1,5 @@
-﻿using Microsoft.Office.Interop.Excel;
+﻿using ExcelController.Interfaces;
+using Microsoft.Office.Interop.Excel;
 using Range = Microsoft.Office.Interop.Excel.Range;
 
 namespace ExcelController
@@ -68,7 +69,7 @@ namespace ExcelController
         {
             var keyCells = FindKeyCellByValue("№", null);
             var keyCells2 = FindKeyCellByValue("Сума", null);
-            //переписать метод без if
+            //TODO: переписать метод без if
             if (keyCells2.Count == 0)
             {
                 keyCells2 = FindKeyCellByValue("Best Lap", null);
@@ -85,6 +86,14 @@ namespace ExcelController
                 index++;
 
             return startCol - index;
+        }
+
+        public int GetStartIndexOfEmptyTable(int row, int column)
+        {
+            int index = row;
+            while (_excel.Cells[index, column].Value != null)
+                index++;
+            return index;
         }
     }
 }

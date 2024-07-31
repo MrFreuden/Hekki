@@ -18,8 +18,4 @@
     </COMReference>
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Old\" />
-  </ItemGroup>
-
 </Project>
