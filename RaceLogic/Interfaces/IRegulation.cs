@@ -10,8 +10,8 @@ namespace RaceLogic.Interfaces
     {
         void SetSortMethod(ISortMethod sortMethod);
         void SetDevideMethod(IDevideMethod devideMethod);
-        List<List<int>> GetCombos(List<List<IPilot>> pilots);
+        List<List<int>> GetCombos(List<List<IPilot>> pilots, List<int> numbersOfKarts);
         void Sort(List<IPilot> pilots);
-        List<List<IPilot>> Devide(int groupAmount);
+        List<List<IPilot>> Devide(List<IPilot> pilots, int groupAmount);
     }
 }

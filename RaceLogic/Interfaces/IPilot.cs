@@ -14,5 +14,6 @@ namespace RaceLogic.Interfaces
         string GetAllNumbersKartsAsString();
         void AddScore(int score);
         void AddTime(int time);
+        List<int> GetNumbersKarts();
     }
 }

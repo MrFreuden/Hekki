@@ -54,6 +54,11 @@ namespace RaceLogic
             _times.Add(time);
         }
 
+        public List<int> GetNumbersKarts()
+        {
+            return _usedKarts.ToList();
+        }
+
         public string GetAllNumbersKartsAsString()
         {
             string res = "";
