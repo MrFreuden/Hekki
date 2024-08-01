@@ -20,6 +20,10 @@ namespace RaceLogic
             _excelWriter = excelWriter;
         }
 
+        //TODO: перенести в отдельный класс
+
+
+
         public List<int> ReadResultsInBoard(int column, int countRows)
         {
             //var keyCells = FindKeyCellByValue("ХІТ", null);

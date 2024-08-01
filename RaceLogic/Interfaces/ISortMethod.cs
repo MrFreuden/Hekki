@@ -8,5 +8,6 @@ namespace RaceLogic.Interfaces
 {
     public interface ISortMethod
     {
+        IList<T> Sort<T>(IList<T> list);
     }
 }

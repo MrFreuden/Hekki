@@ -34,13 +34,13 @@ namespace RaceLogic
 
         public void MakeHeat()
         {
-            _regulation.Sort(_pilots, _sortMethod);
-            var devided = _regulation.Devide(_devideMethod, GroupAmount);
-            var karts = _regulation.GetCombos(devided);
+            _regulation.Sort(_pilots);
+            var devided = _regulation.Devide(_pilots, GroupAmount);
+            var karts = _regulation.GetCombos(devided, _numberKarts);
             _pilotService.AddKarts(devided, karts);
-            var names = _pilotService.GetNames(_pilots);
-            _service.WriteNamesInRace(names);
-            _service.WriteUsedKartsInRace(karts);
+            var names = _pilotService.GetNames(devided);
+            _service.WriteDataInfoInRace(names, "");
+            _service.WriteDataInfoInRace(karts, "");
         }
 
         public void SortBoardByScore()
