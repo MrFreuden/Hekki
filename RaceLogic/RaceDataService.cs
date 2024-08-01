@@ -24,7 +24,7 @@ namespace RaceLogic
 
 
 
-        public List<int> ReadResultsInBoard(int column, int countRows)
+        public List<int> ReadResultsInBoard(string nameOfColumn, int countRows)
         {
             //var keyCells = FindKeyCellByValue("ХІТ", null);
             //var keyCells = FindKeyCellByValue("Best Lap", null);
@@ -32,7 +32,7 @@ namespace RaceLogic
             return ConvertDataToInt(result);
         }
 
-        public List<List<int>> ReadResultsInRace(int column, List<int> countRows)
+        public List<List<int>> ReadResultsInRace(string nameOfColumn, List<int> countRows)
         {
             var result = new List<List<int>>(countRows.Count);
             var startRow = StartRowByDefault;
@@ -45,7 +45,7 @@ namespace RaceLogic
             return result;
         }
 
-        public List<List<string>> ReadNamesInRace(int column, List<int> countRows)
+        public List<List<string>> ReadNamesInRace(string nameOfColumn, List<int> countRows)
         {
             var names = new List<List<string>>(countRows.Count);
             var startRow = StartRowByDefault;
@@ -57,7 +57,7 @@ namespace RaceLogic
             return names;
         }
 
-        public List<List<int>> ReadUsedKartsInBoard(int column, int countRows)
+        public List<List<int>> ReadUsedKartsInBoard(string nameOfColumn, int countRows)
         {
             var karts = new List<List<int>>(countRows);
             var currentRow = StartRowByDefault;
@@ -69,7 +69,7 @@ namespace RaceLogic
             return karts;
         }
 
-        public List<int> ReadUsedKartsInRace(int column, List<int> countRows)
+        public List<int> ReadUsedKartsInRace(string nameOfColumn, List<int> countRows)
         {
             var karts = new List<int>();
             var currentRow = StartRowByDefault;
@@ -81,27 +81,27 @@ namespace RaceLogic
             return karts;
         }
 
-        public List<string> ReadLiquesInBoard(int column, int countRows)
+        public List<string> ReadLiquesInBoard(string nameOfColumn, int countRows)
         {
             return _excelReader.ReadDataInColumn(StartRowByDefault, column, countRows);
         }
 
-        public List<string> ReadNamesInBoard(int column, int countRows)
+        public List<string> ReadNamesInBoard(string nameOfColumn, int countRows)
         {
             return _excelReader.ReadDataInColumn(StartRowByDefault, column, countRows);
         }
 
-        public void WriteDataInfoInBoard<T>(List<T> data, int column)
+        public void WriteDataInfoInBoard<T>(List<T> data, string nameOfColumn)
         {
             _excelWriter.WriteDataInColumn(data, column, StartRowByDefault);
         }
 
-        public void WriteUsedKartsInBoard(List<int> karts, int column)
+        public void WriteUsedKartsInBoard(List<int> karts, string nameOfColumn)
         {
             _excelWriter.AppendDataInColumn(karts, column, StartRowByDefault);
         }
 
-        public void WriteDataInfoInRace<T>(List<List<T>> data, int column, List<int> countRows)
+        public void WriteDataInfoInRace<T>(List<List<T>> data, string nameOfColumn, List<int> countRows)
         {
             for (int i = 0; i < countRows.Count; i++)
             {

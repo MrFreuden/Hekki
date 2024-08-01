@@ -9,15 +9,15 @@ namespace RaceLogic.Interfaces
         Range GetHeadersTB();
         int GetIndexNearColLeft(string keyWord, int startRow, int startCol);
         void SortTable(string nameColumn);
-        List<int> ReadResultsInBoard(int column, int countRows);
-        List<List<int>> ReadResultsInRace(int column, List<int> countRows);
-        List<List<string>> ReadNamesInRace(int column, List<int> countRows);
-        List<List<int>> ReadUsedKartsInBoard(int column, int countRows);
-        List<int> ReadUsedKartsInRace(int column, List<int> countRows);
-        List<string> ReadLiquesInBoard(int column, int countRows);
-        List<string> ReadNamesInBoard(int column, int countRows);
-        void WriteDataInfoInBoard<T>(List<T> data, int column);
-        void WriteUsedKartsInBoard(List<int> karts, int column);
-        void WriteDataInfoInRace<T>(List<List<T>> data, int column, List<int> countRows);
+        List<int> ReadResultsInBoard(string nameOfColumn, int countRows);
+        List<List<int>> ReadResultsInRace(string nameOfColumn, List<int> countRows);
+        List<List<string>> ReadNamesInRace(string nameOfColumn, List<int> countRows);
+        List<List<int>> ReadUsedKartsInBoard(string nameOfColumn, int countRows);
+        List<int> ReadUsedKartsInRace(string nameOfColumn, List<int> countRows);
+        List<string> ReadLiquesInBoard(string nameOfColumn, int countRows);
+        List<string> ReadNamesInBoard(string nameOfColumn, int countRows);
+        void WriteDataInfoInBoard<T>(List<T> data, string nameOfColumn);
+        void WriteUsedKartsInBoard(List<int> karts, string nameOfColumn);
+        void WriteDataInfoInRace<T>(List<List<T>> data, string nameOfColumn, List<int> countRows);
     }
 }

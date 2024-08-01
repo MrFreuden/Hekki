@@ -19,6 +19,7 @@ namespace RaceLogic
         private ISortMethod _sortMethod;
         private IDevideMethod _devideMethod;
         private IPilotService _pilotService;
+        private List<int> _groupsСapacity;
 
         public ISortMethod SortMethod => _sortMethod;
 
@@ -36,11 +37,22 @@ namespace RaceLogic
         {
             _regulation.Sort(_pilots);
             var devided = _regulation.Devide(_pilots, GroupAmount);
+            SetGroupsСapacity(devided);
             var karts = _regulation.GetCombos(devided, _numberKarts);
             _pilotService.AddKarts(devided, karts);
             var names = _pilotService.GetNames(devided);
-            _service.WriteDataInfoInRace(names, "");
-            _service.WriteDataInfoInRace(karts, "");
+            _service.WriteDataInfoInRace(names, "Пілоти", _groupsСapacity);
+            _service.WriteDataInfoInRace(karts, "Карт", _groupsСapacity);
+        }
+
+        private void SetGroupsСapacity(List<List<IPilot>> list)
+        {
+            var groupsCapacity = new List<int>();
+            foreach (var group in list)
+            {
+                groupsCapacity.Add(group.Count);
+            }
+            _groupsСapacity = groupsCapacity;
         }
 
         public void SortBoardByScore()
@@ -55,14 +67,14 @@ namespace RaceLogic
 
         public void TransferScoresToBoard()
         {
-            var scores = _service.ReadColScoresInRace();
-            _service.WriteScoresInBoard(scores);
+            var scores = _service.ReadResultsInRace("Разом", _groupsСapacity);
+            _service.WriteDataInfoInBoard(scores, "ХІТ");
         }
 
         public void TransferTimesToBoard()
         {
-            var times = _service.ReadColTimesInRace();
-            _service.WriteTimesInBoard(times);
+            var times = _service.ReadResultsInRace("Час", _groupsСapacity);
+            _service.WriteDataInfoInBoard(times, "Best Lap");
         }
 
         public void RebuildAll()

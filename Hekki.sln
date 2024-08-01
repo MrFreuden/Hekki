@@ -11,8 +11,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExcelController", "ExcelCon
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RaceLogic", "RaceLogic\RaceLogic.csproj", "{B8E009C6-E96D-4F27-896E-020984A76B21}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExcelWorker.Test", "ExcelWorkerTest\ExcelWorker.Test.csproj", "{10F79E9F-1183-45D1-975A-EDF2834AF8D1}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -31,16 +29,9 @@ Global
 		{B8E009C6-E96D-4F27-896E-020984A76B21}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B8E009C6-E96D-4F27-896E-020984A76B21}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B8E009C6-E96D-4F27-896E-020984A76B21}.Release|Any CPU.Build.0 = Release|Any CPU
-		{10F79E9F-1183-45D1-975A-EDF2834AF8D1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{10F79E9F-1183-45D1-975A-EDF2834AF8D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{10F79E9F-1183-45D1-975A-EDF2834AF8D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{10F79E9F-1183-45D1-975A-EDF2834AF8D1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{10F79E9F-1183-45D1-975A-EDF2834AF8D1} = {5231AA22-18B6-4F19-AB31-80D3121EA33F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {5660CE37-9D4D-4871-80CF-C636DDA2D1BA}
