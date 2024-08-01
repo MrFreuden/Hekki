@@ -19,7 +19,7 @@ namespace Hekki
             var excelWorker = new ExcelWorker();
             _raceService = new RaceDataService(new ExcelHelper(excelWorker), new ExcelReader(excelWorker), new ExcelWriter(excelWorker));
             var regulation = new NewRefactorRegulation(new SimpleMethodDevide(numbersKarts.Count, 10), new SortMethod(), new Combination());
-            _race = new Race1(regulation, _raceService, new List<Pilot>(), numbersKarts);
+            _race = new Race(regulation, _raceService, new List<Pilot>(), numbersKarts);
         }
 
         private void DoQual1_Click(object sender, EventArgs e)

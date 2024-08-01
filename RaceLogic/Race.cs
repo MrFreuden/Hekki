@@ -7,7 +7,7 @@ using RaceLogic.Interfaces;
 
 namespace RaceLogic
 {
-    public class Race1 : IRace
+    public class Race : IRace
     {
         public int KartsCount { get => _numberKarts.Count; }
         public int PilotsCount { get => _pilots.Count; }
@@ -25,7 +25,7 @@ namespace RaceLogic
 
         public IDevideMethod DevideMethod => _devideMethod;
 
-        public Race1(IRegulation regulation, IRaceDataService service, IEnumerable<IPilot> pilots, List<int> numberKarts)
+        public Race(IRegulation regulation, IRaceDataService service, IEnumerable<IPilot> pilots, List<int> numberKarts)
         {
             _regulation = regulation;
             _service = service;
