@@ -11,7 +11,7 @@ namespace RaceLogic
     {
         public IList<T> Sort<T>(IList<T> list)
         {
-            throw new NotImplementedException();
+            return list;
         }
     }
 }
