@@ -56,7 +56,7 @@ namespace Hekki
 
         private void Clear_Click(object sender, EventArgs e)
         {
-            ExcelWorker.CleanData();
+            throw new NotImplementedException();
         }
 
         private void RebuilKarts_Click(object sender, EventArgs e)
@@ -73,7 +73,7 @@ namespace Hekki
 
         private void DeleteKartsFromLastRace_Click(object sender, EventArgs e)
         {
-            ExcelWorker.DeleteLastUsedKartsInTotalBoard();
+            throw new NotImplementedException();
             testNew.ReBuildPilots();
         }
 
