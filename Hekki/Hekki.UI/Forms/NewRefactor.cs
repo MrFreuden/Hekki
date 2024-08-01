@@ -1,5 +1,4 @@
-﻿using RaceLogic.Regulations;
-using ExcelController;
+﻿using ExcelController;
 using RaceLogic;
 using RaceLogic.Interfaces;
 namespace Hekki
@@ -10,16 +9,16 @@ namespace Hekki
         private IRaceDataService _raceService;
         private static TestNew testNew = new();
         private static List<int> numbersKarts;
-
+        
         public NewRefactor(List<int> karts)
         {
             InitializeComponent();
             Icon = Icon.ExtractAssociatedIcon(Application.ExecutablePath);
             numbersKarts = karts;
             numbersOfKarts.Lines = numbersKarts.ConvertAll<string>(delegate (int i) { return i.ToString(); }).ToArray();
-
-            _raceService = new RaceDataService(new ExcelHelper(), new ExcelReader(), new ExcelWriter(), new ExcelWorker());
-            var regulation = new NewRefactorRegulation(new GroupDevider());
+            var excelWorker = new ExcelWorker();
+            _raceService = new RaceDataService(new ExcelHelper(excelWorker), new ExcelReader(excelWorker), new ExcelWriter(excelWorker));
+            var regulation = new NewRefactorRegulation(new SimpleMethodDevide(numbersKarts.Count, 10), new SortMethod(), new Combination());
             _race = new Race1(regulation, _raceService, new List<Pilot>(), numbersKarts);
         }
 
