@@ -17,7 +17,5 @@ namespace RaceLogic.Interfaces
         void TransferTimesToBoard();
         void ClearAll();
         void RebuildAll();
-        void SetSortMethod(ISortMethod sortMethod);
-        void SetDevideMethod(IDevideMethod devideMethod);
     }
 }

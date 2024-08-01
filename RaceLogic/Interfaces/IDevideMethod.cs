@@ -8,5 +8,6 @@ namespace RaceLogic.Interfaces
 {
     public interface IDevideMethod
     {
+        IList<IList<T>> Devide<T>(IList<T> list, int count);
     }
 }

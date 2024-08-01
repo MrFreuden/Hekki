@@ -10,35 +10,34 @@ namespace RaceLogic
     public class NewRefactorRegulation : IRegulation
     {
         private IGroupesDevider _groupesDevider;
+        private ISortMethod _sortMethod;
 
         public NewRefactorRegulation(IGroupesDevider groupesDevider)
         {
             _groupesDevider = groupesDevider;
         }
 
-        private int Test { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-
-        public void AddScores(List<int> scores)
+        public List<List<IPilot>> Devide(int groupAmount)
         {
             throw new NotImplementedException();
         }
 
-        public void RemoveScores(List<int> scores)
+        public List<List<int>> GetCombos(List<List<IPilot>> pilots)
         {
             throw new NotImplementedException();
         }
 
-        public void SortByScore(List<IPilot> pilots)
+        public void SetDevideMethod(IDevideMethod devideMethod)
         {
             throw new NotImplementedException();
         }
 
-        public void SortByTime(List<IPilot> pilots)
+        public void SetSortMethod(ISortMethod sortMethod)
         {
             throw new NotImplementedException();
         }
 
-        public void SortRandom(List<IPilot> pilots)
+        public void Sort(List<IPilot> pilots)
         {
             throw new NotImplementedException();
         }
