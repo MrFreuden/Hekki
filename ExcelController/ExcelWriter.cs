@@ -6,31 +6,16 @@ namespace ExcelController
 {
     public class ExcelWriter : IExcelWriter
     {
-        private readonly IExcelWorker _excelWorker;
+        private readonly Application _excel;
 
-        public ExcelWriter(IExcelWorker excelWorker)
+        public ExcelWriter(Application excel)
         {
-            _excelWorker = excelWorker;
+            _excel = excel;
         }
 
-        public void WriteDataInColumn<T>(List<T> data, int column, int row)
+        public void WriteCell(int row, int column, string value)
         {
-            foreach (var dat in data)
-            {
-                _excelWorker.WriteCell(row, column, dat.ToString());
-                row++;
-            }
-        }
-
-        public void AppendDataInColumn<T>(List<T> data, int column, int row)
-        {
-            foreach (var dat in data)
-            {
-                var currentData = dat.ToString();
-                var prewData = _excelWorker.ReadCell(row, column);
-                _excelWorker.WriteCell(row, column, prewData + " " + dat);
-                row++;
-            }
+            _excel.Cells[row, column] = value;
         }
     }
 }

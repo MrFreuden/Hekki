@@ -8,7 +8,6 @@ namespace ExcelController.Interfaces
 {
     public interface IExcelReader
     {
-        List<string> ReadDataInColumn(int startRow, int column, int count);
-        string ReadDataInCell(int startRow, int column);
+        string ReadCell(int row, int column);
     }
 }

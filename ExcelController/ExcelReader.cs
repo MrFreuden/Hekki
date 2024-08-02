@@ -6,26 +6,16 @@ namespace ExcelController
 {
     public class ExcelReader : IExcelReader
     {
-        private readonly IExcelWorker _excelWorker;
+        private readonly Application _excel;
 
-        public ExcelReader(IExcelWorker excelWorker)
+        public ExcelReader(Application excel)
         {
-            _excelWorker = excelWorker;
+            _excel = excel;
         }
 
-        public List<string> ReadDataInColumn(int startRow, int column, int count)
+        public string ReadCell(int row, int column)
         {
-            var data = new List<string>();
-            for (int i = 0; i < count; i++)
-            {
-                data.Add(_excelWorker.ReadCell(startRow, column));
-            }
-            return data;
-        }
-
-        public string ReadDataInCell(int startRow, int column)
-        {
-            return _excelWorker.ReadCell(startRow, column);
+            return _excel.Cells[row, column].Value.ToString();
         }
     }
 }
