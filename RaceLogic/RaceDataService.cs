@@ -9,15 +9,11 @@ namespace RaceLogic
     public class RaceDataService : IRaceDataService
     {
         public const int StartRowByDefault = 4;
-        private readonly IExcelHelper _excelHelper;
-        private readonly IExcelReader _excelReader;
-        private readonly IExcelWriter _excelWriter;
+        private readonly IExcelWorker _excelWorker;
 
-        public RaceDataService(IExcelHelper excelHelper, IExcelReader excelReader, IExcelWriter excelWriter) 
+        public RaceDataService(IExcelWorker excelWorker) 
         { 
-            _excelHelper = excelHelper;
-            _excelReader = excelReader;
-            _excelWriter = excelWriter;
+            _excelWorker = excelWorker;
         }
 
         //TODO: перенести в отдельный класс
@@ -28,7 +24,7 @@ namespace RaceLogic
         {
             //var keyCells = FindKeyCellByValue("ХІТ", null);
             //var keyCells = FindKeyCellByValue("Best Lap", null);
-            var result = _excelReader.ReadDataInColumn(StartRowByDefault, column, countRows);
+            var result = _excelWorker.ReadDataInColumn(StartRowByDefault, column, countRows);
             return ConvertDataToInt(result);
         }
 
@@ -38,7 +34,7 @@ namespace RaceLogic
             var startRow = StartRowByDefault;
             for (int i = 0; i < countRows.Count; i++)
             {
-                var score = _excelReader.ReadDataInColumn(startRow, column, countRows[i]);
+                var score = _excelWorker.ReadDataInColumn(startRow, column, countRows[i]);
                 result.Add(ConvertDataToInt(score));
                 startRow += countRows[i];
             }
@@ -51,7 +47,7 @@ namespace RaceLogic
             var startRow = StartRowByDefault;
             for (int i = 0; i < countRows.Count; i++)
             {
-                names.Add(_excelReader.ReadDataInColumn(startRow, column, countRows[i]));
+                names.Add(_excelWorker.ReadDataInColumn(startRow, column, countRows[i]));
                 startRow += countRows[i];
             }
             return names;
@@ -63,7 +59,7 @@ namespace RaceLogic
             var currentRow = StartRowByDefault;
             for (int i = 0; i < countRows; i++)
             {
-                var kartsAsString = _excelReader.ReadDataInCell(currentRow, column);
+                var kartsAsString = _excelWorker.ReadDataInCell(currentRow, column);
                 karts.Add(ConvertStringToListInt(kartsAsString));
             }
             return karts;
@@ -75,7 +71,7 @@ namespace RaceLogic
             var currentRow = StartRowByDefault;
             for (int i = 0; i < countRows.Count; i++)
             {
-                var kartsAsString = _excelReader.ReadDataInColumn(currentRow, column, countRows[i]);
+                var kartsAsString = _excelWorker.ReadDataInColumn(currentRow, column, countRows[i]);
                 karts.AddRange(ConvertDataToInt(kartsAsString));
             }
             return karts;
@@ -83,55 +79,55 @@ namespace RaceLogic
 
         public List<string> ReadLiquesInBoard(string nameOfColumn, int countRows)
         {
-            return _excelReader.ReadDataInColumn(StartRowByDefault, column, countRows);
+            return _excelWorker.ReadDataInColumn(StartRowByDefault, column, countRows);
         }
 
         public List<string> ReadNamesInBoard(string nameOfColumn, int countRows)
         {
-            return _excelReader.ReadDataInColumn(StartRowByDefault, column, countRows);
+            return _excelWorker.ReadDataInColumn(StartRowByDefault, column, countRows);
         }
 
         public void WriteDataInfoInBoard<T>(List<T> data, string nameOfColumn)
         {
-            _excelWriter.WriteDataInColumn(data, column, StartRowByDefault);
+            _excelWorker.WriteDataInColumn(data, column, StartRowByDefault);
         }
 
         public void WriteUsedKartsInBoard(List<int> karts, string nameOfColumn)
         {
-            _excelWriter.AppendDataInColumn(karts, column, StartRowByDefault);
+            _excelWorker.AppendDataInColumn(karts, column, StartRowByDefault);
         }
 
         public void WriteDataInfoInRace<T>(List<List<T>> data, string nameOfColumn, List<int> countRows)
         {
             for (int i = 0; i < countRows.Count; i++)
             {
-                _excelWriter.WriteDataInColumn(data[i], column, countRows[i]);
+                _excelWorker.WriteDataInColumn(data[i], column, countRows[i]);
             }
         }
 
         public void SortTable(string nameColumn)
         {
-            _excelHelper.SortTable(nameColumn);
+            _excelWorker.SortTable(nameColumn);
         }
 
         public void ClearExcelData(Range rangeToClean = null, int countBellow = 50)
         {
-            _excelHelper.ClearExcelData(rangeToClean, countBellow);
+            _excelWorker.ClearExcelData(rangeToClean, countBellow);
         }
 
         public int GetColumnNumberByName(string value, Range searchedRange)
         {
-            return _excelHelper.FindKeyCellByValue(value, searchedRange);
+            return _excelWorker.FindKeyCellByValue(value, searchedRange);
         }
 
         public Range GetHeadersTB()
         {
-            return _excelHelper.GetHeadersTB();
+            return _excelWorker.GetHeadersTB();
         }
 
         public int GetIndexNearColLeft(string keyWord, int startRow, int startCol)
         {
-            return _excelHelper.GetIndexNearColLeft(keyWord, startRow, startCol);
+            return _excelWorker.GetIndexNearColLeft(keyWord, startRow, startCol);
         }
 
         private List<int> ConvertDataToInt(List<string> data)
