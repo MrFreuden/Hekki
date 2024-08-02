@@ -12,18 +12,19 @@ namespace RaceLogic
         public int KartsCount { get => _numberKarts.Count; }
         public int PilotsCount { get => _pilots.Count; }
         public int GroupAmount { get => (int)Math.Ceiling((double)PilotsCount / KartsCount); }
+        public ISortMethod SortMethod => _sortMethod;
+        public IDevideMethod DevideMethod => _devideMethod;
+
         private IRegulation _regulation;
         private IRaceDataService _service;
-        private List<IPilot> _pilots;
-        private List<int> _numberKarts;
+        private IPilotService _pilotService;
+
         private ISortMethod _sortMethod;
         private IDevideMethod _devideMethod;
-        private IPilotService _pilotService;
+
+        private List<IPilot> _pilots;
+        private List<int> _numberKarts;
         private List<int> _groupsСapacity;
-
-        public ISortMethod SortMethod => _sortMethod;
-
-        public IDevideMethod DevideMethod => _devideMethod;
 
         public Race(IRegulation regulation, IRaceDataService service, IEnumerable<IPilot> pilots, List<int> numberKarts)
         {
@@ -35,14 +36,22 @@ namespace RaceLogic
 
         public void MakeHeat()
         {
+            var preparedPilots = PreparePilots();
+
+            var karts = _regulation.GetCombos(preparedPilots, _numberKarts);
+            _pilotService.AddKarts(preparedPilots, karts);
+
+            var names = _pilotService.GetNames(preparedPilots);
+            _service.WriteDataInfoInRace(names, "Пілоти", _groupsСapacity);
+            _service.WriteDataInfoInRace(karts, "Карт", _groupsСapacity);
+        }
+
+        private List<List<IPilot>> PreparePilots()
+        {
             _regulation.Sort(_pilots);
             var devided = _regulation.Devide(_pilots, GroupAmount);
             SetGroupsСapacity(devided);
-            var karts = _regulation.GetCombos(devided, _numberKarts);
-            _pilotService.AddKarts(devided, karts);
-            var names = _pilotService.GetNames(devided);
-            _service.WriteDataInfoInRace(names, "Пілоти", _groupsСapacity);
-            _service.WriteDataInfoInRace(karts, "Карт", _groupsСapacity);
+            return devided;
         }
 
         private void SetGroupsСapacity(List<List<IPilot>> list)

@@ -17,16 +17,16 @@ namespace ExcelController
         {
             List<IList<Range>> keyCells = new()
             {
-                FindKeyCellByValue("Номера", rangeToClean),
-                FindKeyCellByValue("Best Lap", rangeToClean),
-                FindKeyCellByValue("ХІТ", rangeToClean),
-                FindKeyCellByValue("Карт", rangeToClean),
-                FindKeyCellByValue("Пілоти", rangeToClean),
-                FindKeyCellByValue("Штраф", rangeToClean),
-                FindKeyCellByValue("Час", rangeToClean),
-                //FindKeyCellByValue("Ім'я", rangeToClean),
-                //FindKeyCellByValue("Ліга", rangeToClean),
-                FindKeyCellByValue("Очки", rangeToClean)
+                //FindKeyCellByValue("Номера", rangeToClean),
+                //FindKeyCellByValue("Best Lap", rangeToClean),
+                //FindKeyCellByValue("ХІТ", rangeToClean),
+                //FindKeyCellByValue("Карт", rangeToClean),
+                //FindKeyCellByValue("Пілоти", rangeToClean),
+                //FindKeyCellByValue("Штраф", rangeToClean),
+                //FindKeyCellByValue("Час", rangeToClean),
+                ////FindKeyCellByValue("Ім'я", rangeToClean),
+                ////FindKeyCellByValue("Ліга", rangeToClean),
+                //FindKeyCellByValue("Очки", rangeToClean)
             };
 
             for (int j = 0; j < keyCells.Count; j++)

@@ -5,7 +5,7 @@ namespace RaceLogic.Interfaces
     public interface IRaceDataService
     {
         void ClearExcelData(Range rangeToClean = null, int countBellow = 50);
-        IList<Range> FindKeyCellByValue(string value, Range searchedRange);
+        //IList<Range> FindKeyCellByValue(string value, Range searchedRange);  TODO: узнать как правильно сделать
         Range GetHeadersTB();
         int GetIndexNearColLeft(string keyWord, int startRow, int startCol);
         void SortTable(string nameColumn);

@@ -119,7 +119,7 @@ namespace RaceLogic
             _excelHelper.ClearExcelData(rangeToClean, countBellow);
         }
 
-        public IList<Range> FindKeyCellByValue(string value, Range searchedRange)
+        public int GetColumnNumberByName(string value, Range searchedRange)
         {
             return _excelHelper.FindKeyCellByValue(value, searchedRange);
         }
