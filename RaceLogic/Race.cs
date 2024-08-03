@@ -76,14 +76,20 @@ namespace RaceLogic
 
         public void TransferScoresToBoard()
         {
-            var scores = _service.ReadResultsInRace("Разом", _groupsСapacity);
-            _service.WriteDataInfoInBoard(scores, "ХІТ");
+            var scores = _service.ReadResultsInRace("Разом", PilotsCount);
+            for (int i = 0; i < scores.Count; i++)
+            {
+                _service.WriteDataInfoInBoard(scores[i], "ХІТ", i);
+            }
         }
 
         public void TransferTimesToBoard()
         {
-            var times = _service.ReadResultsInRace("Час", _groupsСapacity);
-            _service.WriteDataInfoInBoard(times, "Best Lap");
+            var times = _service.ReadResultsInRace("Час", PilotsCount);
+            for (int i = 0; i < times.Count; i++)
+            {
+                _service.WriteDataInfoInBoard(times[i], "Best Lap", i);
+            }
         }
 
         public void RebuildAll()
