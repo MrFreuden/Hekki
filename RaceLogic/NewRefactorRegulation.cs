@@ -28,7 +28,7 @@ namespace RaceLogic
 
         public void Sort(List<IPilot> pilots)
         {
-            throw new NotImplementedException();
+            _sortMethod.Sort(pilots);
         }
         //TODO: Переделать метод. Не нравится что сюда передаются пилоты и метод взять карты.
         public List<List<int>> GetCombos(List<List<IPilot>> groupsPilots, List<int> numbersOfKarts)

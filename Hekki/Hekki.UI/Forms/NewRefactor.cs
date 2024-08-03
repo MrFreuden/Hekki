@@ -8,7 +8,7 @@ namespace Hekki
         private IRace _race;
         private IRaceDataService _raceService;
         private static List<int> numbersKarts;
-        
+        public const int MaxKarts = 10;
         public NewRefactor(List<int> karts)
         {
             InitializeComponent();
@@ -24,8 +24,8 @@ namespace Hekki
 
         private void DoQual1_Click(object sender, EventArgs e)
         {
-            _race.SetSortMethod(new SortMethod());
-            _race.SetDevideMethod();
+            _race.SetSortMethod(new SortShuffle());
+            _race.SetDevideMethod(new SimpleMethodDevide(numbersKarts.Count, MaxKarts));
             _race.MakeHeat();
         }
 

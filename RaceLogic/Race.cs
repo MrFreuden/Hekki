@@ -12,15 +12,10 @@ namespace RaceLogic
         public int KartsCount { get => _numberKarts.Count; }
         public int PilotsCount { get => _pilots.Count; }
         public int GroupAmount { get => (int)Math.Ceiling((double)PilotsCount / KartsCount); }
-        public ISortMethod SortMethod => _sortMethod;
-        public IDevideMethod DevideMethod => _devideMethod;
 
         private IRegulation _regulation;
         private IRaceDataService _service;
         private IPilotService _pilotService;
-
-        private ISortMethod _sortMethod;
-        private IDevideMethod _devideMethod;
 
         private List<IPilot> _pilots;
         private List<int> _numberKarts;
@@ -104,12 +99,12 @@ namespace RaceLogic
 
         public void SetDevideMethod(IDevideMethod devideMethod)
         {
-            _devideMethod = devideMethod;
+            _regulation.SetDevideMethod(devideMethod);
         }
 
         public void SetSortMethod(ISortMethod sortMethod)
         {
-            _sortMethod = sortMethod;
+            _regulation.SetSortMethod(sortMethod);
         }
     }
 }
