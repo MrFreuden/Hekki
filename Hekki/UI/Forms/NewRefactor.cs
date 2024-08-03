@@ -1,7 +1,8 @@
-﻿using ExcelController;
-using RaceLogic;
+﻿using ExcelController.Services;
+using RaceLogic.Algorithms;
 using RaceLogic.Interfaces;
 using RaceLogic.Models;
+using RaceLogic.Services;
 namespace Hekki
 {
     public partial class NewRefactor : Form
