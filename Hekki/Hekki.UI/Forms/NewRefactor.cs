@@ -50,7 +50,7 @@ namespace Hekki
 
         private void DoSemiFinal_Click(object sender, EventArgs e)
         {
-            _race.SetDevideMethod(new SimpleMethodDevide(numbersKarts.Count, MaxKarts));
+            _race.SetDevideMethod(new CardMethodDevide());
             _race.MakeHeat();
         }
 
@@ -62,50 +62,42 @@ namespace Hekki
 
         private void Clear_Click(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            _race.ClearAll();
         }
 
-        private void RebuilKarts_Click(object sender, EventArgs e)
+        private void ReadScores_Click(object sender, EventArgs e)
         {
-            numbersKarts.Clear();
-            foreach (string i in numbersOfKarts.Lines)
-                numbersKarts.Add(Int32.Parse(i));
+            _race.TransferScoresToBoard();
+        }
+
+        private void SortScores_Click(object sender, EventArgs e)
+        {
+            _race.SortBoardByScore();
+        }
+
+        private void ReadTimes_Click(object sender, EventArgs e)
+        {
+            _race.TransferTimesToBoard();
+        }
+
+        private void SortTimes_Click(object sender, EventArgs e)
+        {
+            _race.SortBoardByTime();
+        }
+
+        private void SortTimeDead_Click(object sender, EventArgs e)
+        {
+            throw new NotImplementedException();
         }
 
         private void RebuildPilots_Click(object sender, EventArgs e)
         {
-            
+            throw new NotImplementedException();
         }
 
         private void DeleteKartsFromLastRace_Click(object sender, EventArgs e)
         {
             throw new NotImplementedException();
-            
-        }
-
-        private void ReadScores_Click(object sender, EventArgs e)
-        {
-            
-        }
-
-        private void SortScores_Click(object sender, EventArgs e)
-        {
-            
-        }
-
-        private void ReadTimes_Click(object sender, EventArgs e)
-        {
-            
-        }
-
-        private void SortTimes_Click(object sender, EventArgs e)
-        {
-            
-        }
-
-        private void SortTimeDead_Click(object sender, EventArgs e)
-        {
-
         }
 
         private void numbersOfKarts_TextChanged(object sender, EventArgs e)
@@ -124,6 +116,15 @@ namespace Hekki
         private void numbersOfKarts_KeyPress(object sender, KeyPressEventArgs e)
         {
             e.Handled = !char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar);
+        }
+
+
+        //TODO: это что???
+        private void RebuilKarts_Click(object sender, EventArgs e)
+        {
+            numbersKarts.Clear();
+            foreach (string i in numbersOfKarts.Lines)
+                numbersKarts.Add(Int32.Parse(i));
         }
     }
 }
