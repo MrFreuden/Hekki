@@ -7,7 +7,6 @@ namespace Hekki
     {
         private IRace _race;
         private IRaceDataService _raceService;
-        private static TestNew testNew = new();
         private static List<int> numbersKarts;
         
         public NewRefactor(List<int> karts)
@@ -16,17 +15,18 @@ namespace Hekki
             Icon = Icon.ExtractAssociatedIcon(Application.ExecutablePath);
             numbersKarts = karts;
             numbersOfKarts.Lines = numbersKarts.ConvertAll<string>(delegate (int i) { return i.ToString(); }).ToArray();
+
             var excelWorker = new ExcelWorker();
-            _raceService = new RaceDataService(new ExcelHelper(excelWorker), new ExcelReader(excelWorker), new ExcelWriter(excelWorker));
+            _raceService = new RaceDataService(excelWorker);
             var regulation = new NewRefactorRegulation(new SimpleMethodDevide(numbersKarts.Count, 10), new SortMethod(), new Combination());
             _race = new Race(regulation, _raceService, new List<Pilot>(), numbersKarts);
         }
 
         private void DoQual1_Click(object sender, EventArgs e)
         {
-
-            testNew.DoQualRace(numbersKarts);
-            testNew.WriteUsedKarts();
+            _race.SetSortMethod(new SortMethod());
+            _race.SetDevideMethod();
+            _race.MakeHeat();
         }
 
         private void DoHeat1_Click(object sender, EventArgs e)
