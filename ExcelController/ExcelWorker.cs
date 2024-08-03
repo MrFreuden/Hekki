@@ -1,11 +1,11 @@
 ﻿using ExcelController.Interfaces;
-using Range = Microsoft.Office.Interop.Excel.Range;
 
 namespace ExcelController
 {
     public class ExcelWorker : IExcelWorker
     {
         public const int StartRowByDefault = 4;
+        public const int EndRowByDefault = 53;
         private readonly ExcelApplicationManager _applicationManager;
         private readonly ExcelReader _reader;
         private readonly ExcelWriter _writer;
@@ -21,7 +21,7 @@ namespace ExcelController
             _searcher = new ExcelSearcher(_applicationManager.Excel);
         }
 
-        public void WriteDataInEmptyColumn<T>(List<T> data, string columnName, int row)
+        public void WriteDataInEmptyColumn<T>(List<T> data, string columnName, int startRow)
         {
             var column = GetNumberOfEmptyColumnByName(columnName);
             if (column == -1)
@@ -29,7 +29,7 @@ namespace ExcelController
                 return;
             }
 
-            WriteDataInColumn(data, column, row);
+            WriteDataInColumn(data, column, startRow);
         }
 
         private int GetNumberOfEmptyColumnByName(string columnName)
@@ -59,30 +59,22 @@ namespace ExcelController
             }
         }
 
-        public List<List<string>> ReadDataInColumnsByName(string columnName, int columnNumber, List<int> grousCapacity)
+        public List<List<string>> ReadDataInColumnsByName(string columnName, int count)
         {
             var data = new List<List<string>>();
-            var cellIndexes = GetNumberOfFilledColumnsByName(columnName);
-            var startRow = StartRowByDefault;
-            for (int i = 0; i < grousCapacity.Count; i++)
-            {
-                data.Add(ReadDataInColumn(startRow, cellIndexes[columnNumber], grousCapacity[i]));
-            }
-            return data;
-        }
+            var columnIndexes = GetNumberOfFilledColumnsByName(columnName);
+            var rows = Temp(count);
 
-        private List<int> GetNumberOfFilledColumnsByName(string columnName)
-        {
-            var cells = _searcher.GetCellsByValue(columnName, null);
-            var columnIndexes = new List<int>();
-            foreach (var cell in cells)
+            for (int i = 0; i < columnIndexes.Count; i++)
             {
-                if (!IsCellAboveEmpty(cell.Row, cell.Column))
+                data.Add(new List<string>());
+                for (int j = 0; j < rows.Count; j++)
                 {
-                    columnIndexes.Add(cell.Column);
+                    data[i].Add(ReadDataInCell(rows[i][j], columnIndexes[i]));
                 }
             }
-            return columnIndexes;
+
+            return data;
         }
 
         public List<string> ReadDataInColumn(int startRow, int column, int count)
@@ -101,6 +93,50 @@ namespace ExcelController
             return _reader.ReadCell(row, column);
         }
 
+        private List<List<int>> Temp(int count)
+        {
+            var columns = GetNumberOfFilledColumnsByName("Пілоти");
+            var test = new List<List<int>>();
+            for (int i = 0; i < columns.Count; i++)
+            {
+                test.Add(GetRowsNames(columns[i], count));
+            }
+            return test;
+        }
+
+        private List<int> GetRowsNames(int column, int count)
+        {
+            var rows = new List<int>();
+            var row = StartRowByDefault;
+            for (int i = 0; i < count && i < EndRowByDefault; i++)
+            {
+                if (_reader.ReadCell(row, column) != null)
+                {
+                    rows.Add(row);
+                }
+                row++;
+            }
+            return rows;
+        }
+
+        private List<int> GetNumberOfFilledColumnsByName(string columnName)
+        {
+            var cells = _searcher.GetCellsByValue(columnName, null);
+            var columnIndexes = new List<int>();
+            foreach (var cell in cells)
+            {
+                if (!IsCellAboveEmpty(cell.Row, cell.Column))
+                {
+                    columnIndexes.Add(cell.Column);
+                }
+            }
+            return columnIndexes;
+        }
+
+        
+
+        
+
         public void AppendDataInColumn<T>(List<T> data, int column, int row)
         {
             foreach (var dat in data)
@@ -113,6 +149,27 @@ namespace ExcelController
         }
 
         public void SortTable(string nameColumn)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Dictionary<string, List<int>> GetColumnNumberForAllHeaders(List<string> headers)
+        {
+            var dict = new Dictionary<string, List<int>>();
+            foreach (var header in headers)
+            {
+                var list = _searcher.GetCellsByValue(header, null);
+                var listNumbers = new List<int>();
+                foreach (var item in list)
+                {
+                    listNumbers.Add(item.Column);
+                }
+                dict[header] = listNumbers;
+            }
+            return dict;
+        }
+
+        public void Clear(Microsoft.Office.Interop.Excel.Range rangeToClean = null, int countBellow = 50)
         {
             throw new NotImplementedException();
         }

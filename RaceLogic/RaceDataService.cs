@@ -1,7 +1,5 @@
 ﻿using ExcelController.Interfaces;
 using RaceLogic.Interfaces;
-using System.Data.Common;
-using static System.Formats.Asn1.AsnWriter;
 using Range = Microsoft.Office.Interop.Excel.Range;
 
 namespace RaceLogic
@@ -9,99 +7,107 @@ namespace RaceLogic
     public class RaceDataService : IRaceDataService
     {
         public const int StartRowByDefault = 4;
+        public const int EndRowByDefault = 53;
+        public const int MaxKarts = 10;
         private readonly IExcelWorker _excelWorker;
-
-        public RaceDataService(IExcelWorker excelWorker) 
-        { 
-            _excelWorker = excelWorker;
-        }
-
-        //TODO: перенести в отдельный класс
-
-
-
-        public List<int> ReadResultsInBoard(string nameOfColumn, int countRows)
-        {
-            //var keyCells = FindKeyCellByValue("ХІТ", null);
-            //var keyCells = FindKeyCellByValue("Best Lap", null);
-            var result = _excelWorker.ReadDataInColumn(StartRowByDefault, column, countRows);
-            return ConvertDataToInt(result);
-        }
-
-        public List<List<int>> ReadResultsInRace(string nameOfColumn, List<int> countRows)
-        {
-            var result = new List<List<int>>(countRows.Count);
-            var startRow = StartRowByDefault;
-            for (int i = 0; i < countRows.Count; i++)
+        private Dictionary<string, List<int>> _keyCellsColumnNumbers;
+        private List<string> _headers = new()
             {
-                var score = _excelWorker.ReadDataInColumn(startRow, column, countRows[i]);
-                result.Add(ConvertDataToInt(score));
-                startRow += countRows[i];
+                { "Номера" },
+                { "Best Lap" },
+                { "ХІТ" },
+                { "Карт" },
+                { "Пілоти" },
+                { "Штраф" },
+                { "Час" },
+                { "Ім'я" },
+                { "Ліга" },
+                { "Очки" }
+            };
+
+        public RaceDataService(IExcelWorker excelWorker)
+        {
+            _excelWorker = excelWorker;
+            _keyCellsColumnNumbers = GetColumnNumberForAllHeaders();
+        }
+
+        private Dictionary<string, List<int>> GetColumnNumberForAllHeaders()
+        {
+            return _excelWorker.GetColumnNumberForAllHeaders(_headers);
+        }
+
+        public List<List<int>> ReadResultsInBoard(string nameOfColumn, int countRows)
+        {
+            var result = new List<List<int>>();
+            var numbersColumns = _keyCellsColumnNumbers[nameOfColumn];
+            for (int i = 0; i < numbersColumns.Count; i++)
+            {
+                var res = ConvertDataToInt(_excelWorker.ReadDataInColumn(StartRowByDefault, numbersColumns[i], countRows));
+                result.Add(res);
             }
             return result;
         }
 
-        public List<List<string>> ReadNamesInRace(string nameOfColumn, List<int> countRows)
+        public List<List<int>> ReadResultsInRace(string nameOfColumn, int count)
         {
-            var names = new List<List<string>>(countRows.Count);
-            var startRow = StartRowByDefault;
-            for (int i = 0; i < countRows.Count; i++)
+            var result = new List<List<int>>();
+            var score = _excelWorker.ReadDataInColumnsByName(nameOfColumn, count);
+
+            foreach (var data in score)
             {
-                names.Add(_excelWorker.ReadDataInColumn(startRow, column, countRows[i]));
-                startRow += countRows[i];
+                result.Add(ConvertDataToInt(data));
             }
-            return names;
+
+            return result;
         }
 
-        public List<List<int>> ReadUsedKartsInBoard(string nameOfColumn, int countRows)
+        public List<List<int>> ReadUsedKartsInBoard(int count)
         {
-            var karts = new List<List<int>>(countRows);
-            var currentRow = StartRowByDefault;
-            for (int i = 0; i < countRows; i++)
+            var karts = new List<List<int>>();
+            var numbersColumns = _keyCellsColumnNumbers["Номера"];
+            for (int i = 0; i < numbersColumns.Count; i++)
             {
-                var kartsAsString = _excelWorker.ReadDataInCell(currentRow, column);
-                karts.Add(ConvertStringToListInt(kartsAsString));
-            }
-            return karts;
-        }
-
-        public List<int> ReadUsedKartsInRace(string nameOfColumn, List<int> countRows)
-        {
-            var karts = new List<int>();
-            var currentRow = StartRowByDefault;
-            for (int i = 0; i < countRows.Count; i++)
-            {
-                var kartsAsString = _excelWorker.ReadDataInColumn(currentRow, column, countRows[i]);
-                karts.AddRange(ConvertDataToInt(kartsAsString));
+                karts.Add(new List<int>());
+                var kartsAsString = _excelWorker.ReadDataInColumn(StartRowByDefault, numbersColumns[i], count);
+                foreach (var item in kartsAsString)
+                {
+                    karts.Add(ConvertStringToListInt(item));
+                }
             }
             return karts;
         }
 
-        public List<string> ReadLiquesInBoard(string nameOfColumn, int countRows)
+        public List<string> ReadLiquesInBoard(int countRows)
         {
-            return _excelWorker.ReadDataInColumn(StartRowByDefault, column, countRows);
+            var numbersColumns = _keyCellsColumnNumbers["Ліга"];
+            return _excelWorker.ReadDataInColumn(StartRowByDefault, numbersColumns.First(), countRows);
         }
 
-        public List<string> ReadNamesInBoard(string nameOfColumn, int countRows)
+        public List<string> ReadNamesInBoard(int countRows)
         {
-            return _excelWorker.ReadDataInColumn(StartRowByDefault, column, countRows);
+            var numbersColumns = _keyCellsColumnNumbers["Ім'я"];
+            return _excelWorker.ReadDataInColumn(StartRowByDefault, numbersColumns.First(), countRows);
         }
 
-        public void WriteDataInfoInBoard<T>(List<T> data, string nameOfColumn)
+        public void WriteDataInfoInBoard<T>(List<T> data, string nameOfColumn, int number)
         {
-            _excelWorker.WriteDataInColumn(data, column, StartRowByDefault);
+            var numbersColumns = _keyCellsColumnNumbers[nameOfColumn];
+            _excelWorker.WriteDataInColumn(data, numbersColumns[number], StartRowByDefault);
         }
 
-        public void WriteUsedKartsInBoard(List<int> karts, string nameOfColumn)
+        public void WriteUsedKartsInBoard(List<int> karts)
         {
-            _excelWorker.AppendDataInColumn(karts, column, StartRowByDefault);
+            var numbersColumns = _keyCellsColumnNumbers["Номера"];
+            _excelWorker.AppendDataInColumn(karts, numbersColumns.First(), StartRowByDefault);
         }
 
         public void WriteDataInfoInRace<T>(List<List<T>> data, string nameOfColumn, List<int> countRows)
         {
+            var startRow = StartRowByDefault;
             for (int i = 0; i < countRows.Count; i++)
             {
-                _excelWorker.WriteDataInColumn(data[i], column, countRows[i]);
+                _excelWorker.WriteDataInEmptyColumn(data[i], nameOfColumn, startRow);
+                startRow += MaxKarts;
             }
         }
 
@@ -112,22 +118,7 @@ namespace RaceLogic
 
         public void ClearExcelData(Range rangeToClean = null, int countBellow = 50)
         {
-            _excelWorker.ClearExcelData(rangeToClean, countBellow);
-        }
-
-        public int GetColumnNumberByName(string value, Range searchedRange)
-        {
-            return _excelWorker.FindKeyCellByValue(value, searchedRange);
-        }
-
-        public Range GetHeadersTB()
-        {
-            return _excelWorker.GetHeadersTB();
-        }
-
-        public int GetIndexNearColLeft(string keyWord, int startRow, int startCol)
-        {
-            return _excelWorker.GetIndexNearColLeft(keyWord, startRow, startCol);
+            _excelWorker.Clear(rangeToClean, countBellow);
         }
 
         private List<int> ConvertDataToInt(List<string> data)
