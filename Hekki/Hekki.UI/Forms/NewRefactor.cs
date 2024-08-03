@@ -31,26 +31,33 @@ namespace Hekki
 
         private void DoHeat1_Click(object sender, EventArgs e)
         {
-            testNew.DoOneRace(numbersKarts);
-            testNew.WriteUsedKarts();
+            _race.SetDevideMethod(new SimpleMethodDevide(numbersKarts.Count, MaxKarts));
+            _race.MakeHeat();
         }
 
         private void DoQual2_Click(object sender, EventArgs e)
         {
-            testNew.DoQualRace(numbersKarts);
-            testNew.WriteUsedKarts();
+            _race.SetSortMethod(new SortShuffle());
+            _race.SetDevideMethod(new SimpleMethodDevide(numbersKarts.Count, MaxKarts));
+            _race.MakeHeat();
         }
 
         private void DoHeat2_Click(object sender, EventArgs e)
         {
-            testNew.DoOneRace(numbersKarts);
-            testNew.WriteUsedKarts();
+            _race.SetDevideMethod(new SimpleMethodDevide(numbersKarts.Count, MaxKarts));
+            _race.MakeHeat();
+        }
+
+        private void DoSemiFinal_Click(object sender, EventArgs e)
+        {
+            _race.SetDevideMethod(new SimpleMethodDevide(numbersKarts.Count, MaxKarts));
+            _race.MakeHeat();
         }
 
         private void DoFinal_Click(object sender, EventArgs e)
         {
-            testNew.DoFinal(numbersKarts);
-            testNew.WriteUsedKarts();
+            _race.SetDevideMethod(new SimpleMethodDevide(numbersKarts.Count, MaxKarts));
+            _race.MakeHeat();
         }
 
         private void Clear_Click(object sender, EventArgs e)
@@ -67,47 +74,38 @@ namespace Hekki
 
         private void RebuildPilots_Click(object sender, EventArgs e)
         {
-            testNew.ReBuildPilots();
+            
         }
 
         private void DeleteKartsFromLastRace_Click(object sender, EventArgs e)
         {
             throw new NotImplementedException();
-            testNew.ReBuildPilots();
+            
         }
 
         private void ReadScores_Click(object sender, EventArgs e)
         {
-            var scores = testNew.GetScores();
-            testNew.WriteScores(scores);
+            
         }
 
         private void SortScores_Click(object sender, EventArgs e)
         {
-            testNew.SortScores();
+            
         }
 
         private void ReadTimes_Click(object sender, EventArgs e)
         {
-            var times = testNew.GetTimes();
-            testNew.WriteTimes(times);
+            
         }
 
         private void SortTimes_Click(object sender, EventArgs e)
         {
-            testNew.SortTimeInTB();
-            testNew.SortTimeInRace();
-        }
-
-        private void DoSemiFinal_Click(object sender, EventArgs e)
-        {
-            testNew.DoNextRace(numbersKarts);
-            testNew.WriteUsedKarts();
+            
         }
 
         private void SortTimeDead_Click(object sender, EventArgs e)
         {
-            testNew.SortTimeDead();
+
         }
 
         private void numbersOfKarts_TextChanged(object sender, EventArgs e)
