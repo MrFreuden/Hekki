@@ -2,7 +2,7 @@
 using Microsoft.Office.Interop.Excel;
 using Range = Microsoft.Office.Interop.Excel.Range;
 
-namespace ExcelController
+namespace ExcelController.Services
 {
     public class ExcelCleaner : IExcelCleaner
     {
@@ -33,8 +33,8 @@ namespace ExcelController
             {
                 for (int i = 0; i < keyCells[j].Count; i++)
                 {
-                    string q = keyCells[j][i][2].Address.Replace("$", String.Empty);
-                    string s = keyCells[j][i][countBellow].Address.Replace("$", String.Empty);
+                    string q = keyCells[j][i][2].Address.Replace("$", string.Empty);
+                    string s = keyCells[j][i][countBellow].Address.Replace("$", string.Empty);
                     var aras = _excel.get_Range(q, s);
                     aras.ClearContents();
                 }

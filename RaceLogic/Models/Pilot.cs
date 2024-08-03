@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RaceLogic
+namespace RaceLogic.Models
 {
     public class Pilot : IPilot
     {

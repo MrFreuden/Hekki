@@ -1,7 +1,8 @@
 ﻿using ExcelController.Interfaces;
+using ExcelController.Utils;
 using Application = Microsoft.Office.Interop.Excel.Application;
 
-namespace ExcelController
+namespace ExcelController.Services
 {
     public class ExcelApplicationManager : IExcelApplicationManager
     {

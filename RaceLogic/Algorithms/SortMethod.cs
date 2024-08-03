@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RaceLogic
+namespace RaceLogic.Algorithms
 {
     public class SortMethod : ISortMethod
     {

@@ -23,7 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="Hekki.Resource\Resources\logo.ico" />
+    <Content Include="Resources\logo.ico" />
   </ItemGroup>
 
   <ItemGroup>
@@ -40,9 +40,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="Hekki.UI\Forms\NewRefactor.cs">
+    <Compile Update="UI\Forms\NewRefactor.cs">
       <SubType>Form</SubType>
     </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="UI\ViewModels\" />
   </ItemGroup>
 
 </Project>

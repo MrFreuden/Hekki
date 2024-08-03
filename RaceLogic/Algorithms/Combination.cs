@@ -1,6 +1,6 @@
 ﻿using RaceLogic.Interfaces;
 
-namespace RaceLogic
+namespace RaceLogic.Algorithms
 {
     public class Combination : ICombination
     {
@@ -30,7 +30,7 @@ namespace RaceLogic
 
         private bool IsNumbersKartChanged(List<int> numberKarts)
         {
-            return !Enumerable.SequenceEqual(numberKarts, _allCombinations[0]);
+            return !numberKarts.SequenceEqual(_allCombinations[0]);
         }
 
         private void CalculateAllCombinations(List<int> numberKarts)

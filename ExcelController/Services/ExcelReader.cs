@@ -2,7 +2,7 @@
 using Application = Microsoft.Office.Interop.Excel.Application;
 using Range = Microsoft.Office.Interop.Excel.Range;
 
-namespace ExcelController
+namespace ExcelController.Services
 {
     public class ExcelReader : IExcelReader
     {

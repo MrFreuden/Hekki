@@ -2,7 +2,7 @@
 using RaceLogic.Interfaces;
 using Range = Microsoft.Office.Interop.Excel.Range;
 
-namespace RaceLogic
+namespace RaceLogic.Services
 {
     public class RaceDataService : IRaceDataService
     {

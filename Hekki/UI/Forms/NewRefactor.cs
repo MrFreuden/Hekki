@@ -1,6 +1,7 @@
 ﻿using ExcelController;
 using RaceLogic;
 using RaceLogic.Interfaces;
+using RaceLogic.Models;
 namespace Hekki
 {
     public partial class NewRefactor : Form

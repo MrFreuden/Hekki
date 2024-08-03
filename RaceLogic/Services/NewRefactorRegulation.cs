@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using RaceLogic.Interfaces;
 
-namespace RaceLogic
+namespace RaceLogic.Services
 {
     public class NewRefactorRegulation : IRegulation
     {
@@ -60,6 +60,6 @@ namespace RaceLogic
         public void SetSortMethod(ISortMethod sortMethod)
         {
             _sortMethod = sortMethod;
-        }  
+        }
     }
 }

@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using RaceLogic.Interfaces;
 
-namespace RaceLogic
+namespace RaceLogic.Models
 {
     public class Race : IRace
     {

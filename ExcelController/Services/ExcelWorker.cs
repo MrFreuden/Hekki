@@ -1,6 +1,6 @@
 ﻿using ExcelController.Interfaces;
 
-namespace ExcelController
+namespace ExcelController.Services
 {
     public class ExcelWorker : IExcelWorker
     {
@@ -133,9 +133,9 @@ namespace ExcelController
             return columnIndexes;
         }
 
-        
 
-        
+
+
 
         public void AppendDataInColumn<T>(List<T> data, int column, int row)
         {

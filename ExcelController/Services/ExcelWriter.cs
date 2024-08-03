@@ -2,7 +2,7 @@
 using Application = Microsoft.Office.Interop.Excel.Application;
 
 
-namespace ExcelController
+namespace ExcelController.Services
 {
     public class ExcelWriter : IExcelWriter
     {
