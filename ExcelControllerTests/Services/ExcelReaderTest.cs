@@ -17,28 +17,40 @@ namespace ExcelControllerTests.Services
         }
 
         [Test]
-        public void ReadCell_ReturnCorrectValue()
+        [TestCase(1, 1, "Test Value")]
+        [TestCase(2, 2, "1234")]
+        [TestCase(3, 3, "")]
+        [TestCase(4, 4, "41,123")]
+        public void ReadCell_ReturnCorrectValue(int row, int column, string expectedValue)
         {
             // Arrange
-            int row = 1;
-            int column = 1;
-            string expectedValue = "Test Value";
-
             _mockRange.Setup(range => range.Value2).Returns(expectedValue);
-
             _mockExcel.Setup(excel => excel.Cells[row, column]).Returns(_mockRange.Object);
 
             var excelReader = new ExcelReader(_mockExcel.Object);
 
+            // Act
+            var cellData = excelReader.ReadCell(row, column);
 
+            // Assert
+            Assert.That(cellData, Is.EqualTo(expectedValue));
+        }
+
+        [Test]
+        public void ReadCell_HandlesNullCell()
+        {
+            // Arrange
+            int row = 1;
+            int column = 1;
+            _mockExcel.Setup(excel => excel.Cells[row, column]).Returns((Range)null);
+
+            var excelReader = new ExcelReader(_mockExcel.Object);
 
             // Act
             var cellData = excelReader.ReadCell(row, column);
 
-
-
             // Assert
-            Assert.That(cellData, Is.EqualTo(expectedValue));
+            Assert.IsNull(cellData);
         }
     }
 }
