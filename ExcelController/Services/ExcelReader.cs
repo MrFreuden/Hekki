@@ -15,7 +15,8 @@ namespace ExcelController.Services
 
         public string ReadCell(int row, int column)
         {
-            return _excel.Cells[row, column].Value.ToString();
+            var cell = (Range)_excel.Cells[row, column];
+            return cell?.Value2?.ToString();
         }
     }
 }
