@@ -1,5 +1,6 @@
 ﻿using ExcelController.Interfaces;
 using Application = Microsoft.Office.Interop.Excel.Application;
+using Range = Microsoft.Office.Interop.Excel.Range;
 
 
 namespace ExcelController.Services
@@ -15,7 +16,8 @@ namespace ExcelController.Services
 
         public void WriteCell(int row, int column, string value)
         {
-            _excel.Cells[row, column] = value;
+            var cell = (Range)_excel.Cells[row, column];
+            cell.Value = value;
         }
     }
 }
