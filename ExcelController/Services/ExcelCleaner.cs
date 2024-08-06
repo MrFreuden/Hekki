@@ -1,4 +1,5 @@
 ﻿using ExcelController.Interfaces;
+using ExcelController.Services.InteropWrappers;
 using Microsoft.Office.Interop.Excel;
 using Range = Microsoft.Office.Interop.Excel.Range;
 
@@ -6,9 +7,9 @@ namespace ExcelController.Services
 {
     public class ExcelCleaner : IExcelCleaner
     {
-        private readonly Application _excel;
+        private readonly IExcelApplication _excel;
 
-        public ExcelCleaner(Application excel)
+        public ExcelCleaner(IExcelApplication excel)
         {
             _excel = excel;
         }

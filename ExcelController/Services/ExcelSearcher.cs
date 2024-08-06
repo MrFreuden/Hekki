@@ -1,4 +1,5 @@
 ﻿using ExcelController.Interfaces;
+using ExcelController.Services.InteropWrappers;
 using Application = Microsoft.Office.Interop.Excel.Application;
 using Range = Microsoft.Office.Interop.Excel.Range;
 
@@ -6,9 +7,9 @@ namespace ExcelController.Services
 {
     public class ExcelSearcher : IExcelSearcher
     {
-        private readonly Application _excel;
+        private readonly IExcelApplication _excel;
 
-        public ExcelSearcher(Application excel)
+        public ExcelSearcher(IExcelApplication excel)
         {
             _excel = excel;
         }

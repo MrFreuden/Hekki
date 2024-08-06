@@ -1,4 +1,5 @@
 ﻿using ExcelController.Interfaces;
+using ExcelController.Services.InteropWrappers;
 using ExcelController.Utils;
 using Application = Microsoft.Office.Interop.Excel.Application;
 
@@ -6,13 +7,15 @@ namespace ExcelController.Services
 {
     public class ExcelApplicationManager : IExcelApplicationManager
     {
-        private Application _excel;
+        private Application _excel_Interop;
+        private IExcelApplication _excelWrapper;
 
-        public Application Excel => _excel;
+        public IExcelApplication Excel => _excelWrapper;
 
         public ExcelApplicationManager()
         {
-            _excel = GetExcel();
+            _excel_Interop = GetExcel();
+            _excelWrapper = new ExcelApplicationWrapper(_excel_Interop);
         }
 
         private Application GetExcel()
