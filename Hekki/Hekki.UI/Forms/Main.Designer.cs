@@ -38,14 +38,14 @@
             versionNumber = new Label();
             SprintOld = new Button();
             TestNew = new Button();
+            SprintNew = new Button();
             SuspendLayout();
             // 
             // Cherkasy
             // 
-            Cherkasy.Location = new Point(76, 76);
-            Cherkasy.Margin = new Padding(4);
+            Cherkasy.Location = new Point(61, 61);
             Cherkasy.Name = "Cherkasy";
-            Cherkasy.Size = new Size(255, 108);
+            Cherkasy.Size = new Size(204, 86);
             Cherkasy.TabIndex = 0;
             Cherkasy.Text = "Cherkasy";
             Cherkasy.UseVisualStyleBackColor = true;
@@ -53,10 +53,9 @@
             // 
             // School
             // 
-            School.Location = new Point(430, 76);
-            School.Margin = new Padding(4);
+            School.Location = new Point(344, 61);
             School.Name = "School";
-            School.Size = new Size(255, 108);
+            School.Size = new Size(204, 86);
             School.TabIndex = 1;
             School.Text = "School";
             School.UseVisualStyleBackColor = true;
@@ -64,10 +63,9 @@
             // 
             // Sprint
             // 
-            Sprint.Location = new Point(76, 295);
-            Sprint.Margin = new Padding(4);
+            Sprint.Location = new Point(61, 236);
             Sprint.Name = "Sprint";
-            Sprint.Size = new Size(255, 108);
+            Sprint.Size = new Size(204, 86);
             Sprint.TabIndex = 2;
             Sprint.Text = "Sprint";
             Sprint.UseVisualStyleBackColor = true;
@@ -75,10 +73,9 @@
             // 
             // Junior
             // 
-            Junior.Location = new Point(430, 295);
-            Junior.Margin = new Padding(4);
+            Junior.Location = new Point(344, 236);
             Junior.Name = "Junior";
-            Junior.Size = new Size(255, 108);
+            Junior.Size = new Size(204, 86);
             Junior.TabIndex = 3;
             Junior.Text = "Junior";
             Junior.UseVisualStyleBackColor = true;
@@ -86,10 +83,9 @@
             // 
             // EveryOnEvery
             // 
-            EveryOnEvery.Location = new Point(796, 295);
-            EveryOnEvery.Margin = new Padding(4);
+            EveryOnEvery.Location = new Point(637, 236);
             EveryOnEvery.Name = "EveryOnEvery";
-            EveryOnEvery.Size = new Size(255, 108);
+            EveryOnEvery.Size = new Size(204, 86);
             EveryOnEvery.TabIndex = 4;
             EveryOnEvery.Text = "Every On Every";
             EveryOnEvery.UseVisualStyleBackColor = true;
@@ -97,10 +93,9 @@
             // 
             // numbersOfKarts
             // 
-            numbersOfKarts.Location = new Point(76, 438);
-            numbersOfKarts.Margin = new Padding(4);
+            numbersOfKarts.Location = new Point(61, 350);
             numbersOfKarts.Name = "numbersOfKarts";
-            numbersOfKarts.Size = new Size(155, 202);
+            numbersOfKarts.Size = new Size(125, 162);
             numbersOfKarts.TabIndex = 15;
             numbersOfKarts.Text = "11\n12\n13\n14\n15\n16\n17\n18\n19\n20";
             numbersOfKarts.TextChanged += numbersOfKarts_TextChanged;
@@ -109,18 +104,18 @@
             // versionNumber
             // 
             versionNumber.AutoSize = true;
-            versionNumber.Location = new Point(1056, 25);
+            versionNumber.Location = new Point(845, 20);
+            versionNumber.Margin = new Padding(2, 0, 2, 0);
             versionNumber.Name = "versionNumber";
-            versionNumber.Size = new Size(69, 25);
+            versionNumber.Size = new Size(59, 20);
             versionNumber.TabIndex = 16;
             versionNumber.Text = "Версия";
             // 
             // SprintOld
             // 
-            SprintOld.Location = new Point(796, 76);
-            SprintOld.Margin = new Padding(4);
+            SprintOld.Location = new Point(637, 61);
             SprintOld.Name = "SprintOld";
-            SprintOld.Size = new Size(255, 108);
+            SprintOld.Size = new Size(204, 86);
             SprintOld.TabIndex = 17;
             SprintOld.Text = "SprintOld";
             SprintOld.UseVisualStyleBackColor = true;
@@ -128,20 +123,30 @@
             // 
             // TestNew
             // 
-            TestNew.Location = new Point(430, 473);
-            TestNew.Margin = new Padding(4);
+            TestNew.Location = new Point(344, 378);
             TestNew.Name = "TestNew";
-            TestNew.Size = new Size(255, 108);
+            TestNew.Size = new Size(204, 86);
             TestNew.TabIndex = 18;
             TestNew.Text = "TestNew";
             TestNew.UseVisualStyleBackColor = true;
             TestNew.Click += TestNew_Click;
             // 
+            // SprintNew
+            // 
+            SprintNew.Location = new Point(637, 378);
+            SprintNew.Name = "SprintNew";
+            SprintNew.Size = new Size(204, 86);
+            SprintNew.TabIndex = 19;
+            SprintNew.Text = "SprintNew";
+            SprintNew.UseVisualStyleBackColor = true;
+            SprintNew.Click += SprintNew_Click;
+            // 
             // Main
             // 
-            AutoScaleDimensions = new SizeF(10F, 25F);
+            AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1211, 655);
+            ClientSize = new Size(969, 524);
+            Controls.Add(SprintNew);
             Controls.Add(TestNew);
             Controls.Add(SprintOld);
             Controls.Add(versionNumber);
@@ -152,7 +157,6 @@
             Controls.Add(School);
             Controls.Add(Cherkasy);
             Icon = (Icon)resources.GetObject("$this.Icon");
-            Margin = new Padding(4);
             Name = "Main";
             Text = "Hekki";
             ResumeLayout(false);
@@ -170,5 +174,6 @@
         private Label versionNumber;
         private Button SprintOld;
         private Button TestNew;
+        private Button SprintNew;
     }
 }

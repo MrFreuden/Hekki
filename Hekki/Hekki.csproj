@@ -40,6 +40,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Hekki.UI\Forms\SprintNewReg.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="Hekki.UI\Forms\TestNewReg.cs">
       <SubType>Form</SubType>
     </Compile>

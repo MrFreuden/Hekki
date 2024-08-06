@@ -90,5 +90,13 @@ namespace Hekki
             win8.Closed += (s, args) => this.Close();
             win8.Show();
         }
+
+        private void SprintNew_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            SprintNewReg win9 = new(karts);
+            win9.Closed += (s, args) => this.Close();
+            win9.Show();
+        }
     }
 }
