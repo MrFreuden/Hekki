@@ -1,9 +1,5 @@
 using Moq;
-using Application = Microsoft.Office.Interop.Excel.Application;
 using ExcelController.Services;
-using Range = Microsoft.Office.Interop.Excel.Range;
-using ExcelController.Interfaces;
-using Microsoft.Office.Interop.Excel;
 using ExcelController.Services.InteropWrappers;
 namespace ExcelControllerTests.Services
 {
@@ -26,15 +22,15 @@ namespace ExcelControllerTests.Services
         {
             // Arrange
             string searchValue = "Test Value";
-            string firstAddress = "$A$1";
-            string secondAddress = "$B$2";
+            string firstAddress = "A1";
+            string secondAddress = "B2";
             _mockFoundRange.SetupSequence(range => range.Address)
                 .Returns(firstAddress)
                 .Returns(secondAddress);
 
             _mockSearchedRange.Setup(range => range.Find(It.IsAny<object>())).Returns(_mockFoundRange.Object);
 
-            _mockSearchedRange.Setup(range => range.FindNext(It.IsAny<Range>()))
+            _mockSearchedRange.Setup(range => range.FindNext(It.IsAny<IExcelRange>()))
                 .Returns(_mockFoundRange.Object);
 
             var excelSearcher = new ExcelSearcher(_mockExcel.Object);
