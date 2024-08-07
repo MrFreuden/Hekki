@@ -7,7 +7,8 @@ namespace ExcelController.Services.InteropWrappers
     {
         private readonly Range _range;
         public string Address => _range.Address;
-
+        public int Column => _range.Column;
+        public int Row => _range.Row;
         public ExcelRangeWrapper(Range range)
         {
             _range = range;
