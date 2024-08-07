@@ -7,15 +7,14 @@ namespace ExcelController.Services
 {
     public class ExcelApplicationManager : IExcelApplicationManager
     {
-        private Application _excel_Interop;
         private IExcelApplication _excelWrapper;
 
-        public IExcelApplication Excel => _excelWrapper;
+        public IExcelApplication ExcelWrapper => _excelWrapper;
 
         public ExcelApplicationManager()
         {
-            _excel_Interop = GetExcel();
-            _excelWrapper = new ExcelApplicationWrapper(_excel_Interop);
+            var excel_Interop = GetExcel();
+            _excelWrapper = new ExcelApplicationWrapper(excel_Interop);
         }
 
         private Application GetExcel()

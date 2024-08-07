@@ -1,7 +1,7 @@
 ﻿using ExcelController.Services.InteropWrappers;
 using Moq;
 
-namespace ExcelControllerTests.Services
+namespace ExcelControllerTests.Moq
 {
     internal class ExcelRangeMockFactory
     {
@@ -35,7 +35,7 @@ namespace ExcelControllerTests.Services
 
             for (int i = 0; i < mocks.Count; i++)
             {
-                var nextRange = (i < mocks.Count - 1) ? mocks[i + 1].Object : null;
+                var nextRange = i < mocks.Count - 1 ? mocks[i + 1].Object : null;
                 mocks[i].Setup(range => range.FindNext(It.IsAny<IExcelRange>())).Returns(nextRange);
                 searchedRange.Setup(range => range.FindNext(mocks[i].Object)).Returns(nextRange);
             }

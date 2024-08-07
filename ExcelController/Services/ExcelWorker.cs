@@ -1,4 +1,5 @@
 ﻿using ExcelController.Interfaces;
+using ExcelController.Services.InteropWrappers;
 
 namespace ExcelController.Services
 {
@@ -6,19 +7,28 @@ namespace ExcelController.Services
     {
         public const int StartRowByDefault = 4;
         public const int EndRowByDefault = 53;
-        private readonly ExcelApplicationManager _applicationManager;
-        private readonly ExcelReader _reader;
-        private readonly ExcelWriter _writer;
-        private readonly ExcelCleaner _cleaner;
-        private readonly ExcelSearcher _searcher;
+        private readonly IExcelApplication _application;
+        private readonly IExcelReader _reader;
+        private readonly IExcelWriter _writer;
+        private readonly IExcelCleaner _cleaner;
+        private readonly IExcelSearcher _searcher;
 
         public ExcelWorker()
         {
-            _applicationManager = new ExcelApplicationManager();
-            _reader = new ExcelReader(_applicationManager.Excel);
-            _writer = new ExcelWriter(_applicationManager.Excel);
-            _cleaner = new ExcelCleaner(_applicationManager.Excel);
-            _searcher = new ExcelSearcher(_applicationManager.Excel);
+            var excelApplicationManager = new ExcelApplicationManager();
+            _reader = new ExcelReader(excelApplicationManager.ExcelWrapper);
+            _writer = new ExcelWriter(excelApplicationManager.ExcelWrapper);
+            _cleaner = new ExcelCleaner(excelApplicationManager.ExcelWrapper);
+            _searcher = new ExcelSearcher(excelApplicationManager.ExcelWrapper);
+        }
+
+        public ExcelWorker(IExcelApplication excelApplication, IExcelReader excelReader, IExcelWriter excelWriter, IExcelCleaner excelCleaner, IExcelSearcher excelSearcher)
+        {
+            _application = excelApplication;
+            _reader = excelReader;
+            _writer = excelWriter;
+            _cleaner = excelCleaner;
+            _searcher = excelSearcher;
         }
 
         public void WriteDataInEmptyColumn<T>(List<T> data, string columnName, int startRow)

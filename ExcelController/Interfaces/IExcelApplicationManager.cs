@@ -3,9 +3,9 @@ using Microsoft.Office.Interop.Excel;
 
 namespace ExcelController.Interfaces
 {
-    internal interface IExcelApplicationManager
+    public interface IExcelApplicationManager
     {
-        IExcelApplication Excel { get; }
+        IExcelApplication ExcelWrapper { get; }
 
         void CloseWorkbook();
         void OpenWorkbook(string path);
