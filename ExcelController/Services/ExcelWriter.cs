@@ -17,8 +17,8 @@ namespace ExcelController.Services
 
         public void WriteCell(int row, int column, string value)
         {
-            var cell = (Range)_excel.Cells[row, column];
-            cell.Value = value;
+            var cell = _excel.GetCell(row, column);
+            cell.Value2 = value;
         }
     }
 }

@@ -4,6 +4,6 @@ namespace ExcelController.Services.InteropWrappers
 {
     public interface IExcelRange
     {
-        object Value2 { get; }
+        object Value2 { get; set; }
     }
 }

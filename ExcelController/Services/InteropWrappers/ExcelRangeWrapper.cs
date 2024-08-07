@@ -12,6 +12,20 @@ namespace ExcelController.Services.InteropWrappers
             _range = range;
         }
 
-        public object Value2 => _range.Value2;
+        public object Value2
+        {
+            get => _range.Value2;
+            set
+            {
+                if (value != null)
+                {
+                    _range.Value2 = value.ToString();
+                }
+                else
+                {
+                    _range.Value2 = null;
+                }
+            }
+        }
     }
 }
