@@ -1,20 +1,22 @@
 using Moq;
-using Application = Microsoft.Office.Interop.Excel.Application;
 using ExcelController.Services;
-using Range = Microsoft.Office.Interop.Excel.Range;
 using ExcelController.Services.InteropWrappers;
+using ExcelController.Interfaces;
+
 namespace ExcelControllerTests.Services
 {
     public class ExcelReaderTest
     {
         private Mock<IExcelApplication> _mockExcel;
         private Mock<IExcelRange> _mockRange;
+        private IExcelReader _excelReader;
 
         [SetUp]
         public void Setup()
         {
             _mockExcel = new Mock<IExcelApplication>();
             _mockRange = new Mock<IExcelRange>();
+            _excelReader = new ExcelReader(_mockExcel.Object);
         }
 
         [Test]
@@ -28,10 +30,8 @@ namespace ExcelControllerTests.Services
             _mockRange.Setup(range => range.Value2).Returns(expectedValue);
             _mockExcel.Setup(excel => excel.GetCell(row, column)).Returns(_mockRange.Object);
 
-            var excelReader = new ExcelReader(_mockExcel.Object);
-
             // Act
-            var cellData = excelReader.ReadCell(row, column);
+            var cellData = _excelReader.ReadCell(row, column);
 
             // Assert
             Assert.That(cellData, Is.EqualTo(expectedValue));
@@ -45,13 +45,11 @@ namespace ExcelControllerTests.Services
             int column = 1;
             _mockExcel.Setup(excel => excel.GetCell(row, column)).Returns((IExcelRange)null);
 
-            var excelReader = new ExcelReader(_mockExcel.Object);
-
             // Act
-            var cellData = excelReader.ReadCell(row, column);
+            var cellData = _excelReader.ReadCell(row, column);
 
             // Assert
-            Assert.IsNull(cellData);
+            Assert.That(cellData, Is.Null);
         }
     }
 }

@@ -1,9 +1,6 @@
 ﻿using Moq;
 using ExcelController.Services;
-using Application = Microsoft.Office.Interop.Excel.Application;
-using Range = Microsoft.Office.Interop.Excel.Range;
 using ExcelController.Services.InteropWrappers;
-
 
 namespace ExcelControllerTests.Services
 {
