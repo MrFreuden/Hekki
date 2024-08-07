@@ -1,8 +1,5 @@
 ﻿using ExcelController.Interfaces;
 using ExcelController.Services.InteropWrappers;
-using Application = Microsoft.Office.Interop.Excel.Application;
-using Range = Microsoft.Office.Interop.Excel.Range;
-
 
 namespace ExcelController.Services
 {
