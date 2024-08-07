@@ -14,9 +14,8 @@ namespace ExcelController.Services
 
         public IList<IExcelRange> GetCellsByValue(string value, IExcelRange searchedRange)
         {
-            searchedRange ??= _excel.GetCell(1, 1);
+            searchedRange ??= _excel.GetRange("A1", "DZ1000");
             var finded = searchedRange.Find(value);
-
             if (finded == null)
                 return new List<IExcelRange>();
 
@@ -26,7 +25,7 @@ namespace ExcelController.Services
             {
                 ranges.Add(finded);
                 finded = searchedRange.FindNext(finded);
-                if (firstAdress == finded.Address)
+                if (finded == null || firstAdress == finded.Address)
                     return ranges;
             }
         }
