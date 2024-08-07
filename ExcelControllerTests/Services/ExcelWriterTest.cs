@@ -11,13 +11,13 @@ namespace ExcelControllerTests.Services
     public class ExcelWriterTest
     {
         private Mock<IExcelApplication> _mockExcel;
-        private Mock<Range> _mockRange;
+        private Mock<IExcelRange> _mockRange;
 
         [SetUp]
         public void Setup()
         {
             _mockExcel = new Mock<IExcelApplication>();
-            _mockRange = new Mock<Range>();
+            _mockRange = new Mock<IExcelRange>();
         }
 
         [Test]
@@ -28,7 +28,7 @@ namespace ExcelControllerTests.Services
         public void WriteCell_SetsCorrectValue(int row, int column, string value)
         {
             // Arrange
-            _mockExcel.Setup(excel => excel.Cells[row, column]).Returns(_mockRange.Object);
+            _mockExcel.Setup(excel => excel.GetCell(row, column)).Returns(_mockRange.Object);
 
             var excelWriter = new ExcelWriter(_mockExcel.Object);
 
@@ -36,7 +36,7 @@ namespace ExcelControllerTests.Services
             excelWriter.WriteCell(row, column, value);
 
             // Assert
-            _mockRange.VerifySet(range => range.Value = value, Times.Once);
+            _mockRange.VerifySet(range => range.Value2 = value, Times.Once);
         }
     }
 }

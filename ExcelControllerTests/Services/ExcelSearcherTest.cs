@@ -4,20 +4,21 @@ using ExcelController.Services;
 using Range = Microsoft.Office.Interop.Excel.Range;
 using ExcelController.Interfaces;
 using Microsoft.Office.Interop.Excel;
+using ExcelController.Services.InteropWrappers;
 namespace ExcelControllerTests.Services
 {
     public class ExcelSearcherTest
     {
-        private Mock<Application> _mockExcel;
-        private Mock<Range> _mockSearchedRange;
-        private Mock<Range> _mockFoundRange;
+        private Mock<IExcelApplication> _mockExcel;
+        private Mock<IExcelRange> _mockSearchedRange;
+        private Mock<IExcelRange> _mockFoundRange;
 
         [SetUp]
         public void Setup()
         {
-            _mockExcel = new Mock<Application>();
-            _mockSearchedRange = new Mock<Range>();
-            _mockFoundRange = new Mock<Range>();
+            _mockExcel = new Mock<IExcelApplication>();
+            _mockSearchedRange = new Mock<IExcelRange>();
+            _mockFoundRange = new Mock<IExcelRange>();
         }
 
         [Test]
@@ -31,16 +32,7 @@ namespace ExcelControllerTests.Services
                 .Returns(firstAddress)
                 .Returns(secondAddress);
 
-            _mockSearchedRange.Setup(range => range.Find(
-                It.IsAny<object>(),
-                It.IsAny<object>(),
-                It.IsAny<object>(),
-                It.IsAny<object>(),
-                It.IsAny<object>(),
-                It.IsAny<XlSearchDirection>(),
-                It.IsAny<object>(),
-                It.IsAny<object>(),
-                It.IsAny<object>())).Returns(_mockFoundRange.Object);
+            _mockSearchedRange.Setup(range => range.Find(It.IsAny<object>())).Returns(_mockFoundRange.Object);
 
             _mockSearchedRange.Setup(range => range.FindNext(It.IsAny<Range>()))
                 .Returns(_mockFoundRange.Object);
