@@ -2,6 +2,7 @@
 using ExcelController.Services;
 using Application = Microsoft.Office.Interop.Excel.Application;
 using Range = Microsoft.Office.Interop.Excel.Range;
+using ExcelController.Services.InteropWrappers;
 
 
 namespace ExcelControllerTests.Services
@@ -9,13 +10,13 @@ namespace ExcelControllerTests.Services
     [TestFixture]
     public class ExcelWriterTest
     {
-        private Mock<Application> _mockExcel;
+        private Mock<IExcelApplication> _mockExcel;
         private Mock<Range> _mockRange;
 
         [SetUp]
         public void Setup()
         {
-            _mockExcel = new Mock<Application>();
+            _mockExcel = new Mock<IExcelApplication>();
             _mockRange = new Mock<Range>();
         }
 

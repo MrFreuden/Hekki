@@ -1,7 +1,9 @@
-﻿namespace ExcelController.Interfaces
+﻿using ExcelController.Services.InteropWrappers;
+
+namespace ExcelController.Interfaces
 {
     public interface IExcelSearcher
     {
-        IList<Microsoft.Office.Interop.Excel.Range> GetCellsByValue(string value, Microsoft.Office.Interop.Excel.Range searchedRange);
+        IList<IExcelRange> GetCellsByValue(string value, IExcelRange searchedRange);
     }
 }

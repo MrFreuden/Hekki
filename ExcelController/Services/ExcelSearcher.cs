@@ -14,16 +14,16 @@ namespace ExcelController.Services
             _excel = excel;
         }
 
-        public IList<Range> GetCellsByValue(string value, Range searchedRange)
+        public IList<IExcelRange> GetCellsByValue(string value, IExcelRange searchedRange)
         {
-            searchedRange ??= _excel.get_Range("A1", "XFD1048576");
+            searchedRange ??= _excel.GetCell(1, 1);
             var finded = searchedRange.Find(value);
 
             if (finded == null)
-                return new List<Range>();
+                return new List<IExcelRange>();
 
             var firstAdress = finded.Address;
-            List<Range> ranges = new();
+            List<IExcelRange> ranges = new();
             while (true)
             {
                 ranges.Add(finded);

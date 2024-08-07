@@ -36,7 +36,7 @@ namespace ExcelController.Services
                 {
                     string q = keyCells[j][i][2].Address.Replace("$", string.Empty);
                     string s = keyCells[j][i][countBellow].Address.Replace("$", string.Empty);
-                    var aras = _excel.get_Range(q, s);
+                    var aras = _excel.GetCell(1, 1);
                     aras.ClearContents();
                 }
             }
