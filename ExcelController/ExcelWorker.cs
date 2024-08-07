@@ -217,6 +217,11 @@ namespace ExcelController
             return pilotsLiques;
         }
 
+        private static bool IsCellAboveEmpty(int row, int column)
+        {
+            return excel.Cells[row, column].Value == null;
+        }
+
         public static List<List<string>> ReadNamesInRace(int pilotsCount,
             int[] indexesNeededCols,
             int countBreaker = 50)
@@ -227,6 +232,11 @@ namespace ExcelController
             {
                 if (!(indexesNeededCols.Contains(keyScore[j].Column)))
                     continue;
+
+                if (IsCellAboveEmpty(keyScore[j].Row + 1, keyScore[j].Column))
+                {
+                    continue;
+                }
 
                 var startIndexName = keyScore[j].Row + 1;
 
@@ -279,6 +289,30 @@ namespace ExcelController
         {
             var pilotsScores = new List<List<string>>();
             var keyScore = FindKeyCellByValue("Разом", null);
+            cols = new int[keyScore.Count];
+            for (int j = 0; j < pilotsCount; j++)
+            {
+                var startIndexScore = keyScore[j].Row + 1;
+                int columnIndexName = GetIndexNearColLeft("Пілоти", keyScore[j].Row, keyScore[j][startIndexScore - 1].Column);
+                cols[j] = columnIndexName;
+                pilotsScores.Add(new List<string>());
+                for (int i = 0; i < countInGroup; startIndexScore++)
+                {
+                    if (Convert.ToString(excel.Cells[startIndexScore, columnIndexName].Value) == null)
+                        continue;
+                    var val = Convert.ToString(excel.Cells[startIndexScore, keyScore[j].Column].Value);
+
+                    pilotsScores[j].Add(val);
+                    i++;
+                }
+            }
+            return pilotsScores;
+        }
+
+        public static List<List<string>> ReadTimesInRaceEveryOnEvery(int pilotsCount, int countInGroup, out int[] cols)
+        {
+            var pilotsScores = new List<List<string>>();
+            var keyScore = FindKeyCellByValue("Час", null);
             cols = new int[keyScore.Count];
             for (int j = 0; j < pilotsCount; j++)
             {

@@ -28,101 +28,124 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.Clear = new System.Windows.Forms.Button();
-            this.numbersOfKarts = new System.Windows.Forms.RichTextBox();
-            this.DoRaces = new System.Windows.Forms.Button();
-            this.ReadScores = new System.Windows.Forms.Button();
-            this.SortScores = new System.Windows.Forms.Button();
-            this.ReplaceKart = new System.Windows.Forms.Button();
-            this.RebuildPilots = new System.Windows.Forms.Button();
-            this.SuspendLayout();
+            Clear = new Button();
+            numbersOfKarts = new RichTextBox();
+            DoRaces = new Button();
+            ReadScores = new Button();
+            SortScores = new Button();
+            ReplaceKart = new Button();
+            RebuildPilots = new Button();
+            ReadTimes = new Button();
+            SortTimeDead = new Button();
+            SuspendLayout();
             // 
             // Clear
             // 
-            this.Clear.Location = new System.Drawing.Point(180, 432);
-            this.Clear.Name = "Clear";
-            this.Clear.Size = new System.Drawing.Size(128, 54);
-            this.Clear.TabIndex = 1;
-            this.Clear.Text = "Очистить";
-            this.Clear.UseVisualStyleBackColor = true;
-            this.Clear.Click += new System.EventHandler(this.Clear_Click);
+            Clear.Location = new Point(180, 432);
+            Clear.Name = "Clear";
+            Clear.Size = new Size(128, 54);
+            Clear.TabIndex = 1;
+            Clear.Text = "Очистить";
+            Clear.UseVisualStyleBackColor = true;
+            Clear.Click += Clear_Click;
             // 
             // numbersOfKarts
             // 
-            this.numbersOfKarts.Location = new System.Drawing.Point(31, 324);
-            this.numbersOfKarts.Name = "numbersOfKarts";
-            this.numbersOfKarts.Size = new System.Drawing.Size(125, 162);
-            this.numbersOfKarts.TabIndex = 15;
-            this.numbersOfKarts.Text = "";
-            this.numbersOfKarts.TextChanged += new System.EventHandler(this.numbersOfKarts_TextChanged);
-            this.numbersOfKarts.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.numbersOfKarts_KeyPress);
+            numbersOfKarts.Location = new Point(31, 324);
+            numbersOfKarts.Name = "numbersOfKarts";
+            numbersOfKarts.Size = new Size(125, 162);
+            numbersOfKarts.TabIndex = 15;
+            numbersOfKarts.Text = "";
+            numbersOfKarts.TextChanged += numbersOfKarts_TextChanged;
+            numbersOfKarts.KeyPress += numbersOfKarts_KeyPress;
             // 
             // DoRaces
             // 
-            this.DoRaces.Location = new System.Drawing.Point(31, 97);
-            this.DoRaces.Name = "DoRaces";
-            this.DoRaces.Size = new System.Drawing.Size(170, 91);
-            this.DoRaces.TabIndex = 17;
-            this.DoRaces.Text = "Распределить заезды";
-            this.DoRaces.UseVisualStyleBackColor = true;
-            this.DoRaces.Click += new System.EventHandler(this.DoRaces_Click);
+            DoRaces.Location = new Point(31, 97);
+            DoRaces.Name = "DoRaces";
+            DoRaces.Size = new Size(170, 91);
+            DoRaces.TabIndex = 17;
+            DoRaces.Text = "Распределить заезды";
+            DoRaces.UseVisualStyleBackColor = true;
+            DoRaces.Click += DoRaces_Click;
             // 
             // ReadScores
             // 
-            this.ReadScores.Location = new System.Drawing.Point(664, 324);
-            this.ReadScores.Name = "ReadScores";
-            this.ReadScores.Size = new System.Drawing.Size(128, 83);
-            this.ReadScores.TabIndex = 24;
-            this.ReadScores.Text = "Перенести балы в общую таблицу";
-            this.ReadScores.UseVisualStyleBackColor = true;
-            this.ReadScores.Click += new System.EventHandler(this.ReadScores_Click);
+            ReadScores.Location = new Point(664, 324);
+            ReadScores.Name = "ReadScores";
+            ReadScores.Size = new Size(128, 83);
+            ReadScores.TabIndex = 24;
+            ReadScores.Text = "Перенести балы в общую таблицу";
+            ReadScores.UseVisualStyleBackColor = true;
+            ReadScores.Click += ReadScores_Click;
             // 
             // SortScores
             // 
-            this.SortScores.Location = new System.Drawing.Point(811, 324);
-            this.SortScores.Name = "SortScores";
-            this.SortScores.Size = new System.Drawing.Size(128, 83);
-            this.SortScores.TabIndex = 25;
-            this.SortScores.Text = "Сортировать общую таблицу по балам";
-            this.SortScores.UseVisualStyleBackColor = true;
-            this.SortScores.Click += new System.EventHandler(this.SortScores_Click);
+            SortScores.Location = new Point(811, 324);
+            SortScores.Name = "SortScores";
+            SortScores.Size = new Size(128, 83);
+            SortScores.TabIndex = 25;
+            SortScores.Text = "Сортировать общую таблицу по балам";
+            SortScores.UseVisualStyleBackColor = true;
+            SortScores.Click += SortScores_Click;
             // 
             // ReplaceKart
             // 
-            this.ReplaceKart.Location = new System.Drawing.Point(786, 42);
-            this.ReplaceKart.Name = "ReplaceKart";
-            this.ReplaceKart.Size = new System.Drawing.Size(128, 83);
-            this.ReplaceKart.TabIndex = 26;
-            this.ReplaceKart.Text = "Заменить карт";
-            this.ReplaceKart.UseVisualStyleBackColor = true;
+            ReplaceKart.Location = new Point(786, 42);
+            ReplaceKart.Name = "ReplaceKart";
+            ReplaceKart.Size = new Size(128, 83);
+            ReplaceKart.TabIndex = 26;
+            ReplaceKart.Text = "Заменить карт";
+            ReplaceKart.UseVisualStyleBackColor = true;
             // 
             // RebuildPilots
             // 
-            this.RebuildPilots.Location = new System.Drawing.Point(329, 324);
-            this.RebuildPilots.Name = "RebuildPilots";
-            this.RebuildPilots.Size = new System.Drawing.Size(128, 83);
-            this.RebuildPilots.TabIndex = 28;
-            this.RebuildPilots.Text = "Пересобрать пилотов";
-            this.RebuildPilots.UseVisualStyleBackColor = true;
-            this.RebuildPilots.Click += new System.EventHandler(this.RebuildPilots_Click);
+            RebuildPilots.Location = new Point(329, 324);
+            RebuildPilots.Name = "RebuildPilots";
+            RebuildPilots.Size = new Size(128, 83);
+            RebuildPilots.TabIndex = 28;
+            RebuildPilots.Text = "Пересобрать пилотов";
+            RebuildPilots.UseVisualStyleBackColor = true;
+            RebuildPilots.Click += RebuildPilots_Click;
+            // 
+            // ReadTimes
+            // 
+            ReadTimes.Location = new Point(664, 429);
+            ReadTimes.Name = "ReadTimes";
+            ReadTimes.Size = new Size(128, 83);
+            ReadTimes.TabIndex = 29;
+            ReadTimes.Text = "Перенести время в общую таблицу";
+            ReadTimes.UseVisualStyleBackColor = true;
+            ReadTimes.Click += ReadTimes_Click;
+            // 
+            // SortTimeDead
+            // 
+            SortTimeDead.Location = new Point(514, 429);
+            SortTimeDead.Name = "SortTimeDead";
+            SortTimeDead.Size = new Size(128, 83);
+            SortTimeDead.TabIndex = 30;
+            SortTimeDead.Text = "Сортировать времена Дед";
+            SortTimeDead.UseVisualStyleBackColor = true;
+            SortTimeDead.Click += SortTimeDead_Click;
             // 
             // EveryOnEveryReg
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(969, 524);
-            this.Controls.Add(this.RebuildPilots);
-            this.Controls.Add(this.ReplaceKart);
-            this.Controls.Add(this.SortScores);
-            this.Controls.Add(this.ReadScores);
-            this.Controls.Add(this.DoRaces);
-            this.Controls.Add(this.numbersOfKarts);
-            this.Controls.Add(this.Clear);
-            this.Name = "EveryOnEveryReg";
-            this.Text = "EveryOnEveryReg";
-            this.Load += new System.EventHandler(this.EveryOnEveryReg_Load);
-            this.ResumeLayout(false);
-
+            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleMode = AutoScaleMode.Font;
+            ClientSize = new Size(969, 524);
+            Controls.Add(SortTimeDead);
+            Controls.Add(ReadTimes);
+            Controls.Add(RebuildPilots);
+            Controls.Add(ReplaceKart);
+            Controls.Add(SortScores);
+            Controls.Add(ReadScores);
+            Controls.Add(DoRaces);
+            Controls.Add(numbersOfKarts);
+            Controls.Add(Clear);
+            Name = "EveryOnEveryReg";
+            Text = "EveryOnEveryReg";
+            Load += EveryOnEveryReg_Load;
+            ResumeLayout(false);
         }
 
         #endregion
@@ -134,5 +157,7 @@
         private Button SortScores;
         private Button ReplaceKart;
         private Button RebuildPilots;
+        private Button ReadTimes;
+        private Button SortTimeDead;
     }
 }

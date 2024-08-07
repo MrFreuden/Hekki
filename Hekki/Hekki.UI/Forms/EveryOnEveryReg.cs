@@ -72,5 +72,16 @@ namespace Hekki
                 numbersKarts.Add(Int32.Parse(line));
             }
         }
+
+        private void ReadTimes_Click(object sender, EventArgs e)
+        {
+            var times = every.GetTimesEvery(numbersKarts);
+            every.WriteTimes(times);
+        }
+
+        private void SortTimeDead_Click(object sender, EventArgs e)
+        {
+            every.SortTimeDeadEvery();
+        }
     }
 }
