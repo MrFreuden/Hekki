@@ -1,4 +1,6 @@
 ﻿using ExcelController;
+using Microsoft.Office.Interop.Excel;
+using Range = Microsoft.Office.Interop.Excel.Range;
 
 namespace RaceLogic.Regulations
 {
@@ -63,6 +65,21 @@ namespace RaceLogic.Regulations
             pilots = Race.MakePilotsFromTotalBoard(Race.CountPilotsInFirstGroup);
             Race.StartFinalRace(pilots, numbersKarts, numberRace);
 
+        }
+
+        public void SortTimeDeadNew()
+        {
+            string firstCell = "C";
+            var keyCell = ExcelWorker.FindKeyCellByValue("Усього", null);
+            var keyCellLast = ExcelWorker.FindKeyCellByValue("Сума", null);
+            var address = keyCellLast[0].Address;
+            string lastCell = address[1].ToString();
+            lastCell += (3 + pilots.Count).ToString();
+            int w = 4;
+
+            Range rangeToSort = ExcelWorker.excel.Range[firstCell + w.ToString(), lastCell];
+            var c2 = rangeToSort.Columns[keyCell[0].Column - 2];
+            rangeToSort.Sort(c2, XlSortOrder.xlAscending);
         }
     }
 }

@@ -118,7 +118,7 @@ namespace Hekki
 
         private void SortTimeDead_Click(object sender, EventArgs e)
         {
-            testNew.SortTimeDead();
+            testNew.SortTimeDeadNew();
         }
     }
 }
