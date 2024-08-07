@@ -2,18 +2,19 @@ using Moq;
 using Application = Microsoft.Office.Interop.Excel.Application;
 using ExcelController.Services;
 using Range = Microsoft.Office.Interop.Excel.Range;
+using ExcelController.Services.InteropWrappers;
 namespace ExcelControllerTests.Services
 {
     public class ExcelReaderTest
     {
-        private Mock<Application> _mockExcel;
-        private Mock<Range> _mockRange;
+        private Mock<IExcelApplication> _mockExcel;
+        private Mock<IExcelRange> _mockRange;
 
         [SetUp]
         public void Setup()
         {
-            _mockExcel = new Mock<Application>();
-            _mockRange = new Mock<Range>();
+            _mockExcel = new Mock<IExcelApplication>();
+            _mockRange = new Mock<IExcelRange>();
         }
 
         [Test]
@@ -25,7 +26,7 @@ namespace ExcelControllerTests.Services
         {
             // Arrange
             _mockRange.Setup(range => range.Value2).Returns(expectedValue);
-            _mockExcel.Setup(excel => excel.Cells[row, column]).Returns(_mockRange.Object);
+            _mockExcel.Setup(excel => excel.GetCell(row, column)).Returns(_mockRange.Object);
 
             var excelReader = new ExcelReader(_mockExcel.Object);
 
@@ -42,7 +43,7 @@ namespace ExcelControllerTests.Services
             // Arrange
             int row = 1;
             int column = 1;
-            _mockExcel.Setup(excel => excel.Cells[row, column]).Returns((Range)null);
+            _mockExcel.Setup(excel => excel.GetCell(row, column)).Returns((IExcelRange)null);
 
             var excelReader = new ExcelReader(_mockExcel.Object);
 
