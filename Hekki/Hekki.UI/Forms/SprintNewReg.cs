@@ -29,7 +29,7 @@ namespace Hekki
 
         private void DoHeat1_Click(object sender, EventArgs e)
         {
-            testNew.DoNextRace(numbersKarts);
+            testNew.DoNextRaceCard(numbersKarts);
             testNew.WriteUsedKarts();
         }
 
@@ -41,7 +41,7 @@ namespace Hekki
 
         private void DoHeat2_Click(object sender, EventArgs e)
         {
-            testNew.DoNextRace(numbersKarts);
+            testNew.DoNextRaceCard(numbersKarts);
             testNew.WriteUsedKarts();
         }
 

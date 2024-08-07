@@ -58,6 +58,13 @@ namespace RaceLogic.Regulations
             Race.StartSemiRace(pilots, numbersKarts, 4);
         }
 
+        public void DoNextRaceCard(List<int> numbersKarts)
+        {
+            Race.ReBuildCountPilotsInFirstGroup(numbersKarts);
+            pilots = Race.MakePilotsFromTotalBoard(pilots.Count);
+            Race.StartSemiRace(pilots, numbersKarts, 4);
+        }
+
         public void DoFinal(List<int> numbersKarts)
         {
             Race.ReBuildCountPilotsInFirstGroup(numbersKarts);
