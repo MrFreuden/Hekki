@@ -6,7 +6,6 @@ namespace ExcelController.Services.InteropWrappers
     public class ExcelApplicationWrapper : IExcelApplication
     {
         private readonly Application _excelApplication;
-        public Application Excel => _excelApplication;
 
         public ExcelApplicationWrapper(Application excelApplication)
         {

@@ -5,7 +5,6 @@ namespace ExcelController.Services.InteropWrappers
 {
     public interface IExcelApplication
     {
-        Application Excel { get; }
         IExcelRange GetCell(int row, int column);
         IExcelRange GetRange(string firstCellAdress, string secondCellAdress);
     }

@@ -15,14 +15,18 @@ namespace ExcelController.Services
 
         public ExcelWorker()
         {
-            var excelApplicationManager = new ExcelApplicationManager();
-            _reader = new ExcelReader(excelApplicationManager.ExcelWrapper);
-            _writer = new ExcelWriter(excelApplicationManager.ExcelWrapper);
-            _cleaner = new ExcelCleaner(excelApplicationManager.ExcelWrapper);
-            _searcher = new ExcelSearcher(excelApplicationManager.ExcelWrapper);
+            _application = new ExcelApplicationManager().ExcelWrapper;
+            _reader = new ExcelReader(_application);
+            _writer = new ExcelWriter(_application);
+            _cleaner = new ExcelCleaner(_application);
+            _searcher = new ExcelSearcher(_application);
         }
 
-        public ExcelWorker(IExcelApplication excelApplication, IExcelReader excelReader, IExcelWriter excelWriter, IExcelCleaner excelCleaner, IExcelSearcher excelSearcher)
+        public ExcelWorker(IExcelApplication excelApplication, 
+            IExcelReader excelReader, 
+            IExcelWriter excelWriter, 
+            IExcelCleaner excelCleaner, 
+            IExcelSearcher excelSearcher)
         {
             _application = excelApplication;
             _reader = excelReader;
@@ -142,10 +146,6 @@ namespace ExcelController.Services
             }
             return columnIndexes;
         }
-
-
-
-
 
         public void AppendDataInColumn<T>(List<T> data, int column, int row)
         {
