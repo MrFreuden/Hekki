@@ -92,13 +92,13 @@ namespace RaceLogic.Services
         public void WriteDataInfoInBoard<T>(List<T> data, string nameOfColumn, int number)
         {
             var numbersColumns = _keyCellsColumnNumbers[nameOfColumn];
-            _excelWorker.WriteDataInColumn(data, numbersColumns[number], StartRowByDefault);
+            _excelWorker.WriteDataInColumn(data, StartRowByDefault, numbersColumns[number]);
         }
 
         public void WriteUsedKartsInBoard(List<int> karts)
         {
             var numbersColumns = _keyCellsColumnNumbers["Номера"];
-            _excelWorker.AppendDataInColumn(karts, numbersColumns.First(), StartRowByDefault);
+            _excelWorker.AppendDataInColumn(karts, StartRowByDefault, numbersColumns.First());
         }
 
         public void WriteDataInfoInRace<T>(List<List<T>> data, string nameOfColumn, List<int> countRows)
@@ -106,7 +106,7 @@ namespace RaceLogic.Services
             var startRow = StartRowByDefault;
             for (int i = 0; i < countRows.Count; i++)
             {
-                _excelWorker.WriteDataInEmptyColumn(data[i], nameOfColumn, startRow);
+                _excelWorker.WriteDataInEmptyColumn(data[i], startRow, nameOfColumn);
                 startRow += MaxKarts;
             }
         }
