@@ -48,12 +48,12 @@ namespace ExcelControllerTests.Moq
 
         private string IncrementAddress(string address)
         {
-            var parts = address.Split('$');
+            var parts = address.Split('$', StringSplitOptions.RemoveEmptyEntries);
             if (parts.Length < 2 || !int.TryParse(parts[1], out int rowNumber))
             {
                 throw new ArgumentException("Invalid address format");
             }
-            return $"{parts[0]}${rowNumber + 1}";
+            return $"${parts[0]}${rowNumber + 1}";
         }
     }
 }
