@@ -7,10 +7,8 @@ namespace ExcelControllerTests.Moq
     {
         public Mock<IExcelRange> CreateMockRange(string initialAddress, int count)
         {
-            var mocks = CreateMockRanges(initialAddress, count);
-            var searchedRange = SetupSearchedRange(mocks);
-
-            return searchedRange;
+            var mockRanges = CreateMockRanges(initialAddress, count);
+            return SetupFindNextBehavior(mockRanges);
         }
 
         private List<Mock<IExcelRange>> CreateMockRanges(string initialAddress, int count)
@@ -20,16 +18,16 @@ namespace ExcelControllerTests.Moq
 
             for (int i = 0; i < count; i++)
             {
-                var currentMock = new Mock<IExcelRange>();
-                currentMock.Setup(range => range.Address).Returns(currentAddress);
-                mocks.Add(currentMock);
-                currentAddress = GetNewAddress(currentAddress);
+                var mock = new Mock<IExcelRange>();
+                mock.Setup(range => range.Address).Returns(currentAddress);
+                mocks.Add(mock);
+                currentAddress = IncrementAddress(currentAddress);
             }
 
             return mocks;
         }
 
-        private Mock<IExcelRange> SetupSearchedRange(List<Mock<IExcelRange>> mocks)
+        private Mock<IExcelRange> SetupFindNextBehavior(List<Mock<IExcelRange>> mocks)
         {
             var searchedRange = new Mock<IExcelRange>();
 
@@ -48,22 +46,14 @@ namespace ExcelControllerTests.Moq
             return searchedRange;
         }
 
-        private string GetNewAddress(string address)
+        private string IncrementAddress(string address)
         {
-            return address.Remove(address.Length - 1) + GetNewNumberRow(address);
-        }
-
-        private int GetNewNumberRow(string str)
-        {
-            var splited = str.Split('$');
-            foreach (var item in splited)
+            var parts = address.Split('$');
+            if (parts.Length < 2 || !int.TryParse(parts[1], out int rowNumber))
             {
-                if (int.TryParse(item, out int number))
-                {
-                    return number + 1;
-                }
+                throw new ArgumentException("Invalid address format");
             }
-            throw new ArgumentException("Impossible address");
+            return $"{parts[0]}${rowNumber + 1}";
         }
     }
 }
