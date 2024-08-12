@@ -39,6 +39,25 @@ namespace ExcelControllerTests.Services
             Assert.AreEqual("$A$1", result[0].Address);
             Assert.AreEqual("$A$2", result[1].Address);
         }
+        [Test]
+        public void Test()
+        {
+            // Arrange
+            string searchValue = "Test Value";
+            string initialAddress = "$A$1";
+            int count = 2;
+            var headers = _mockFactory.CreateHeaders(1, 1, searchValue, count, count + count);
+            _mockSearchedRange = _mockFactory.GetSearchRange(headers);
+            var excelSearcher = new ExcelSearcher(_mockExcel.Object);
+
+            // Act
+            var result = excelSearcher.GetCellsByValue(searchValue, _mockSearchedRange.Object);
+
+            // Assert
+            Assert.AreEqual(count, result.Count);
+            Assert.AreEqual("$A$1", result[0].Address);
+            Assert.AreEqual("$E$1", result[1].Address);
+        }
 
         [Test]
         public void FindNext_ReturnsCorrectChain()
