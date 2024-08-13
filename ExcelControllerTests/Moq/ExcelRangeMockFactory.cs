@@ -4,72 +4,26 @@ using Moq;
 
 namespace ExcelControllerTests.Moq
 {
+    public enum ValueType
+    {
+        None,
+        RandomString,
+        RandomNumber
+    }
+
     public class ExcelRangeMockFactory
     {
         private Fixture _fixture = new();
-        public Mock<IExcelRange> CreateMockRange(string initialAddress, int count)
-        {
-            var mockRanges = CreateMockRanges(initialAddress, count);
-            return SetupFindNextBehavior(mockRanges);
-        }
+        
+        //public List<IExcelRange> CreateCellsInOneRow(int startRow, int startColumn, string name, int count)
+        //{
+        //    return Enumerable.Range(startColumn, count).Select(column => CreateCell(startRow, column, name).Object).ToList();
+        //}
 
-        private List<Mock<IExcelRange>> CreateMockRanges(string initialAddress, int count)
-        {
-            var mocks = new List<Mock<IExcelRange>>();
-            string currentAddress = initialAddress;
-
-            for (int i = 0; i < count; i++)
-            {
-                var mock = new Mock<IExcelRange>();
-                mock.Setup(range => range.Address).Returns(currentAddress);
-                mocks.Add(mock);
-                currentAddress = IncrementAddress(currentAddress);
-            }
-
-            return mocks;
-        }
-
-        private string IncrementAddress(string address)
-        {
-            var parts = address.Split('$', StringSplitOptions.RemoveEmptyEntries);
-            if (parts.Length < 2 || !int.TryParse(parts[1], out int rowNumber))
-            {
-                throw new ArgumentException("Invalid address format");
-            }
-            return $"${parts[0]}${rowNumber + 1}";
-        }
-
-        private Mock<IExcelRange> SetupFindNextBehavior(List<Mock<IExcelRange>> mocks)
-        {
-            var searchedRange = new Mock<IExcelRange>();
-
-            for (int i = 0; i < mocks.Count; i++)
-            {
-                var nextRange = i < mocks.Count - 1 ? mocks[i + 1].Object : null;
-                mocks[i].Setup(range => range.FindNext(It.IsAny<IExcelRange>())).Returns(nextRange);
-                searchedRange.Setup(range => range.FindNext(mocks[i].Object)).Returns(nextRange);
-            }
-
-            if (mocks.Count > 0)
-            {
-                searchedRange.Setup(range => range.Find(It.IsAny<string>())).Returns(mocks[0].Object);
-            }
-
-            return searchedRange;
-        }
-
-        public List<IExcelRange> CreateCellsInOneRow(int startRow, int startColumn, string name, int count)
-        {
-            return Enumerable.Range(startColumn, count).Select(column => CreateCell(startRow, column, name).Object).ToList();
-        }
-
-
-
-
-        public List<IExcelRange> CreateCellsInOneColumn(int startRow, int column, int count)
-        {
-            return Enumerable.Range(startRow, count).Select(row => CreateCell(row, column, _fixture.Create<string>()).Object).ToList();
-        }
+        //public List<IExcelRange> CreateCellsInOneColumn(int startRow, int column, int count)
+        //{
+        //    return Enumerable.Range(startRow, count).Select(row => CreateCell(row, column, _fixture.Create<string>()).Object).ToList();
+        //}
 
         public Mock<IExcelRange> CreateCell(int row, int column, string value)
         {
@@ -102,16 +56,34 @@ namespace ExcelControllerTests.Moq
             return columnName;
         }
 
-        public List<IExcelRange> CreateColumnsWithData(int startRow, int column, string columnHeader, int length, int count)
+        public List<IExcelRange> CreateColumnsWithData(int startRow, int column, string columnHeader, int length, int count, ValueType valueType = ValueType.RandomString)
         {
+            //TODO: убрать 4
             var headers = CreateHeaders(startRow, column, columnHeader, count, 4).Select(mock => mock.Object).ToList();
-            var columnData = CreateCellsInColumn(startRow, column, length).Select(mock => mock.Object).ToList();
+            var columnData = CreateCellsInColumn(startRow, column, length, valueType).Select(mock => mock.Object).ToList();
             return headers.Concat(columnData).ToList();
         }
-        public List<Mock<IExcelRange>> CreateCellsInColumn(int startRow, int column, int count)
+
+        public IExcelRange CreateOneColumnWithData(int startRow, int column, string columnHeader, int length, int count, ValueType valueType = ValueType.RandomString)
         {
-            return Enumerable.Range(startRow, count).Select(row => CreateCell(row, column, _fixture.Create<string>())).ToList();
+            return CreateColumnsWithData(startRow, column, columnHeader, length, count, valueType).First();
         }
+
+        public List<Mock<IExcelRange>> CreateCellsInColumn(int startRow, int column, int count, ValueType valueType = ValueType.RandomString)
+        {
+            return Enumerable.Range(startRow, count).Select(row => CreateCell(row, column, GenerateValue(valueType))).ToList();
+        }
+
+        private string GenerateValue(ValueType valueType)
+        {
+            return valueType switch
+            {
+                ValueType.None => null,
+                ValueType.RandomNumber => _fixture.Create<int>().ToString(),
+                _ => _fixture.Create<string>(),
+            };
+        }
+
         public List<Mock<IExcelRange>> CreateHeaders(int row, int column, string columnHeader, int count, int offset)
         {
             var mocks = new List<Mock<IExcelRange>>();
@@ -123,25 +95,12 @@ namespace ExcelControllerTests.Moq
             return mocks;
         }
 
-        public Mock<IExcelRange> GetSearchRange(List<Mock<IExcelRange>> ranges)
-        {
-            var searchRange = new Mock<IExcelRange>();
-            SetupFind(searchRange, ranges);
-            return searchRange;
-        }
-
-        private void SetupFind(Mock<IExcelRange> searchRange, List<Mock<IExcelRange>> ranges)
+        public void SetupSearchRange(Mock<IExcelRange> searchRange, List<Mock<IExcelRange>> ranges)
         {
             for (int i = 0, j = 1; i < ranges.Count; i++, j++)
             {
-                if (j == ranges.Count)
-                {
-                    searchRange.Setup(x => x.FindNext(ranges[i].Object)).Returns(ranges.First().Object);
-                }
-                else
-                {
-                    searchRange.Setup(x => x.FindNext(ranges[i].Object)).Returns(ranges[j].Object);
-                }
+                var nextRange = (i + 1 < ranges.Count) ? ranges[i + 1].Object : ranges.First().Object;
+                searchRange.Setup(x => x.FindNext(ranges[i].Object)).Returns(nextRange);
 
                 if (i == 0)
                 {

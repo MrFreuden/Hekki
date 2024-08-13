@@ -28,7 +28,7 @@ namespace ExcelControllerTests.Services
             var col = 1;
             var count = 2;
             var headers = _mockFactory.CreateHeaders(row, col, searchValue, count, count + count);
-            _mockSearchedRange = _mockFactory.GetSearchRange(headers);
+            _mockFactory.SetupSearchRange(_mockSearchedRange, headers);
             var excelSearcher = new ExcelSearcher(_mockExcel.Object);
 
             // Act
@@ -49,7 +49,7 @@ namespace ExcelControllerTests.Services
             var col = 1;
             var count = 3;
             var headers = _mockFactory.CreateHeaders(row, col, searchValue, count, count + count);
-            _mockSearchedRange = _mockFactory.GetSearchRange(headers);
+            _mockFactory.SetupSearchRange(_mockSearchedRange, headers);
 
             // Act
             var firstRange = _mockSearchedRange.Object.Find("Test Value");
