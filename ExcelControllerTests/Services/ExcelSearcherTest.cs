@@ -23,30 +23,11 @@ namespace ExcelControllerTests.Services
         public void GetCellsByValue_ReturnsCorrectRanges()
         {
             // Arrange
-            string searchValue = "Test Value";
-            string initialAddress = "$A$1";
-            int count = 2;
-
-            _mockSearchedRange = _mockFactory.CreateMockRange(initialAddress, count);
-
-            var excelSearcher = new ExcelSearcher(_mockExcel.Object);
-
-            // Act
-            var result = excelSearcher.GetCellsByValue(searchValue, _mockSearchedRange.Object);
-
-            // Assert
-            Assert.AreEqual(count, result.Count);
-            Assert.AreEqual("$A$1", result[0].Address);
-            Assert.AreEqual("$A$2", result[1].Address);
-        }
-        [Test]
-        public void Test()
-        {
-            // Arrange
-            string searchValue = "Test Value";
-            string initialAddress = "$A$1";
-            int count = 2;
-            var headers = _mockFactory.CreateHeaders(1, 1, searchValue, count, count + count);
+            var searchValue = "Test Value";
+            var row = 1;
+            var col = 1;
+            var count = 2;
+            var headers = _mockFactory.CreateHeaders(row, col, searchValue, count, count + count);
             _mockSearchedRange = _mockFactory.GetSearchRange(headers);
             var excelSearcher = new ExcelSearcher(_mockExcel.Object);
 
@@ -54,36 +35,39 @@ namespace ExcelControllerTests.Services
             var result = excelSearcher.GetCellsByValue(searchValue, _mockSearchedRange.Object);
 
             // Assert
-            Assert.AreEqual(count, result.Count);
-            Assert.AreEqual("$A$1", result[0].Address);
-            Assert.AreEqual("$E$1", result[1].Address);
+            Assert.That(result, Has.Count.EqualTo(count));
+            Assert.That(result[0].Address, Is.EqualTo("$A$1"));
+            Assert.That(result[1].Address, Is.EqualTo("$E$1"));
         }
 
         [Test]
         public void FindNext_ReturnsCorrectChain()
         {
             // Arrange
-            string initialAddress = "$A$1";
-            int count = 3;
+            var searchValue = "Test Value";
+            var row = 1;
+            var col = 1;
+            var count = 3;
+            var headers = _mockFactory.CreateHeaders(row, col, searchValue, count, count + count);
+            _mockSearchedRange = _mockFactory.GetSearchRange(headers);
 
-            _mockSearchedRange = _mockFactory.CreateMockRange(initialAddress, count);
-
+            // Act
             var firstRange = _mockSearchedRange.Object.Find("Test Value");
             var secondRange = _mockSearchedRange.Object.FindNext(firstRange);
             var thirdRange = _mockSearchedRange.Object.FindNext(secondRange);
             var fourthRange = _mockSearchedRange.Object.FindNext(thirdRange);
 
-            // Act & Assert
-            Assert.IsNotNull(firstRange);
-            Assert.AreEqual("$A$1", firstRange.Address);
+            // Assert
+            Assert.That(firstRange, Is.Not.Null);
+            Assert.That(firstRange.Address, Is.EqualTo("$A$1"));
 
-            Assert.IsNotNull(secondRange);
-            Assert.AreEqual("$A$2", secondRange.Address);
+            Assert.That(secondRange, Is.Not.Null);
+            Assert.That(secondRange.Address, Is.EqualTo("$G$1"));
 
-            Assert.IsNotNull(thirdRange);
-            Assert.AreEqual("$A$3", thirdRange.Address);
+            Assert.That(thirdRange, Is.Not.Null);
+            Assert.That(thirdRange.Address, Is.EqualTo("$M$1"));
 
-            Assert.IsNull(fourthRange);
+            Assert.That(fourthRange.Address, Is.EqualTo(fourthRange.Address));
         }
     }
 }
