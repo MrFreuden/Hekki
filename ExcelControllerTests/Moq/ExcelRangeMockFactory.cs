@@ -15,10 +15,10 @@ namespace ExcelControllerTests.Moq
     {
         private Fixture _fixture = new();
 
-        public List<IExcelRange> CreateColumnWithData(int startRow, int column, string columnHeader, int length, ValueType valueType = ValueType.RandomString)
+        public List<IExcelRange> CreateColumnWithData(int startRowHeader, int column, string columnHeader, int length, ValueType valueType = ValueType.RandomString)
         {
-            var header = CreateHeader(startRow++, column, columnHeader).Object;
-            var columnData = CreateCellsInColumn(startRow, column, length, valueType).Select(mock => mock.Object).ToList();
+            var header = CreateHeader(startRowHeader++, column, columnHeader).Object;
+            var columnData = CreateCellsInColumn(startRowHeader, column, length, valueType).Select(mock => mock.Object).ToList();
             columnData.Insert(0, header);
             return columnData;
         }
