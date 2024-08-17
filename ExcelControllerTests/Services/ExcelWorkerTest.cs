@@ -28,54 +28,61 @@ namespace ExcelControllerTests.Services
             _mockSearcher = new Mock<IExcelSearcher>();
             _fixture = new Fixture();
             _mockFactory = new ExcelRangeMockFactory();
-
             _excelWorker = new ExcelWorker(_mockExcel.Object, _mockReader.Object, _mockWriter.Object, _mockCleaner.Object, _mockSearcher.Object);
         }
 
         [Test]
-        [TestCase(1, 4, "Test String", 1, 2, 3)]
-        [TestCase(1, 4, "Test String", "Name1", "Name2", "Name3")]
-        public void WriteDataInEmptyColumn_ShouldWriteData_WhenColumnIsEmpty(int countCells, int startRow, string columnHeader, params object[] data)
+        [TestCase(4, "Test String", 1, 2, 3)]
+        [TestCase(4, "Test String", "Name1", "Name2", "Name3")]
+        public void WriteDataInEmptyColumn_ShouldWriteData_WhenColumnIsEmpty(int startRow, string columnHeader, params object[] data)
         {
             // Arrange
-            var cells = _mockFactory.CreateColumnsWithData(startRow, _fixture.Create<int>(), columnHeader, countCells, 1, Moq.ValueType.None);
-
+            var indexColumn = _fixture.Create<int>();
+            var column = _mockFactory.CreateColumnWithData(startRow, indexColumn, columnHeader, data.Length, Moq.ValueType.None);
+            SetupSearcher(new List<List<IExcelRange>> { column });
+            SetupReader(new List<List<IExcelRange>> { column });
+            var startRowData = startRow + 1;
+            
             // Act
-            _excelWorker.WriteDataInEmptyColumn(data.ToList(), startRow, columnHeader);
+            _excelWorker.WriteDataInEmptyColumn(data.ToList(), startRowData, columnHeader);
 
             // Assert
-            VerifyWriteCalls(startRow, cells.First().Column, data, Times.Once());
+            VerifyWriteCalls(startRowData, column.First().Column, data, Times.Once());
         }
 
-        [Test]
-        [TestCase(2, 4, "Test String", 1, 2, 3)]
-        public void WriteDataInEmptyColumn_ShouldWriteData_WhenFirstColumnIsFilledButSecondIsEmpty(int countCells, int startRow, string columnHeader, params object[] data)
+        private void SetupReader(List<List<IExcelRange>> columns)
         {
-            // Arrange
-            var cellsFilled = _mockFactory.CreateOneColumnWithData(startRow, _fixture.Create<int>(), columnHeader, countCells, 1, Moq.ValueType.RandomString);
-            var cellsEmpty = _mockFactory.CreateOneColumnWithData(startRow, _fixture.Create<int>(), columnHeader, countCells, 1, Moq.ValueType.None);
-            //var searchRange = _mockFactory.SetupSearchRange(new List<Mock<IExcelRange>>() { cellsFilled, cellsEmpty });
-            // Act
-            _excelWorker.WriteDataInEmptyColumn(data.ToList(), startRow, columnHeader);
-
-            // Assert
-            VerifyWriteCalls(startRow, cellsFilled.Column, data, Times.Never());
-            VerifyWriteCalls(startRow, cellsEmpty.Column, data, Times.Once());
+            foreach (var column in columns)
+            {
+                foreach (var cell in column)
+                {
+                    _mockReader.Setup(x => x.ReadCell(cell.Row, cell.Column)).Returns(cell.Value2 != null ? cell.Value2.ToString() : null);
+                }
+                
+            }
         }
 
-        [Test]
-        [TestCase(1, 4, "Test String", 1, 2, 3)]
-        [TestCase(1, 4, "Test String", "Name1", "Name2", "Name3")]
-        public void WriteDataInEmptyColumn_ShouldNotWriteData_WhenHasNoEmptyColumn(int countCells, int startRow, string columnName, params object[] data)
+        private void SetupSearcher(List<List<IExcelRange>> columns)
         {
-            // Arrange
-            var cells = _mockFactory.CreateColumnsWithData(startRow, _fixture.Create<int>(), columnName, countCells, 2, Moq.ValueType.RandomString);
-           
-            // Act
-            _excelWorker.WriteDataInEmptyColumn(data.ToList(), startRow, columnName);
+            var sortedHeaders = GetSortedHeaders(columns);
+            _mockSearcher.Setup(x => x.GetCellsByValue(sortedHeaders.First().Value2.ToString(), (IExcelRange)null)).Returns(sortedHeaders);
+        }
 
-            // Assert
-            VerifyWriteCalls(startRow, cells.First().Column, data, Times.Never());
+        private List<IExcelRange> GetSortedHeaders(List<List<IExcelRange>> columns)
+        {
+            var nonEmptyColumns = columns.Where(columnList => columnList.Any()).ToList();
+
+            var firstValues = nonEmptyColumns.Select(columnList => columnList.First().Value2).Distinct().ToList();
+            if (firstValues.Count > 1)
+            {
+                throw new InvalidOperationException("Свойство Value2 у всех элементов должно совпадать.");
+            }
+
+            return nonEmptyColumns
+                .Select(columnList => columnList.First())
+                .OrderBy(cell => cell.Column)
+                .ToList();
+
         }
 
         private void VerifyWriteCalls(int startRow, int column, object[] data, Times times)
@@ -87,14 +94,44 @@ namespace ExcelControllerTests.Services
         }
 
         [Test]
-        [TestCase(4, 4, 1, 2, 3)]
-        [TestCase(4, 5, "Name1", "Name2", "Name3")]
-        public void WriteDataInColumn_ShouldWriteData_WhenCorrectArg(int startRow, int column, params object[] data)
+        [TestCase(3, 4, "Test String", 1, 2, 3)]
+        public void WriteDataInEmptyColumn_ShouldWriteData_WhenFirstColumnIsFilledButSecondIsEmpty(int countCells, int startRow, string columnHeader, params object[] data)
         {
-            _excelWorker.WriteDataInColumn(data.ToList(), startRow, column);
+            var indexColumn = 3;
+            var indexEmptyColumn = indexColumn + 2;
+            // Arrange
+            var filledColumn = _mockFactory.CreateColumnWithData(startRow, indexColumn, columnHeader, countCells, Moq.ValueType.RandomString);
+            var emptyColumn = _mockFactory.CreateColumnWithData(startRow, indexEmptyColumn, columnHeader, countCells, Moq.ValueType.None);
+            var columns = new List<List<IExcelRange>> { filledColumn, emptyColumn };
+            SetupSearcher(columns);
+            SetupReader(columns);
+            var startRowData = startRow + 1;
+            // Act
+            _excelWorker.WriteDataInEmptyColumn(data.ToList(), startRowData, columnHeader);
 
-            VerifyWriteCalls(startRow, column, data, Times.Once());
+            // Assert
+            VerifyWriteCalls(startRowData, indexColumn, data, Times.Never());
+            VerifyWriteCalls(startRowData, indexEmptyColumn, data, Times.Once());
         }
+
+        [Test]
+        [TestCase(3, 4, "Test String", 1, 2, 3)]
+        [TestCase(3, 4, "Test String", "Name1", "Name2", "Name3")]
+        public void WriteDataInEmptyColumn_ShouldNotWriteData_WhenHasNoEmptyColumn(int countCells, int startRow, string columnHeader, params object[] data)
+        {
+            var indexColumn = _fixture.Create<int>();
+            // Arrange
+            var filledColumn = _mockFactory.CreateColumnWithData(startRow, indexColumn, columnHeader, countCells, Moq.ValueType.RandomString);
+            SetupSearcher(new List<List<IExcelRange>> { filledColumn });
+            SetupReader(new List<List<IExcelRange>> { filledColumn });
+            var startRowData = startRow + 1;
+            // Act
+            _excelWorker.WriteDataInEmptyColumn(data.ToList(), startRowData, columnHeader);
+            
+            // Assert
+            VerifyWriteCalls(startRowData, filledColumn.First().Column, data, Times.Never());
+        }
+
 
         //[Test]
         //public void ReadDataInColumnsByName_ReturnsExpected_WhenNoOffset()
