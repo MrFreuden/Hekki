@@ -151,9 +151,9 @@ namespace ExcelControllerTests.Services
 
         private void SetupColumns(params List<IExcelRange>[] columns)
         {
-            var v = columns.ToList();
-            SetupSearcher(v);
-            SetupReader(v);
+            var columnLists = columns.ToList();
+            SetupSearcher(columnLists);
+            SetupReader(columnLists);
         }
 
         private void SetupReader(List<List<IExcelRange>> columns)
@@ -198,82 +198,59 @@ namespace ExcelControllerTests.Services
                 _mockWriter.Verify(x => x.WriteCell(startRow + i, column, data[i].ToString()), times);
             }
         }
-        //[Test]
-        //public void ReadDataInColumnsByName_ReturnsExpected_WhenNoOffset()
-        //{
-        //    string columnName = "Time";
-        //    int count = 3;
-        //    int offset = 1;
-        //    var cellsHeaders = SetupHeaderData(ExcelWorker.StartRowByDefault - 1, _fixture.Create<int>(), columnName, 1);
-        //    var cellsNameHeaders = SetupHeaderData(cellsHeaders.First().Row, cellsHeaders.First().Column - offset, "Пілоти", 1);
-        //    var cellsInColumn = SetupColumnData(cellsHeaders, count);
-        //    var cellsInColumnName = SetupColumnData(cellsNameHeaders, count);
 
-        //    var expected = CreateExpectedData(cellsInColumn);
+        [Test]
+        public void ReadDataInColumnsByName_ReturnsExpected_WhenNoOffset()
+        {
+            // Arrange
+            var columnName = "Time";
+            var count = 3;
+            var offset = 1;
+            var columnIndex = _fixture.Create<int>();
+            var columnOfNames = _mockFactory.CreateColumnWithData(
+                ExcelWorker.StartRowByDefault - 1, columnIndex, "Пілоти", count, Moq.ValueType.RandomString);
+            var columnOfData = _mockFactory.CreateColumnWithData(
+                ExcelWorker.StartRowByDefault - 1, columnIndex + offset, columnName, count, Moq.ValueType.RandomNumber);
+            var expected = CreateExpectedData(columnOfData);
+            SetupColumns(columnOfNames);
+            SetupColumns(columnOfData);
+            // Act
+            var result = _excelWorker.ReadDataInColumnsByName(columnName, count);
 
-        //    _mockReader.Setup(x => x.ReadCell(cellsHeaders.First().Row, cellsHeaders.First().Column))
-        //        .Returns(cellsInColumn.First().Value2.ToString());
-        //    _mockReader.Setup(x => x.ReadCell(cellsNameHeaders.First().Row, cellsNameHeaders.First().Column))
-        //        .Returns(cellsNameHeaders.First().Value2.ToString());
+            // Assert
+            AssertResults(result, expected);
+        }
 
-        //    var result = _excelWorker.ReadDataInColumnsByName(columnName, count);
+        private List<List<string>> CreateExpectedData(List<IExcelRange> columnData)
+        {
+            return new List<List<string>> { columnData.Skip(1).Select(cell => cell.Value2.ToString()).ToList() };
+        }
 
-        //    AssertResults(result, expected);
-        //}
+        private void AssertResults(List<List<string>> result, List<List<string>> expected)
+        {
+            Assert.That(result, Has.Count.EqualTo(expected.Count));
+            for (int i = 0; i < result.Count; i++)
+            {
+                Assert.That(result[i], Is.EqualTo(expected[i]));
+            }
+        }
 
-        //private List<IExcelRange> SetupHeaderData(int startRow, int startColumn, string columnName, int count)
-        //{
-        //    var cellsHeaders = _mockFactory.CreateCellsInOneRow(startRow, startColumn, columnName, count);
-        //    _mockSearcher.Setup(x => x.GetCellsByValue(columnName, It.IsAny<IExcelRange>()))
-        //       .Returns(cellsHeaders);
+        [Test]
+        public void ReadDataInColumn_ReturnsExpected_WhenAllGood()
+        {
+            // Arrange
+            int startRow = 1;
+            int column = 1;
+            int count = 3;
+            var cells = _mockFactory.CreateCellsInColumn(startRow, column, count).Select(x => x.Object).ToList();
+            var expected = cells.Select(cell => cell.Value2.ToString()).ToList();
+            SetupReader(new List<List<IExcelRange>> { cells });
 
-        //    return cellsHeaders;
-        //}
+            // Act
+            var result = _excelWorker.ReadDataInColumn(startRow, column, count);
 
-        //private List<IExcelRange> SetupColumnData(List<IExcelRange> cellsData, int count)
-        //{
-        //    var columnData = _mockFactory.CreateCellsInOneColumn(cellsData.First().Row + 1, cellsData.First().Column, count);
-        //    for (int i = 0; i < count; i++)
-        //    {
-        //        _mockReader.Setup(x => x.ReadCell(columnData[i].Row, columnData[i].Column))
-        //            .Returns(columnData[i].Value2.ToString());
-        //    }
-        //    return columnData;
-        //}
-
-        //private List<List<string>> CreateExpectedData(List<IExcelRange> columnData)
-        //{
-        //    return new List<List<string>> { columnData.Select(cell => cell.Value2.ToString()).ToList() };
-        //}
-
-        //private void AssertResults(List<List<string>> result, List<List<string>> expected)
-        //{
-        //    Assert.That(result, Has.Count.EqualTo(expected.Count));
-        //    for (int i = 0; i < result.Count; i++)
-        //    {
-        //        Assert.That(result[i], Is.EqualTo(expected[i]));
-        //    }
-        //}
-
-        //[Test]
-        //public void ReadDataInColumn_ReturnsExpected_WhenAllGood()
-        //{
-        //    int startRow = 1;
-        //    int column = 1;
-        //    int count = 3;
-        //    var cells = _mockFactory.CreateCellsInOneColumn(startRow, column, count);
-        //    var expected = cells.Select(cell => cell.Value2.ToString()).ToList();
-
-        //    for (int i = 0; i < count; i++)
-        //    {
-        //        _mockReader.Setup(x => x.ReadCell(cells[i].Row, cells[i].Column)).Returns(cells[i].Value2.ToString());
-        //    }
-
-        //    var result = _excelWorker.ReadDataInColumn(startRow, column, count);
-
-        //    // Assert
-
-        //    Assert.That(result, Is.EqualTo(expected));
-        //}
+            // Assert
+            Assert.That(result, Is.EqualTo(expected));
+        }
     }
 }
