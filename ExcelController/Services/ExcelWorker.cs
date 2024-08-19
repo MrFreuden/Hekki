@@ -154,14 +154,6 @@ namespace ExcelController.Services
             return data;
         }
 
-        
-
-        
-
-       
-
-        
-
         public void AppendDataInColumn<T>(List<T> data, int row, int column)
         {
             foreach (var dat in data)
@@ -171,11 +163,6 @@ namespace ExcelController.Services
                 _writer.WriteCell(row, column, prewData + " " + dat);
                 row++;
             }
-        }
-
-        public void SortTable(string nameColumn)
-        {
-            throw new NotImplementedException();
         }
 
         public Dictionary<string, List<int>> GetColumnNumberForAllHeaders(List<string> headers)
@@ -192,6 +179,10 @@ namespace ExcelController.Services
                 dict[header] = listNumbers;
             }
             return dict;
+        }
+        public void SortTable(string nameColumn)
+        {
+            throw new NotImplementedException();
         }
 
         public void Clear(Microsoft.Office.Interop.Excel.Range rangeToClean = null, int countBellow = 50)
