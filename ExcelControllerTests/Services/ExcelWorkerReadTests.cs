@@ -97,7 +97,7 @@ namespace ExcelControllerTests.Services
             int startRow = 1;
             int column = 1;
             int count = 3;
-            var cells = _mockFactory.CreateCellsInColumn(startRow, column, count).Select(x => x.Object).ToList();
+            var cells = _mockFactory.CreateCellsInColumn(startRow, column, count);
             var expected = cells.Select(cell => cell.Value2.ToString()).ToList();
             SetupReader(new List<List<IExcelRange>> { cells });
 
@@ -116,7 +116,7 @@ namespace ExcelControllerTests.Services
         {
             // Arrange
             int count = 3;
-            var cells = _mockFactory.CreateCellsInColumn(startRow, columnIndex, count).Select(x => x.Object).ToList();
+            var cells = _mockFactory.CreateCellsInColumn(startRow, columnIndex, count);
             var expected = cells.Select(cell => cell.Value2.ToString()).ToList();
             SetupReader(new List<List<IExcelRange>> { cells });
 

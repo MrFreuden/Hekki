@@ -130,7 +130,7 @@ namespace ExcelControllerTests.Services
             var data = new List<string> { "Test2" };
             var rowIndex = 1;
             var columnIndex = 1;
-            var column = _mockFactory.CreateCellsInColumn(rowIndex, columnIndex, data.Count, Moq.ValueType.RandomString).Select(x => x.Object).ToList();
+            var column = _mockFactory.CreateCellsInColumn(rowIndex, columnIndex, data.Count, Moq.ValueType.RandomString);
             var value = column.First().Value2 as string;
             SetupReader(new List<List<IExcelRange>> { column });
 
@@ -141,6 +141,6 @@ namespace ExcelControllerTests.Services
             _mockWriter.Verify(x => x.WriteCell(rowIndex, columnIndex, value + " " + data.First()));
         }
 
-        W
+        
     }
 }

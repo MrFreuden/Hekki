@@ -28,7 +28,7 @@ namespace ExcelControllerTests.Services
             var row = 1;
             var col = 1;
             var count = 2;
-            var headers = new List<Mock<IExcelRange>>();
+            var headers = new List<IExcelRange>();
             for (int i = 0; i < count; i++)
             {
                 headers.Add(_mockFactory.CreateHeader(row, col + i, searchValue));
@@ -53,7 +53,7 @@ namespace ExcelControllerTests.Services
             var row = 1;
             var col = 1;
             var count = 3;
-            var headers = new List<Mock<IExcelRange>>();
+            var headers = new List<IExcelRange>();
             for (int i = 0; i < count; i++)
             {
                 headers.Add(_mockFactory.CreateHeader(row, col + i, searchValue));
