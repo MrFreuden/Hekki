@@ -49,6 +49,7 @@ namespace ExcelController.Services
         private int GetNumberOfEmptyColumnByName(string columnName)
         {
             var cells = _searcher.GetCellsByValue(columnName, null);
+
             foreach (var cell in cells)
             {
                 if (IsCellAboveEmpty(cell.Row, cell.Column))
@@ -56,6 +57,7 @@ namespace ExcelController.Services
                     return cell.Column;
                 }
             }
+
             return -1;
         }
 
@@ -79,7 +81,6 @@ namespace ExcelController.Services
             var columnIndexes = GetNumberOfFilledColumnsByName(columnName);
             var columnNameIndexes = GetNumberOfFilledColumnsByName("Пілоти");
            
-
             for (int i = 0, j = 0; i < columnIndexes.Count; i++, j++)
             {
                 while(j < columnNameIndexes.Count && columnIndexes[i] - columnNameIndexes[j] > 6)
@@ -106,6 +107,7 @@ namespace ExcelController.Services
         {
             var cells = _searcher.GetCellsByValue(columnName, null);
             var columnIndexes = new List<int>();
+
             foreach (var cell in cells)
             {
                 if (!IsCellAboveEmpty(cell.Row, cell.Column))
@@ -113,18 +115,15 @@ namespace ExcelController.Services
                     columnIndexes.Add(cell.Column);
                 }
             }
+
             return columnIndexes;
         }
 
         private List<int> GetFilledRowsForColumns(int column, int count)
         {
-            return GetRowsNames(column, count);
-        }
-
-        private List<int> GetRowsNames(int column, int count)
-        {
             var rows = new List<int>();
             var row = StartRowByDefault;
+
             for (int i = 0; i < count && i < EndRowByDefault; i++)
             {
                 if (_reader.ReadCell(row, column) != null)
@@ -133,6 +132,7 @@ namespace ExcelController.Services
                 }
                 row++;
             }
+
             return rows;
         }
 
@@ -144,11 +144,13 @@ namespace ExcelController.Services
         public List<string> ReadDataInColumn(int startRow, int column, int count)
         {
             var data = new List<string>();
+
             for (int i = 0; i < count; i++)
             {
                 data.Add(_reader.ReadCell(startRow, column));
                 startRow++;
             }
+
             return data;
         }
 
