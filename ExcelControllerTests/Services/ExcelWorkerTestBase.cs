@@ -82,8 +82,6 @@ namespace ExcelControllerTests.Services
             }
         }
 
-
-
         protected List<List<string>> CreateExpectedData(List<IExcelRange> columnData)
         {
             return new List<List<string>> { columnData.Skip(1).Select(cell => cell.Value2.ToString()).ToList() };
