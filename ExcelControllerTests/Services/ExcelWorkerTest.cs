@@ -200,22 +200,23 @@ namespace ExcelControllerTests.Services
         }
 
         [Test]
-        public void ReadDataInColumnsByName_ReturnsExpected_WhenNoOffset()
+        public void ReadDataInColumnsByName_ReturnsExpected()
         {
             // Arrange
             var columnName = "Time";
-            var count = 3;
+            var countData = 3;
             var offset = 1;
             var columnIndex = _fixture.Create<int>();
             var columnOfNames = _mockFactory.CreateColumnWithData(
-                ExcelWorker.StartRowByDefault - 1, columnIndex, "Пілоти", count, Moq.ValueType.RandomString);
+                ExcelWorker.StartRowByDefault - 1, columnIndex, "Пілоти", countData, Moq.ValueType.RandomString);
             var columnOfData = _mockFactory.CreateColumnWithData(
-                ExcelWorker.StartRowByDefault - 1, columnIndex + offset, columnName, count, Moq.ValueType.RandomNumber);
+                ExcelWorker.StartRowByDefault - 1, columnIndex + offset, columnName, countData, Moq.ValueType.RandomNumber);
             var expected = CreateExpectedData(columnOfData);
             SetupColumns(columnOfNames);
             SetupColumns(columnOfData);
+
             // Act
-            var result = _excelWorker.ReadDataInColumnsByName(columnName, count);
+            var result = _excelWorker.ReadDataInColumnsByName(columnName, countData);
 
             // Assert
             AssertResults(result, expected);
