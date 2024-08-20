@@ -23,16 +23,6 @@ namespace RaceLogic.Algorithms
             return combinations[_rnd.Next(combinations.Count)];
         }
 
-        public void RedefineRandomWithSeed()
-        {
-            _rnd = new Random(1234124535);
-        }
-
-        private bool IsNumbersKartChanged(List<int> numberKarts)
-        {
-            return !numberKarts.SequenceEqual(_allCombinations[0]);
-        }
-
         private void CalculateAllCombinations(List<int> numberKarts)
         {
             if (_allCombinations == null || IsNumbersKartChanged(numberKarts))
@@ -41,25 +31,9 @@ namespace RaceLogic.Algorithms
             }
         }
 
-        private void DeleteCombinations(
-            List<List<int>> combinations,
-            List<int> numbers,
-            int position)
+        private bool IsNumbersKartChanged(List<int> numberKarts)
         {
-            for (int i = 0; i < numbers.Count; i++)
-            {
-                var firstIndex = BinSearchStartIndex(combinations, numbers[i],
-                                                        position, 0, combinations.Count - 1);
-                if (firstIndex == -1)
-                {
-                    continue;
-                }
-                var lastIndex = BinSearchLastIndex(combinations, numbers[i],
-                                                        position, 0, combinations.Count - 1);
-                var length = lastIndex - firstIndex + 1;
-
-                combinations.RemoveRange(firstIndex, length);
-            }
+            return !numberKarts.SequenceEqual(_allCombinations[0]);
         }
 
         private List<List<int>> GenerateCombinations(List<int> numbers, int length)
@@ -94,6 +68,25 @@ namespace RaceLogic.Algorithms
                         GenerateCombinationsRecursive(numbers, length, newCombination, result);
                     }
                 }
+            }
+        }
+
+        private void DeleteCombinations(
+            List<List<int>> combinations,
+            List<int> numbers,
+            int position)
+        {
+            for (int i = 0; i < numbers.Count; i++)
+            {
+                var firstIndex = BinSearchStartIndex(combinations, numbers[i], position, 0, combinations.Count - 1);
+                if (firstIndex == -1)
+                {
+                    continue;
+                }
+                var lastIndex = BinSearchLastIndex(combinations, numbers[i], position, 0, combinations.Count - 1);
+                var length = lastIndex - firstIndex + 1;
+
+                combinations.RemoveRange(firstIndex, length);
             }
         }
 
@@ -141,16 +134,9 @@ namespace RaceLogic.Algorithms
             return BinSearchLastIndex(array, value, position, m, right);
         }
 
-        private IList<T> Shuffle<T>(IList<T> list)
+        public void RedefineRandomWithSeed()
         {
-            int n = list.Count;
-            while (n > 1)
-            {
-                n--;
-                int k = _rnd.Next(n + 1);
-                (list[n], list[k]) = (list[k], list[n]);
-            }
-            return list;
+            _rnd = new Random(1234124535);
         }
     }
 }
