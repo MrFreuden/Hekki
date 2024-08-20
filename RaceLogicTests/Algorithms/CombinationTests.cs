@@ -30,6 +30,23 @@ namespace RaceLogicTests.Algorithms
         }
 
         [Test]
+        public void GetCombo_ShouldThrowException_WhenNoAvailableCombination()
+        {
+            // Arrange
+            var usedKarts = new List<List<int>>
+            {
+                new() { 1, 2, 3 },
+                new() { 1, 2, 3 },
+                new() { 1, 2 }
+            };
+            var numberKarts = new List<int> { 1, 2, 3 };
+
+            // Act & Assert
+            var ex = Assert.Throws<InvalidOperationException>(() => _combination.GetCombo(usedKarts, numberKarts));
+            Assert.That(ex.Message, Is.EqualTo("No available combinations."));
+        }
+
+        [Test]
         public void GetCombo_ShouldExcludeUsedKarts()
         {
             // Arrange
