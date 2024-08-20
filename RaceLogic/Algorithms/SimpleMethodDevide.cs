@@ -39,7 +39,7 @@ namespace RaceLogic.Algorithms
             return groups;
         }
 
-        public List<int> CalculateGroupSizes(int totalPilots, int groupCount, int maxGroupSize, int availableKarts)
+        private List<int> CalculateGroupSizes(int totalPilots, int groupCount, int maxGroupSize, int availableKarts)
         {
             var groupSizes = new List<int>();
             int effectiveGroupCount = Math.Min(groupCount, availableKarts);
