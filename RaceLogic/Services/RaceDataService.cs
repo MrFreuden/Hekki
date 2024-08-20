@@ -163,9 +163,5 @@ namespace RaceLogic.Services
         {
             _excelWorker.Clear(rangeToClean, countBellow);
         }
-
-       
-
-        
     }
 }
