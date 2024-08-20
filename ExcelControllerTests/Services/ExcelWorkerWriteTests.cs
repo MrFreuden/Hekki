@@ -141,6 +141,39 @@ namespace ExcelControllerTests.Services
             _mockWriter.Verify(x => x.WriteCell(rowIndex, columnIndex, value + " " + data.First()));
         }
 
-        
+        [Test]
+        public void AppendDataInColumn_WriteNewData_WhenOldDataIsNull()
+        {
+            // Arrange
+            var data = new List<string> { "Test2" };
+            var rowIndex = 1;
+            var columnIndex = 1;
+            var column = _mockFactory.CreateCellsInColumn(rowIndex, columnIndex, data.Count, Moq.ValueType.None);
+            var value = column.First().Value2 as string;
+            SetupReader(new List<List<IExcelRange>> { column });
+
+            // Act
+            _excelWorker.AppendDataInColumn(data, rowIndex, columnIndex);
+
+            // Assert
+            _mockWriter.Verify(x => x.WriteCell(rowIndex, columnIndex, data.First()));
+        }
+
+        [Test]
+        [TestCase(1, 0)]
+        [TestCase(0, 1)]
+        [TestCase(0, 0)]
+        public void AppendDataInColumn_ReturnsException_WhenIndexesIsLessThenOne(int starRowIndex, int columnIndex)
+        {
+            // Arrange
+            var data = new List<string> { "Test2" };
+            var column = _mockFactory.CreateCellsInColumn(starRowIndex, columnIndex, data.Count, Moq.ValueType.None);
+            var value = column.First().Value2 as string;
+            SetupReader(new List<List<IExcelRange>> { column });
+
+            // Act & Assert
+            _mockWriter.Verify(x => x.WriteCell(starRowIndex, columnIndex, data.First()));
+            Assert.Throws<ArgumentException>(() => _excelWorker.AppendDataInColumn(data, starRowIndex, columnIndex));
+        }
     }
 }
