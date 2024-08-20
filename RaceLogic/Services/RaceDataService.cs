@@ -48,6 +48,11 @@ namespace RaceLogic.Services
             return result;
         }
 
+        private List<int> ConvertDataToInt(List<string> data)
+        {
+            return data.Select(int.Parse).ToList();
+        }
+
         public List<List<int>> ReadResultsInRace(string nameOfColumn, int count)
         {
             var result = new List<List<int>>();
@@ -77,6 +82,27 @@ namespace RaceLogic.Services
             return karts;
         }
 
+        private List<int> ConvertStringToListInt(string str)
+        {
+            if (string.IsNullOrWhiteSpace(str))
+            {
+                throw new ArgumentException("Input string cannot be null or empty", nameof(str));
+            }
+
+            return str
+                .Split(' ')
+                .Select(str =>
+                {
+                    bool success = int.TryParse(str, out int result);
+                    if (!success)
+                    {
+                        throw new FormatException($"Unable to convert '{str}' to an integer.");
+                    }
+                    return result;
+                })
+                .ToList();
+        }
+
         public List<string> ReadLiquesInBoard(int countRows)
         {
             var numbersColumns = _keyCellsColumnNumbers["Ліга"];
@@ -101,14 +127,31 @@ namespace RaceLogic.Services
             _excelWorker.AppendDataInColumn(karts, StartRowByDefault, numbersColumns.First());
         }
 
-        public void WriteDataInfoInRace<T>(List<List<T>> data, string nameOfColumn, List<int> countRows)
+        public void WriteDataInfoInRace<T>(List<List<T>> data, string nameOfColumn)
         {
-            var startRow = StartRowByDefault;
-            for (int i = 0; i < countRows.Count; i++)
+            if (data.Count == 0)
             {
-                _excelWorker.WriteDataInEmptyColumn(data[i], startRow, nameOfColumn);
-                startRow += MaxKarts;
+                return;
             }
+            _excelWorker.WriteDataInEmptyColumn(FlattenAndPadData(data), StartRowByDefault, nameOfColumn);
+        }
+
+        private List<T> FlattenAndPadData<T>(List<List<T>> data)
+        {
+            var result = new List<T>();
+
+            foreach (var sublist in data)
+            {
+                result.AddRange(sublist);
+
+                int paddingCount = MaxKarts - sublist.Count;
+                if (paddingCount > 0)
+                {
+                    result.AddRange(Enumerable.Repeat(default(T), paddingCount));
+                }
+            }
+
+            return result;
         }
 
         public void SortTable(string nameColumn)
@@ -121,30 +164,8 @@ namespace RaceLogic.Services
             _excelWorker.Clear(rangeToClean, countBellow);
         }
 
-        private List<int> ConvertDataToInt(List<string> data)
-        {
-            return data.Select(int.Parse).ToList();
-        }
+       
 
-        private List<int> ConvertStringToListInt(string str)
-        {
-            if (string.IsNullOrWhiteSpace(str))
-            {
-                throw new ArgumentException("Input string cannot be null or empty", nameof(str));
-            }
-
-            return str
-                .Split(' ')
-                .Select(str =>
-                {
-                    bool success = int.TryParse(str, out int result);
-                    if (!success)
-                    {
-                        throw new FormatException($"Unable to convert '{str}' to an integer.");
-                    }
-                    return result;
-                })
-                .ToList();
-        }
+        
     }
 }

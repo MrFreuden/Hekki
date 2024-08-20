@@ -101,16 +101,59 @@ namespace RaceLogicTests.Services
                 new List<string> { "Data1", "Data2", "Data3" },
                 new List<string> { "Data4", "Data5", "Data6" }
             };
+            var dataE = new List<string> { "Data1", "Data2", "Data3", null, null, null, null, null, null, null, 
+                                            "Data4", "Data5", "Data6", null, null, null, null, null, null, null };
             string nameOfColumn = "Очки";
-            var countRows = new List<int> { 3, 3 };
             _excelWorkerMock.Setup(x => x.WriteDataInEmptyColumn(It.IsAny<List<string>>(), It.IsAny<int>(), nameOfColumn));
 
             // Act
-            _raceDataService.WriteDataInfoInRace(data, nameOfColumn, countRows);
+            _raceDataService.WriteDataInfoInRace(data, nameOfColumn);
 
             // Assert
-            _excelWorkerMock.Verify(x => x.WriteDataInEmptyColumn(data[0], It.IsAny<int>(), nameOfColumn), Times.Once);
-            _excelWorkerMock.Verify(x => x.WriteDataInEmptyColumn(data[1], It.IsAny<int>(), nameOfColumn), Times.Once);
+            _excelWorkerMock.Verify(x => x.WriteDataInEmptyColumn(dataE, It.IsAny<int>(), nameOfColumn), Times.Once);
+        }
+
+        [Test]
+        public void WriteDataInfoInRace_ShouldNotWrite_WhenDataIsEmpty()
+        {
+            // Arrange
+            var data = new List<List<string>>();
+            string nameOfColumn = "Очки";
+
+            // Act
+            _raceDataService.WriteDataInfoInRace(data, nameOfColumn);
+
+            // Assert
+            _excelWorkerMock.Verify(x => x.WriteDataInEmptyColumn(It.IsAny<List<string>>(), It.IsAny<int>(), nameOfColumn), Times.Never);
+        }
+
+        [Test]
+        public void WriteDataInfoInRace_ShouldNotWrite_WhenNameOfColumnDoesNotExist()
+        {
+            // Arrange
+            var data = new List<List<string>>();
+            string nameOfColumn = "DoesNotExist";
+            // Act
+            _raceDataService.WriteDataInfoInRace(data, nameOfColumn);
+
+            // Assert
+            _excelWorkerMock.Verify(x => x.WriteDataInColumn(It.IsAny<List<string>>(), It.IsAny<int>(), It.IsAny<int>()), Times.Never);
+        }
+
+        [Test]
+        public void WriteDataInfoInRace_ShouldThrowException_WhenDataCountExceedsMaxKarts()
+        {
+            // Arrange
+            var data = new List<List<string>>();
+            for (int i = 0; i < RaceDataService.MaxKarts + 1; i++)
+            {
+                data.Add(new List<string> { $"Data{i}" });
+            }
+            string nameOfColumn = "Очки";
+
+            // Act & Assert
+            var ex = Assert.Throws<InvalidOperationException>(() => _raceDataService.WriteDataInfoInRace(data, nameOfColumn));
+            Assert.That(ex.Message, Is.EqualTo("Количество подсписков превышает MaxKarts"));
         }
     }
 }

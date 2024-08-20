@@ -37,8 +37,8 @@ namespace RaceLogic.Models
             _pilotService.AddKarts(preparedPilots, karts);
 
             var names = _pilotService.GetNames(preparedPilots);
-            _service.WriteDataInfoInRace(names, "Пілоти", _groupsСapacity);
-            _service.WriteDataInfoInRace(karts, "Карт", _groupsСapacity);
+            _service.WriteDataInfoInRace(names, "Пілоти");
+            _service.WriteDataInfoInRace(karts, "Карт");
         }
 
         private List<List<IPilot>> PreparePilots()

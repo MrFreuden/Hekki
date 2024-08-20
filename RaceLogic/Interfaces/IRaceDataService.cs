@@ -10,7 +10,7 @@
         List<List<int>> ReadUsedKartsInBoard(int count);
         void SortTable(string nameColumn);
         void WriteDataInfoInBoard<T>(List<T> data, string nameOfColumn, int number);
-        void WriteDataInfoInRace<T>(List<List<T>> data, string nameOfColumn, List<int> countRows);
+        void WriteDataInfoInRace<T>(List<List<T>> data, string nameOfColumn);
         void WriteUsedKartsInBoard(List<int> karts);
     }
 }
