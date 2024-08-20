@@ -7,29 +7,105 @@ using Moq;
 
 namespace ExcelControllerTests.Services
 {
-    public class ExcelWorkerTest
+    public class ExcelWorkerTest : ExcelWorkerTestBase
     {
-        private Mock<IExcelApplication> _mockExcel;
-        private Mock<IExcelReader> _mockReader;
-        private Mock<IExcelWriter> _mockWriter;
-        private Mock<IExcelCleaner> _mockCleaner;
-        private Mock<IExcelSearcher> _mockSearcher;
-        private ExcelWorker _excelWorker;
-        private Fixture _fixture;
-        private ExcelRangeMockFactory _mockFactory;
-
-        [SetUp]
-        public void Setup()
+        [Test]
+        public void GetColumnNumberForAllHeaders()
         {
-            _mockExcel = new Mock<IExcelApplication>();
-            _mockReader = new Mock<IExcelReader>();
-            _mockWriter = new Mock<IExcelWriter>();
-            _mockCleaner = new Mock<IExcelCleaner>();
-            _mockSearcher = new Mock<IExcelSearcher>();
-            _fixture = new Fixture();
-            _mockFactory = new ExcelRangeMockFactory();
-            _excelWorker = new ExcelWorker(
-                _mockExcel.Object, _mockReader.Object, _mockWriter.Object, _mockCleaner.Object, _mockSearcher.Object);
+            // Arrange
+            var row = 1;
+            var column = 1;
+            var expected = new Dictionary<string, List<int>>();
+            var headers = new List<string>
+                { "Номера" ,
+                 "Best Lap" ,
+                 "ХІТ" };
+            var headersCells = new List<IExcelRange>();
+            for (int i = 0; i < headers.Count; i++)
+            {
+                var he = _mockFactory.CreateHeader(row, column + i, headers[i]);
+                headersCells.Add(he);
+                expected.Add(headers[i], new List<int> { he.Column });
+                SetupSearcher(new List<List<IExcelRange>> { new() { he } });
+            }
+
+            // Act
+            var result = _excelWorker.GetColumnNumberForAllHeaders(headers);
+
+            // Assert
+            Assert.That(result, Is.EqualTo(expected));
+        }
+
+        [Test]
+        public void GetColumnNumberForAllHeaders_ReturnsEmptyDictionary_WhenEmptyHeaders()
+        {
+            // Arrange
+            var row = 1;
+            var column = 1;
+            var expected = new Dictionary<string, List<int>>();
+            var headers = new List<string>();
+            var headersCells = new List<IExcelRange>();
+            for (int i = 0; i < headers.Count; i++)
+            {
+                var he = _mockFactory.CreateHeader(row, column + i, headers[i]);
+                headersCells.Add(he);
+                expected.Add(headers[i], new List<int> { he.Column });
+                SetupSearcher(new List<List<IExcelRange>> { new() { he } });
+            }
+
+            // Act
+            var result = _excelWorker.GetColumnNumberForAllHeaders(headers);
+
+            // Assert
+            Assert.That(result, Is.EqualTo(expected));
+        }
+
+        [Test]
+        public void GetColumnNumberForAllHeaders_ReturnsExists_WhenOneHeaderIsNotExist()
+        {
+            // Arrange
+            var row = 1;
+            var column = 1;
+            var expected = new Dictionary<string, List<int>>();
+            var headers = new List<string>
+                { "Номера" ,
+                 "Best Lap" ,
+                 "ХІТ" };
+            var headersCells = new List<IExcelRange>();
+            for (int i = 0; i < headers.Count - 1; i++)
+            {
+                var he = _mockFactory.CreateHeader(row, column + i, headers[i]);
+                headersCells.Add(he);
+                expected.Add(headers[i], new List<int> { he.Column });
+                SetupSearcher(new List<List<IExcelRange>> { new() { he } });
+            }
+
+            // Act
+            var result = _excelWorker.GetColumnNumberForAllHeaders(headers);
+
+            // Assert
+            Assert.That(result, Is.EqualTo(expected));
+        }
+
+        [Test]
+        public void GetColumnNumberForAllHeaders_ReturnsEmptyDictionary_WhenAllHeaderIsNotExist()
+        {
+            // Arrange
+            var row = 1;
+            var column = 1;
+            var expected = new Dictionary<string, List<int>>();
+            var headers = new List<string>
+                { "Номера" ,
+                 "Best Lap" ,
+                 "ХІТ" };
+            var headersCells = new List<IExcelRange>();
+            _mockSearcher.Setup(x => x.GetCellsByValue(It.IsAny<string>(), null)).Returns(new List<IExcelRange>());
+
+            // Act
+            var result = _excelWorker.GetColumnNumberForAllHeaders(headers);
+
+            // Assert
+            Assert.That(result, Is.EqualTo(expected));
         }
     }
 }
