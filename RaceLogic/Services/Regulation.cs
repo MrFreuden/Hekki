@@ -7,13 +7,13 @@ using RaceLogic.Interfaces;
 
 namespace RaceLogic.Services
 {
-    public class NewRefactorRegulation : IRegulation
+    public class Regulation : IRegulation
     {
         private IDevideMethod _devideMethod;
         private ISortMethod _sortMethod;
         private ICombination _combination;
 
-        public NewRefactorRegulation(IDevideMethod groupesDevider, ISortMethod sortMethod, ICombination combination)
+        public Regulation(IDevideMethod groupesDevider, ISortMethod sortMethod, ICombination combination)
         {
             _devideMethod = groupesDevider;
             _sortMethod = sortMethod;
