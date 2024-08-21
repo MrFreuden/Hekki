@@ -1,10 +1,4 @@
-﻿using Microsoft.Office.Interop.Excel;
-using RaceLogic.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using RaceLogic.Interfaces;
 
 namespace RaceLogic.Services
 {
@@ -52,7 +46,18 @@ namespace RaceLogic.Services
 
         public List<List<string>> GetNames(List<List<IPilot>> pilots)
         {
-            throw new NotImplementedException();
+            var names = new List<List<string>>();
+
+            for (int i = 0; i < pilots.Count; i++)
+            {
+                names.Add(new List<string>());
+                foreach (var pilot in pilots[i])
+                {
+                    names[i].Add(pilot.Name);
+                }
+            }
+
+            return names;
         }
 
         private void CheckEquality(int count1, int count2)
