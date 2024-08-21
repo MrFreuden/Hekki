@@ -75,7 +75,7 @@ namespace ExcelController.Services
             }
         }
 
-        public List<List<string>> ReadDataInRaceInColumnsByName(string columnName, int count)
+        public List<List<string>> ReadDataInColumnsByNameInRace(string columnName, int count)
         {
             var data = new List<List<string>>();
             var columnIndexes = GetNumberOfFilledColumnsByName(columnName);
@@ -97,6 +97,24 @@ namespace ExcelController.Services
                 for (int k = 0; k < rows.Count; k++)
                 {
                     data[i].Add(ReadDataInCell(rows[k], columnIndexes[i]));
+                }
+            }
+
+            return data;
+        }
+
+        public List<List<string>> ReadDataInColumnsByNameInBoard(string columnName)
+        {
+            var data = new List<List<string>>();
+            var columnIndexes = GetNumberOfFilledColumnsByName(columnName);
+
+            for (int i = 0; i < columnIndexes.Count; i++)
+            {
+                var rows = GetFilledRowsForColumns(columnIndexes[i]);
+                data.Add(new List<string>());
+                for (int j = 0; j < rows.Count; j++)
+                {
+                    data[i].Add(ReadDataInCell(rows[j], columnIndexes[i]));
                 }
             }
 
@@ -125,6 +143,23 @@ namespace ExcelController.Services
             var row = StartRowByDefault;
 
             for (int i = 0; i < count && i < EndRowByDefault; i++)
+            {
+                if (_reader.ReadCell(row, column) != null)
+                {
+                    rows.Add(row);
+                }
+                row++;
+            }
+
+            return rows;
+        }
+
+        private List<int> GetFilledRowsForColumns(int column)
+        {
+            var rows = new List<int>();
+            var row = StartRowByDefault;
+
+            for (int i = 0; i < EndRowByDefault; i++)
             {
                 if (_reader.ReadCell(row, column) != null)
                 {

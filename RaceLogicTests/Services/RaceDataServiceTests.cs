@@ -226,7 +226,7 @@ namespace RaceLogicTests.Services
             var data = new List<List<string>> { new() { "1", "2", "3" } };
             var expected = new List<List<int>> { new() { 1, 2, 3 } };
             string nameOfColumn = "Î÷êè";
-            _excelWorkerMock.Setup(x => x.ReadDataInRaceInColumnsByName(nameOfColumn, It.IsAny<int>())).Returns(data);
+            _excelWorkerMock.Setup(x => x.ReadDataInColumnsByNameInRace(nameOfColumn, It.IsAny<int>())).Returns(data);
 
             // Act
             var result = _raceDataService.ReadResultsInRace(nameOfColumn, 3);
@@ -242,7 +242,7 @@ namespace RaceLogicTests.Services
             var data = new List<List<string>> { new() { "A", "B", "C" } };
             var countRows = 3;
             string nameOfColumn = "Õ²Ò";
-            _excelWorkerMock.Setup(x => x.ReadDataInRaceInColumnsByName(nameOfColumn, It.IsAny<int>())).Returns(data);
+            _excelWorkerMock.Setup(x => x.ReadDataInColumnsByNameInRace(nameOfColumn, It.IsAny<int>())).Returns(data);
 
             // Act & Assert
             var ex = Assert.Throws<FormatException>(() => _raceDataService.ReadResultsInRace(nameOfColumn, countRows));

@@ -7,7 +7,7 @@ namespace ExcelController.Interfaces
     {
         void WriteDataInEmptyColumn<T>(List<T> data, int startRow, string columnName);
         void WriteDataInColumn<T>(List<T> data, int startRow, int column);
-        List<List<string>> ReadDataInRaceInColumnsByName(string columnName, int count);
+        List<List<string>> ReadDataInColumnsByNameInRace(string columnName, int count);
         List<string> ReadDataInColumn(int startRow, int column, int count);
         void AppendDataInColumn<T>(List<T> data, int row, int column);
         void SortTable(string nameColumn);
