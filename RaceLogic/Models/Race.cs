@@ -14,19 +14,26 @@ namespace RaceLogic.Models
         public int GroupAmount { get => (int)Math.Ceiling((double)PilotsCount / KartsCount); }
 
         private IRegulation _regulation;
-        private IRaceDataService _service;
+        private IRaceDataService _raceDataService;
         private IPilotService _pilotService;
 
         private List<IPilot> _pilots;
         private List<int> _numberKarts;
-        private List<int> _groupsСapacity;
 
-        public Race(IRegulation regulation, IRaceDataService service, IEnumerable<IPilot> pilots, List<int> numberKarts)
+        public Race(IRegulation regulation, IRaceDataService raceDataService, IPilotService pilotService, IEnumerable<IPilot> pilots, List<int> numberKarts)
         {
             _regulation = regulation;
-            _service = service;
-            _pilots = pilots.ToList();
+            _raceDataService = raceDataService;
+            _pilotService = pilotService;
             _numberKarts = numberKarts;
+            _pilots = pilots.Any() ? pilots.ToList() : CreatePilots();
+
+        }
+
+        private List<IPilot> CreatePilots()
+        {
+
+            throw new NotImplementedException();
         }
 
         public void MakeHeat()
@@ -37,53 +44,42 @@ namespace RaceLogic.Models
             _pilotService.AddKarts(preparedPilots, karts);
 
             var names = _pilotService.GetNames(preparedPilots);
-            _service.WriteDataInfoInRace(names, "Пілоти");
-            _service.WriteDataInfoInRace(karts, "Карт");
+            _raceDataService.WriteDataInfoInRace(names, "Пілоти");
+            _raceDataService.WriteDataInfoInRace(karts, "Карт");
         }
 
         private List<List<IPilot>> PreparePilots()
         {
             _regulation.Sort(_pilots);
             var devided = _regulation.Devide(_pilots, GroupAmount);
-            SetGroupsСapacity(devided);
             return devided;
-        }
-
-        private void SetGroupsСapacity(List<List<IPilot>> list)
-        {
-            var groupsCapacity = new List<int>();
-            foreach (var group in list)
-            {
-                groupsCapacity.Add(group.Count);
-            }
-            _groupsСapacity = groupsCapacity;
         }
 
         public void SortBoardByScore()
         {
-            _service.SortTable("Сума");
+            _raceDataService.SortTable("Сума");
         }
 
         public void SortBoardByTime()
         {
-            _service.SortTable("Час");
+            _raceDataService.SortTable("Час");
         }
 
         public void TransferScoresToBoard()
         {
-            var scores = _service.ReadResultsInRace("Разом", PilotsCount);
+            var scores = _raceDataService.ReadResultsInRace("Разом", PilotsCount);
             for (int i = 0; i < scores.Count; i++)
             {
-                _service.WriteDataInfoInBoard(scores[i], "ХІТ", i);
+                _raceDataService.WriteDataInfoInBoard(scores[i], "ХІТ", i);
             }
         }
 
         public void TransferTimesToBoard()
         {
-            var times = _service.ReadResultsInRace("Час", PilotsCount);
+            var times = _raceDataService.ReadResultsInRace("Час", PilotsCount);
             for (int i = 0; i < times.Count; i++)
             {
-                _service.WriteDataInfoInBoard(times[i], "Best Lap", i);
+                _raceDataService.WriteDataInfoInBoard(times[i], "Best Lap", i);
             }
         }
 
@@ -94,7 +90,7 @@ namespace RaceLogic.Models
 
         public void ClearAll()
         {
-            _service.ClearExcelData();
+            _raceDataService.ClearExcelData();
         }
 
         public void SetDevideMethod(IDevideMethod devideMethod)

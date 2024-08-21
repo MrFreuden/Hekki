@@ -4,6 +4,11 @@ namespace RaceLogic.Services
 {
     public class PilotService : IPilotService
     {
+        public List<IPilot> CreatePilots()
+        {
+            throw new System.NotImplementedException();
+        }
+
         public void AddKarts(List<IPilot> pilots, List<int> karts)
         {
             CheckEquality(pilots.Count, karts.Count);
