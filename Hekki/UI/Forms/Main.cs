@@ -19,10 +19,10 @@ namespace Hekki
 
         private void Sprint_Click(object sender, EventArgs e)
         {
-            //this.Hide();
-            //SprintReg win2 = new(karts);
-            //win2.Closed += (s, args) => this.Close();
-            //win2.Show();
+            this.Hide();
+            NewRefactor win2 = new(karts);
+            win2.Closed += (s, args) => this.Close();
+            win2.Show();
         }
 
         private void Cherkasy_Click(object sender, EventArgs e)
