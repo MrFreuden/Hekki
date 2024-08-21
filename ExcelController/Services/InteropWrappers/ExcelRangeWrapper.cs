@@ -34,14 +34,21 @@ namespace ExcelController.Services.InteropWrappers
             _range.ClearContents();
         }
 
-        public IExcelRange Find(object value)
+        public IExcelRange? Find(object value)
         {
-            return new ExcelRangeWrapper(_range.Find(value));
+            var findedRange = _range.Find(value);
+            return findedRange != null ? new ExcelRangeWrapper(findedRange) : null;
         }
 
         public IExcelRange FindNext(object after)
         {
-            return new ExcelRangeWrapper(_range.FindNext(after));
+            var wrapper = after as ExcelRangeWrapper;
+            if (wrapper == null)
+            {
+                throw new ArgumentException("The 'after' parameter must be of type ExcelRangeWrapper.", nameof(after));
+            }
+            var afterRange = wrapper._range;
+            return new ExcelRangeWrapper(_range.FindNext(afterRange));
         }
     }
 }

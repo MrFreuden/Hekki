@@ -9,7 +9,7 @@ namespace ExcelController.Services.InteropWrappers
         int Column { get; }
         int Row { get; }
         void ClearContents();
-        IExcelRange Find(object value);
+        IExcelRange? Find(object value);
         IExcelRange FindNext(object after);
     }
 }
