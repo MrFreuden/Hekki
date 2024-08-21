@@ -24,7 +24,7 @@ namespace ExcelControllerTests.Services
             SetupColumns(columnOfData);
 
             // Act
-            var result = _excelWorker.ReadDataInColumnsByName(columnName, countData);
+            var result = _excelWorker.ReadDataInRaceInColumnsByName(columnName, countData);
 
             // Assert
             AssertResults(result, expected);
@@ -45,7 +45,7 @@ namespace ExcelControllerTests.Services
             SetupColumns(columnOfData);
 
             // Act
-            var result = _excelWorker.ReadDataInColumnsByName(columnName, countData);
+            var result = _excelWorker.ReadDataInRaceInColumnsByName(columnName, countData);
 
             // Assert
             AssertResults(result, expected);
@@ -61,7 +61,7 @@ namespace ExcelControllerTests.Services
             _mockSearcher.Setup(x => x.GetCellsByValue(It.IsAny<string>(), null)).Returns(new List<IExcelRange>());
 
             // Act
-            var result = _excelWorker.ReadDataInColumnsByName(columnName, countData);
+            var result = _excelWorker.ReadDataInRaceInColumnsByName(columnName, countData);
 
             // Assert
             AssertResults(result, expected);
@@ -84,7 +84,7 @@ namespace ExcelControllerTests.Services
             SetupColumns(columnOfData);
 
             // Act
-            var result = _excelWorker.ReadDataInColumnsByName(columnName, countData + 1);
+            var result = _excelWorker.ReadDataInRaceInColumnsByName(columnName, countData + 1);
 
             // Assert
             AssertResults(result, expected);

@@ -75,7 +75,7 @@ namespace ExcelController.Services
             }
         }
 
-        public List<List<string>> ReadDataInColumnsByName(string columnName, int count)
+        public List<List<string>> ReadDataInRaceInColumnsByName(string columnName, int count)
         {
             var data = new List<List<string>>();
             var columnIndexes = GetNumberOfFilledColumnsByName(columnName);

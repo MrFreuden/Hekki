@@ -56,7 +56,7 @@ namespace RaceLogic.Services
         public List<List<int>> ReadResultsInRace(string nameOfColumn, int count)
         {
             var result = new List<List<int>>();
-            var score = _excelWorker.ReadDataInColumnsByName(nameOfColumn, count);
+            var score = _excelWorker.ReadDataInRaceInColumnsByName(nameOfColumn, count);
 
             foreach (var data in score)
             {
