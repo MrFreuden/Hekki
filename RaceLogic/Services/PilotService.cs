@@ -17,6 +17,48 @@ namespace RaceLogic.Services
             return pilots;
         }
 
+        public List<Pilot> CreatePilots(List<string> names, List<List<int>> kartsMerged, List<List<int>> scoresMerged, List<List<int>> timesMerged, List<string> liques)
+        {
+            var pilots = new List<Pilot>();
+            for (int i = 0; i < names.Count; i++)
+            {
+                var karts = new List<int>();
+                var scores = new List<int>();
+                var times = new List<int>();
+
+                if (kartsMerged.Count != 0)
+                {
+                    for (int j = 0; j < kartsMerged[i].Count; j++)
+                    {
+                        karts.Add(kartsMerged[i][j]);
+                    }
+                }
+                if (timesMerged.Count != 0)
+                {
+                    for (int j = 0; j < timesMerged[i].Count; j++)
+                    {
+                        times.Add(timesMerged[i][j]);
+                    }
+                }
+                if (scoresMerged.Count != 0)
+                {
+                    for (int j = 0; j < scoresMerged[i].Count; j++)
+                    {
+                        scores.Add(scoresMerged[i][j]);
+                    }
+                }
+                if (liques.Count != 0)
+                {
+                    pilots.Add(new Pilot(karts, names[i], scores, times, liques[i]));
+                }
+                else
+                {
+                    pilots.Add(new Pilot(karts, names[i], scores, times));
+                }
+            }
+            return pilots;
+        }
+
         public void AddKarts(List<IPilot> pilots, List<int> karts)
         {
             CheckEquality(pilots.Count, karts.Count);

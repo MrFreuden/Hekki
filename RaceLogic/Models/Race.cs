@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ExcelController.Services;
 using RaceLogic.Interfaces;
 
 namespace RaceLogic.Models
@@ -34,6 +35,18 @@ namespace RaceLogic.Models
         {
             var names = _raceDataService.ReadNamesInBoard();
             return _pilotService.CreatePilots(names);
+        }
+
+        private List<Pilot> MakePilotsFromTotalBoard()
+        {
+            var names = _raceDataService.ReadNamesInBoard();
+            var countPilots = names.Count;
+            var kartsMerged = _raceDataService.ReadUsedKartsInBoard(countPilots);
+            var scoresMerged = _raceDataService.ReadResultsInBoard("Хіт", countPilots);
+            var timesMerged = _raceDataService.ReadResultsInBoard("Best Lap", countPilots);
+            var liques = _raceDataService.ReadLiquesInBoard(countPilots);
+
+            return _pilotService.CreatePilots(names, kartsMerged, scoresMerged, timesMerged, liques);
         }
 
         public void MakeHeat()
