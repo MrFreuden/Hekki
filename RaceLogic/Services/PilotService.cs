@@ -1,12 +1,20 @@
 ﻿using RaceLogic.Interfaces;
+using RaceLogic.Models;
 
 namespace RaceLogic.Services
 {
     public class PilotService : IPilotService
     {
-        public List<IPilot> CreatePilots()
+        public List<IPilot> CreatePilots(List<string> names)
         {
-            throw new System.NotImplementedException();
+            var pilots = new List<IPilot>();
+            
+            foreach (var name in names)
+            {
+                pilots.Add(new Pilot(name));
+            }
+            
+            return pilots;
         }
 
         public void AddKarts(List<IPilot> pilots, List<int> karts)

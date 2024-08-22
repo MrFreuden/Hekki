@@ -5,6 +5,7 @@
         void ClearExcelData(Microsoft.Office.Interop.Excel.Range rangeToClean = null, int countBellow = 50);
         List<string> ReadLiquesInBoard(int countRows);
         List<string> ReadNamesInBoard(int countRows);
+        List<string> ReadNamesInBoard();
         List<List<int>> ReadResultsInBoard(string nameOfColumn, int countRows);
         List<List<int>> ReadResultsInRace(string nameOfColumn, int count);
         List<List<int>> ReadUsedKartsInBoard(int count);

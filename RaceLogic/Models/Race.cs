@@ -32,8 +32,8 @@ namespace RaceLogic.Models
 
         private List<IPilot> CreatePilots()
         {
-
-            throw new NotImplementedException();
+            var names = _raceDataService.ReadNamesInBoard();
+            return _pilotService.CreatePilots(names);
         }
 
         public void MakeHeat()

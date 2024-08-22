@@ -189,6 +189,20 @@ namespace ExcelController.Services
             return data;
         }
 
+        public List<string> ReadDataInColumnToNull(int startRow, int column)
+        {
+            var data = new List<string>();
+            var cellData = "";
+
+            while (cellData != null)
+            {
+                cellData = _reader.ReadCell(startRow, column);
+                data.Add(cellData);
+            }
+
+            return data;
+        }
+
         public void AppendDataInColumn<T>(List<T> data, int row, int column)
         {
             foreach (var dat in data)

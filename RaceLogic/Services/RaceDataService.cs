@@ -115,6 +115,12 @@ namespace RaceLogic.Services
             return _excelWorker.ReadDataInColumn(StartRowByDefault, numbersColumns.First(), countRows);
         }
 
+        public List<string> ReadNamesInBoard()
+        {
+            var numbersColumns = _keyCellsColumnNumbers["Ім'я"];
+            return _excelWorker.ReadDataInColumnToNull(StartRowByDefault, numbersColumns.First());
+        }
+
         public void WriteDataInfoInBoard<T>(List<T> data, string nameOfColumn, int number)
         {
             var numbersColumns = _keyCellsColumnNumbers[nameOfColumn];

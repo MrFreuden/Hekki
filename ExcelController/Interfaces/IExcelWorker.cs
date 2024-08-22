@@ -5,6 +5,7 @@ namespace ExcelController.Interfaces
 {
     public interface IExcelWorker
     {
+        List<string> ReadDataInColumnToNull(int startRow, int column);
         void WriteDataInEmptyColumn<T>(List<T> data, int startRow, string columnName);
         void WriteDataInColumn<T>(List<T> data, int startRow, int column);
         List<List<string>> ReadDataInColumnsByNameInRace(string columnName, int count);

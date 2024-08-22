@@ -8,6 +8,7 @@ namespace RaceLogic.Interfaces
 {
     public interface IPilotService
     {
+        List<IPilot> CreatePilots(List<string> names);
         void AddKarts(List<List<IPilot>> pilots, List<List<int>> karts);
         void AddKarts(List<IPilot> pilots, List<int> karts);
         void AddScores(List<IPilot> pilots, List<int> scores);
