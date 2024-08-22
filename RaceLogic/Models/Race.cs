@@ -37,18 +37,6 @@ namespace RaceLogic.Models
             return _pilotService.CreatePilots(names);
         }
 
-        private List<Pilot> MakePilotsFromTotalBoard()
-        {
-            var names = _raceDataService.ReadNamesInBoard();
-            var countPilots = names.Count;
-            var kartsMerged = _raceDataService.ReadUsedKartsInBoard(countPilots);
-            var scoresMerged = _raceDataService.ReadResultsInBoard("Хіт", countPilots);
-            var timesMerged = _raceDataService.ReadResultsInBoard("Best Lap", countPilots);
-            var liques = _raceDataService.ReadLiquesInBoard(countPilots);
-
-            return _pilotService.CreatePilots(names, kartsMerged, scoresMerged, timesMerged, liques);
-        }
-
         public void MakeHeat()
         {
             var preparedPilots = PreparePilots();
@@ -98,7 +86,14 @@ namespace RaceLogic.Models
 
         public void RebuildAll()
         {
-            throw new NotImplementedException();
+            var names = _raceDataService.ReadNamesInBoard();
+            var countPilots = names.Count;
+            var kartsMerged = _raceDataService.ReadUsedKartsInBoard(countPilots);
+            var scoresMerged = _raceDataService.ReadResultsInBoard("Хіт", countPilots);
+            var timesMerged = _raceDataService.ReadResultsInBoard("Best Lap", countPilots);
+            var liques = _raceDataService.ReadLiquesInBoard(countPilots);
+
+            _pilots = _pilotService.CreatePilots(names, kartsMerged, scoresMerged, timesMerged, liques);
         }
 
         public void ClearAll()

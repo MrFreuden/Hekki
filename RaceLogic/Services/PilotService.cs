@@ -17,7 +17,7 @@ namespace RaceLogic.Services
             return pilots;
         }
 
-        public List<Pilot> CreatePilots(List<string> names, List<List<int>> kartsMerged, List<List<int>> scoresMerged, List<List<int>> timesMerged, List<string> liques)
+        public List<IPilot> CreatePilots(List<string> names, List<List<int>> kartsMerged, List<List<int>> scoresMerged, List<List<int>> timesMerged, List<string> liques)
         {
             var pilots = new List<Pilot>();
             for (int i = 0; i < names.Count; i++)

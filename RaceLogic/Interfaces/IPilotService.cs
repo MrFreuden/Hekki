@@ -15,6 +15,6 @@ namespace RaceLogic.Interfaces
         void AddScores(List<IPilot> pilots, List<int> scores);
         void AddTimes(List<IPilot> pilots, List<int> times);
         List<List<string>> GetNames(List<List<IPilot>> pilots);
-        List<Pilot> CreatePilots(List<string> names, List<List<int>> kartsMerged, List<List<int>> scoresMerged, List<List<int>> timesMerged, List<string> liques);
+        List<IPilot> CreatePilots(List<string> names, List<List<int>> kartsMerged, List<List<int>> scoresMerged, List<List<int>> timesMerged, List<string> liques);
     }
 }
