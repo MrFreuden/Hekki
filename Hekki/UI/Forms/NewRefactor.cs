@@ -21,7 +21,7 @@ namespace Hekki
             var excelWorker = new ExcelWorker();
             _raceService = new RaceDataService(excelWorker);
             var regulation = new Regulation(new SimpleMethodDevide(numbersKarts.Count, 10), new SortMethod(), new Combination());
-            _race = new Race(regulation, _raceService, new List<Pilot>(), numbersKarts);
+            _race = new Race(regulation, _raceService, new PilotService(), new List<Pilot>(), numbersKarts);
         }
 
         private void DoQual1_Click(object sender, EventArgs e)
@@ -94,7 +94,7 @@ namespace Hekki
 
         private void RebuildPilots_Click(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            _race.RebuildAll();
         }
 
         private void DeleteKartsFromLastRace_Click(object sender, EventArgs e)
