@@ -19,7 +19,7 @@ namespace RaceLogic.Services
 
         public List<IPilot> CreatePilots(List<string> names, List<List<int>> kartsMerged, List<List<int>> scoresMerged, List<List<int>> timesMerged, List<string> liques)
         {
-            var pilots = new List<Pilot>();
+            var pilots = new List<IPilot>();
             for (int i = 0; i < names.Count; i++)
             {
                 var karts = new List<int>();
