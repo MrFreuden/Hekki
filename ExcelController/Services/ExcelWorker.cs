@@ -234,9 +234,13 @@ namespace ExcelController.Services
             throw new NotImplementedException();
         }
 
-        public void Clear(Microsoft.Office.Interop.Excel.Range rangeToClean = null, int countBellow = 50)
+        public void Clear(string nameColumn)
         {
-            throw new NotImplementedException();
+            var range = _searcher.GetCellsByValue(nameColumn, null);
+            foreach (var cell in range)
+            {
+                _cleaner.Clear(cell);
+            }
         }
 
         //public Range GetHeadersTB()

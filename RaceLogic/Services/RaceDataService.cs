@@ -165,9 +165,12 @@ namespace RaceLogic.Services
             _excelWorker.SortTable(nameColumn);
         }
 
-        public void ClearExcelData(Range rangeToClean = null, int countBellow = 50)
+        public void ClearExcelData()
         {
-            _excelWorker.Clear(rangeToClean, countBellow);
+            for (int i = 0; i < _headers.Count; i++)
+            {
+                _excelWorker.Clear(_headers[i]);
+            }
         }
     }
 }

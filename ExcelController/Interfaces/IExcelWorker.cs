@@ -13,6 +13,6 @@ namespace ExcelController.Interfaces
         void AppendDataInColumn<T>(List<T> data, int row, int column);
         void SortTable(string nameColumn);
         Dictionary<string, List<int>> GetColumnNumberForAllHeaders(List<string> headers);
-        void Clear(Range rangeToClean = null, int countBellow = 50);
+        void Clear(string nameColumn);
     }
 }
