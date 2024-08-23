@@ -68,10 +68,10 @@ namespace ExcelController.Services
 
         public void WriteDataInColumn<T>(List<T> data, int startRow, int column)
         {
-            foreach (var item in data)
+            for (int i = 0; i < data.Count; i++)
             {
-                _writer.WriteCell(startRow, column, item.ToString());
-                startRow++;
+                string value = data[i]?.ToString();
+                _writer.WriteCell(startRow + i, column, value);
             }
         }
 

@@ -36,8 +36,10 @@ namespace RaceLogic.Services
             var combos = new List<List<int>>();
             for (int i = 0; i < groupsPilots.Count; i++)
             {
-                var q = GetUsedKartsFromGroup(groupsPilots[i]);
-                combos.Add(_combination.GetCombo(q, numbersOfKarts));
+                var usedKarts = GetUsedKartsFromGroup(groupsPilots[i]);
+                var combo = _combination.GetCombo(usedKarts, numbersOfKarts);
+                var selectedCombo = combo.Take(groupsPilots[i].Count).ToList();
+                combos.Add(selectedCombo);
             }
             return combos;
         }
