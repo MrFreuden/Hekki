@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ExcelController.Services;
+using RaceLogic.Algorithms;
 using RaceLogic.Interfaces;
 
 namespace RaceLogic.Models
@@ -39,6 +40,8 @@ namespace RaceLogic.Models
 
         public void MakeHeat()
         {
+            SetSortMethod(new SortShuffle());
+            var indexedPilots = _pilots.Select((pilot, index) => new { Pilot = pilot, Index = index }).ToList();
             var preparedPilots = PreparePilots();
 
             var karts = _regulation.GetCombos(preparedPilots, _numberKarts);
@@ -47,6 +50,7 @@ namespace RaceLogic.Models
             var names = _pilotService.GetNames(preparedPilots);
             _raceDataService.WriteDataInfoInRace(names, "Пілоти");
             _raceDataService.WriteDataInfoInRace(karts, "Карт");
+            _pilots = indexedPilots.OrderBy(x => x.Index).Select(x => x.Pilot).ToList();
         }
 
         private List<List<IPilot>> PreparePilots()

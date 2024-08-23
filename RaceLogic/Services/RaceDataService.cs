@@ -22,7 +22,8 @@ namespace RaceLogic.Services
                 { "Час" },
                 { "Ім'я" },
                 { "Ліга" },
-                { "Очки" }
+                { "Очки" },
+                { "Усього" }
             };
 
         public RaceDataService(IExcelWorker excelWorker)
@@ -167,9 +168,24 @@ namespace RaceLogic.Services
 
         public void ClearExcelData()
         {
-            for (int i = 0; i < _headers.Count; i++)
+            //TODO: Переделать, что бы можно было очищать только определенные столбцы
+            var headers = new List<string>()
             {
-                _excelWorker.Clear(_headers[i]);
+                { "Номера" },
+                { "Best Lap" },
+                { "ХІТ" },
+                { "Карт" },
+                { "Пілоти" },
+                { "Штраф" },
+                { "Час" },
+                { "Ліга" },
+                { "Очки" },
+                { "Усього" }
+            };
+
+            for (int i = 0; i < headers.Count; i++)
+            {
+                _excelWorker.Clear(headers[i]);
             }
         }
     }

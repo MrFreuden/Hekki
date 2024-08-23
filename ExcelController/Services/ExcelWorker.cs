@@ -198,6 +198,7 @@ namespace ExcelController.Services
             {
                 cellData = _reader.ReadCell(startRow, column);
                 data.Add(cellData);
+                startRow++;
             }
 
             return data;

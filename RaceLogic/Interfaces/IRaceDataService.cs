@@ -2,7 +2,7 @@
 {
     public interface IRaceDataService
     {
-        void ClearExcelData(Microsoft.Office.Interop.Excel.Range rangeToClean = null, int countBellow = 50);
+        void ClearExcelData();
         List<string> ReadLiquesInBoard(int countRows);
         List<string> ReadNamesInBoard(int countRows);
         List<string> ReadNamesInBoard();
