@@ -9,9 +9,9 @@ namespace RaceLogic.Algorithms
 {
     public class CardMethodDevide : IDevideMethod
     {
-        public IList<IList<T>> Devide<T>(IList<T> list, int count)
+        public List<List<T>> Devide<T>(List<T> list, int count)
         {
-            var groups = new List<IList<T>>();
+            var groups = new List<List<T>>();
 
             for (int i = 0; i < count; i++)
                 groups.Add(new List<T>());

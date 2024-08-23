@@ -23,7 +23,7 @@ namespace RaceLogic.Services
         public List<List<IPilot>> Devide(List<IPilot> pilots, int groupAmount)
         {
             var q = _devideMethod.Devide(pilots, groupAmount);
-            return (List<List<IPilot>>)q;
+            return q;
         }
 
         public void Sort(List<IPilot> pilots)

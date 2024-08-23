@@ -20,7 +20,7 @@ namespace ExcelController.Services
         private Application GetExcel()
         {
             Application myExcel;
-
+            //TODO: Ошибка не работает, когда ексель не запущен
             try
             {
                 myExcel = (Application)Marshal2.GetActiveObject("Excel.Application");
