@@ -239,7 +239,7 @@ namespace ExcelController.Services
             var range = _searcher.GetCellsByValue(nameColumn, null);
             foreach (var cell in range)
             {
-                _cleaner.Clear(cell);
+                _cleaner.ClearExcelData(cell);
             }
         }
 

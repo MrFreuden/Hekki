@@ -1,10 +1,10 @@
 ﻿using ExcelController.Services.InteropWrappers;
+using Range = Microsoft.Office.Interop.Excel.Range;
 
 namespace ExcelController.Interfaces
 {
     public interface IExcelCleaner
     {
-        void Clear(IExcelRange cell);
-        void ClearExcelData(Microsoft.Office.Interop.Excel.Range rangeToClean = null, int countBellow = 50);
+        void ClearExcelData(IExcelRange rangeToClean, int countBellow = 50);
     }
 }

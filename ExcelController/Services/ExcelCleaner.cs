@@ -13,7 +13,7 @@ namespace ExcelController.Services
             _excel = excel;
         }
 
-        public void ClearExcelData(Range rangeToClean, int countBellow = 50)
+        public void ClearExcelData(IExcelRange rangeToClean, int countBellow = 50)
         {
             var aras = _excel.GetCell(rangeToClean.Row + countBellow, rangeToClean.Column);
             aras.ClearContents();
