@@ -40,7 +40,6 @@ namespace RaceLogic.Models
 
         public void MakeHeat()
         {
-            SetSortMethod(new SortShuffle());
             var indexedPilots = _pilots.Select((pilot, index) => new { Pilot = pilot, Index = index }).ToList();
             var preparedPilots = PreparePilots();
 
