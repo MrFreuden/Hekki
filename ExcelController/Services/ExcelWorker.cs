@@ -194,9 +194,8 @@ namespace ExcelController.Services
             var data = new List<string>();
             var cellData = "";
 
-            while (cellData != null)
+            while ((cellData = _reader.ReadCell(startRow, column)) != null)
             {
-                cellData = _reader.ReadCell(startRow, column);
                 data.Add(cellData);
                 startRow++;
             }
