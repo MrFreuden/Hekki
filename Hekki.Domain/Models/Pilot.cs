@@ -40,5 +40,15 @@ namespace Hekki.Domain.Models
         {
             Add(new Pilot(name));
         }
+
+        public void SortByScore()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void SortByTime()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
