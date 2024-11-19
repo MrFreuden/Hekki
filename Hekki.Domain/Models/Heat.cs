@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Hekki.Domain.Models
 {
-    internal class Heat
+    public class Heat
     {
         private readonly List<Pilot> _pilots;
     }

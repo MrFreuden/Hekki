@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Hekki.Domain.Models
 {
-    internal class Pilot
+    public class Pilot
     {
         private string _name;
         private string _ligue = "NoLique";
@@ -31,6 +31,14 @@ namespace Hekki.Domain.Models
             : this(usedKarts, name, scores, times)
         {
             _ligue = lique;
+        }
+    }
+
+    public class Pilots : List<Pilot>
+    {
+        public void Add(string name)
+        {
+            Add(new Pilot(name));
         }
     }
 }
