@@ -1,5 +1,7 @@
 using Hekki.App;
+using Hekki.Domain.Interfaces;
 using Hekki.Domain.Models;
+using System.Collections.Generic;
 
 namespace Hekki.UI
 {
@@ -13,7 +15,13 @@ namespace Hekki.UI
 
         private Regulation GetRegulation()
         {
-            return new TestRegulation(4, new List<Func<Pilots, Pilots>>
+            var results = new List<IHeatResult>()
+            {
+                new PointsResult(),
+                new PointsResult(),
+                new PointsResult()
+            };
+            return new TestRegulation(3, results, new List<Func<Pilots, Pilots>>
             {
                 list => SortService.RandomSort(list),
                 list => SortService.RandomSort(list),
