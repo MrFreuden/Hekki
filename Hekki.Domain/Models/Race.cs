@@ -21,15 +21,5 @@
                 _heats.Add(new Heat(_regulation.SortMethods[i], _regulation.HeatResults[i]));
             }
         }
-
-        public UIGeneralTableDTO GetGeneralTable()
-        {
-            throw new NotImplementedException();
-        }
-    }
-
-    public class UIGeneralTableDTO
-    {
-        
     }
 }
