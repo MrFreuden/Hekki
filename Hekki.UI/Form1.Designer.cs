@@ -28,12 +28,32 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Text = "Form1";
+            ImitationStartButton = new Button();
+            SuspendLayout();
+            // 
+            // ImitationStartButton
+            // 
+            ImitationStartButton.Location = new Point(325, 138);
+            ImitationStartButton.Name = "ImitationStartButton";
+            ImitationStartButton.Size = new Size(157, 110);
+            ImitationStartButton.TabIndex = 0;
+            ImitationStartButton.Text = "Start";
+            ImitationStartButton.UseVisualStyleBackColor = true;
+            ImitationStartButton.Click += ImitationStartButton_Click;
+            // 
+            // Form1
+            // 
+            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleMode = AutoScaleMode.Font;
+            ClientSize = new Size(800, 450);
+            Controls.Add(ImitationStartButton);
+            Name = "Form1";
+            Text = "Form1";
+            ResumeLayout(false);
         }
 
         #endregion
+
+        private Button ImitationStartButton;
     }
 }

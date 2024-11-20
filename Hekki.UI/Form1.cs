@@ -5,6 +5,7 @@ namespace Hekki.UI
 {
     public partial class Form1 : Form
     {
+        private Regulation _regulation;
         public Form1()
         {
             InitializeComponent();
@@ -12,12 +13,6 @@ namespace Hekki.UI
 
         private Regulation GetRegulation()
         {
-            var pilots = new Pilots
-            {
-                "Test1",
-                "Test2"
-            };
-
             return new TestRegulation(4, new List<Func<Pilots, Pilots>>
             {
                 list => SortService.RandomSort(list),
@@ -26,6 +21,9 @@ namespace Hekki.UI
             });
         }
 
-        
+        private void ImitationStartButton_Click(object sender, EventArgs e)
+        {
+            _regulation = GetRegulation();
+        }
     }
 }
