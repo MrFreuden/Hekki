@@ -1,24 +1,56 @@
 ﻿using Hekki.Domain.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Hekki.Domain.Models;
 
 namespace Hekki.App
 {
-    public class PointsResult : IHeatResult
+    public class PointsResult : IResult<int>
     {
-        public string Label => "Points";
+        private List<int> _points;
+        public IReadOnlyList<int> Points { get { return _points; } }
+        public string GetLabel() => "Points";
+
+        public void PopulateRow(Dictionary<string, int> row, int heatIndex)
+        {
+            throw new NotImplementedException();
+        }
     }
 
-    public class TimesResult : IHeatResult
+    public class TimesResult : IResult<DateTime>
     {
+        public DateTime Times { get; }
+
+        public TimesResult(DateTime times)
+        {
+            Times = times;
+        }
+        public string GetResultAsString()
+        {
+            return Times.ToString();
+        }
+
+        public string GetLabel()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void PopulateRow(Dictionary<string, DateTime> row, int heatIndex)
+        {
+            throw new NotImplementedException();
+        }
+
         public string Label => "Times";
     }
 
-    public class PointsAndTimesResult : IHeatResult
+    public class PointsAndTimesResult : IResult<T> 
     {
-        public string Label => "???";
+        public string GetLabel()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void PopulateRow(Dictionary<string, (int, DateTime)> row, int heatIndex)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

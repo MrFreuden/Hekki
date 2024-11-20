@@ -15,7 +15,7 @@ namespace Hekki.UI
 
         private Regulation GetRegulation()
         {
-            var results = new List<IHeatResult>()
+            var results = new List<IResult>()
             {
                 new PointsResult(),
                 new PointsResult(),

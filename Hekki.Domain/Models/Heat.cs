@@ -9,15 +9,16 @@ namespace Hekki.Domain.Models
 {
     public class Heat
     {
-        private IHeatResult _heatResult;
+        private IResult _heatResult;
         private Func<Pilots, Pilots> _sortFunc;
 
         private List<Group> _groups;
         private Pilots _avaiblePilots;
+        public IResult HeatResult { get { return _heatResult; } }
         public int GroupCapacity { get; set; }
         public int GroupCount => _groups.Count;
 
-        public Heat(Func<Pilots, Pilots> sortFunc, IHeatResult heatResult)
+        public Heat(Func<Pilots, Pilots> sortFunc, IResult heatResult)
         {
             _sortFunc = sortFunc;
         }
