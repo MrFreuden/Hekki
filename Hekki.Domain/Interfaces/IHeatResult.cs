@@ -8,6 +8,6 @@ namespace Hekki.Domain.Interfaces
 {
     public interface IHeatResult
     {
-
+        public string Label { get; }
     }
 }
