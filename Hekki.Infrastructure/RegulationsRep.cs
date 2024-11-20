@@ -5,9 +5,9 @@ namespace Hekki.Infrastructure
 {
     public class RegulationsRep
     {
-        public static Regulation GetRegulation()
-        {
-            return new TestRegulation();
-        }
+        //public static Regulation GetRegulation()
+        //{
+        //    return new TestRegulation();
+        //}
     }
 }

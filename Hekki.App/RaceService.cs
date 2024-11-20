@@ -11,7 +11,7 @@ namespace Hekki.App
             foreach (string name in names) 
                 pilots.Add(new Pilot(name));
 
-            _race = new Race(pilots, new List<Heat>(), new TestRegulation());
+            //_race = new Race(pilots, new List<Heat>(), new TestRegulation());
         }
 
         public void StartNextHeat()

@@ -1,6 +1,6 @@
 ﻿namespace Hekki.UI
 {
-    partial class Form1
+    partial class ChooseRegulation
     {
         /// <summary>
         ///  Required designer variable.

@@ -3,10 +3,10 @@ using Hekki.Domain.Models;
 
 namespace Hekki.UI
 {
-    public partial class Form1 : Form
+    public partial class ChooseRegulation : Form
     {
         private Regulation _regulation;
-        public Form1()
+        public ChooseRegulation()
         {
             InitializeComponent();
         }
@@ -24,6 +24,9 @@ namespace Hekki.UI
         private void ImitationStartButton_Click(object sender, EventArgs e)
         {
             _regulation = GetRegulation();
+            var raceForm = new RaceUIForm();
+            raceForm.Show();
+            
         }
     }
 }
