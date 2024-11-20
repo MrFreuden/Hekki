@@ -12,10 +12,9 @@ namespace Hekki.Domain.Models
         private List<Heat> _heats;
         private Regulation _regulation;
 
-        public Race(List<Pilot> pilots, List<Heat> heats, Regulation regulation)
+        public Race(List<Pilot> pilots, Regulation regulation)
         {
             _pilots = pilots;
-            _heats = heats;
             _regulation = regulation;
         }
     }

@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Hekki.Domain.Models
+namespace Hekki.Domain.Interfaces
 {
-    internal class HeatResults
+    public interface IHeatResult
     {
+
     }
 }
