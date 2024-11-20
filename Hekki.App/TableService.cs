@@ -17,6 +17,11 @@ namespace Hekki.App
 
     public class UIGeneralTableDTO
     {
+        public List<string> Columns { get; set; } = new();
+        public List<GeneralTableRowDTO> Rows { get; set; } = new();
+    }
+    public class GeneralTableRowDTO
+    {
 
     }
 
