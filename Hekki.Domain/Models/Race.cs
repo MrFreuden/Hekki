@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Hekki.Domain.Models
+﻿namespace Hekki.Domain.Models
 {
     public class Race
     {
@@ -16,6 +10,25 @@ namespace Hekki.Domain.Models
         {
             _pilots = pilots;
             _regulation = regulation;
+            CreateHeats();
         }
+
+        private void CreateHeats()
+        {
+            _heats = new List<Heat>();
+            for (int i = 0; i < _regulation.HeatCount; i++)
+            {
+                _heats.Add(new Heat(_regulation.SortMethods[i], _regulation.HeatResults[i]));
+            }
+        }
+
+        public UIGeneralTableDTO GetGeneralTable()
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    public class UIGeneralTableDTO
+    {
     }
 }
