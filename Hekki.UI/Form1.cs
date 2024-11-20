@@ -1,3 +1,4 @@
+using Hekki.App;
 using Hekki.Domain.Models;
 
 namespace Hekki.UI
@@ -16,11 +17,12 @@ namespace Hekki.UI
                 "Test1",
                 "Test2"
             };
+
             return new TestRegulation(4, new List<Func<Pilots, Pilots>>
             {
-                list => Sort(list),
-                list => Sort(list),
-                list => Sort(list),
+                list => SortService.RandomSort(list),
+                list => SortService.RandomSort(list),
+                list => SortService.RandomSort(list),
             });
         }
 
