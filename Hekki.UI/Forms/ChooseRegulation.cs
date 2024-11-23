@@ -17,9 +17,9 @@ namespace Hekki.UI
         {
             var results = new List<IResult>()
             {
-                new PointsResult(),
-                new PointsResult(),
-                new PointsResult()
+                new PointsResult(-1),
+                new PointsResult(-1),
+                new PointsResult(-1)
             };
             return new TestRegulation(3, results, new List<Func<List<Pilot>, List<Pilot>>>
             {

@@ -9,6 +9,7 @@ namespace Hekki.Domain.Interfaces
 {
     public interface IResult
     {
+        public string Value { get; set; }
         public string Label { get; }
     }
 }

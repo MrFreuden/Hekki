@@ -38,14 +38,14 @@
             dataGridView1.Location = new Point(60, 36);
             dataGridView1.Name = "dataGridView1";
             dataGridView1.RowHeadersWidth = 51;
-            dataGridView1.Size = new Size(616, 341);
+            dataGridView1.Size = new Size(850, 467);
             dataGridView1.TabIndex = 0;
             // 
             // RaceUIForm
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
+            ClientSize = new Size(981, 580);
             Controls.Add(dataGridView1);
             Name = "RaceUIForm";
             Text = "RaceUIForm";

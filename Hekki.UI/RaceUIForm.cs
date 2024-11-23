@@ -15,12 +15,40 @@ namespace Hekki.UI
         {
             InitializeComponent();
             _regulation = regulation;
+
+
+
             _pilots = new List<Pilot>
             {
                 new Pilot("Test1"),
                 new Pilot("Test2"),
                 new Pilot("Test3"),
             };
+            _pilots[0].AddResult(new PointsResult(5));
+            _pilots[0].AddResult(new PointsResult(4));
+            _pilots[0].AddResult(new PointsResult(3));
+
+            _pilots[1].AddResult(new PointsResult(3));
+            _pilots[1].AddResult(new PointsResult(5));
+            _pilots[1].AddResult(new PointsResult(4));
+
+            _pilots[2].AddResult(new PointsResult(4));
+            _pilots[2].AddResult(new PointsResult(3));
+            _pilots[2].AddResult(new PointsResult(5));
+
+            _pilots[0].AddUsedKart(1);
+            _pilots[0].AddUsedKart(2);
+            _pilots[0].AddUsedKart(3);
+
+            _pilots[1].AddUsedKart(4);
+            _pilots[1].AddUsedKart(1);
+            _pilots[1].AddUsedKart(2);
+
+            _pilots[2].AddUsedKart(2);
+            _pilots[2].AddUsedKart(3);
+            _pilots[2].AddUsedKart(1);
+
+
             _tableService = new TableService(_regulation, _pilots);
             DrawGeneralTable();
         }
@@ -36,6 +64,7 @@ namespace Hekki.UI
             
             void DrawColumns(DataGridView dataGridView)
             {
+                dataGridView.Columns.Add("UsedKarts", "Used Karts");
                 dataGridView.Columns.Add("PilotName", "Pilot Name");
 
                 foreach (var heatViewModel in regulationViewModel.Heats)
@@ -51,9 +80,9 @@ namespace Hekki.UI
             {
                 foreach (var row in regulationViewModel.PilotViewModels)
                 {
-                    var rowValues = new List<object> { row.UsedKarts, row.Name };
-                    rowValues.AddRange(row.RowViewModel.Results);
-                    dataGridView.Rows.Add(rowValues);
+                    var rowValues = new List<object> { string.Join(" ", row.UsedKarts.Select(x => x.ToString())), row.Name};
+                    rowValues.AddRange(row.RowViewModel.Results.Select(x => x.Value));
+                    dataGridView.Rows.Add(rowValues.ToArray());
                 }
             }
             //PilotUsedKarts = string.Join(" ", pilot.UsedKarts.Select(x => x.ToString())),
