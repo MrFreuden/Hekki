@@ -4,49 +4,67 @@ namespace Hekki.App
 {
     public class TableService
     {
-        public GeneralTableDTO BuildGeneralTable(List<Heat> heats, Pilots pilots)
+        private Regulation _regulation;
+        private List<Pilot> _pilots;
+
+        public TableService(Regulation regulation, List<Pilot> pilots)
         {
-            var table = new GeneralTableDTO();
-            foreach (var heat in heats)
-            {
-                table.Columns.Add(heat.HeatResult.Label);
-            }
-            foreach (var pilot in pilots)
-            {
-                var row = new GeneralTableRowDTO()
-                {
-                    PilotName = pilot.Name,
-                    PilotUsedKarts = string.Join(" ", pilot.UsedKarts.Select(x => x.ToString())),
-                };
-                foreach (var result in pilot.Results)
-                {
-
-                }
-            }
-
-            return table;
+            _regulation = regulation;
+            _pilots = pilots;
         }
 
-        public List<HeatTableDTO> BuildHeatTable(List<Heat> heats, Pilots pilots)
+        public RegulationViewModel BuildGeneralTable()
         {
+
+            var regulationViewModel = new RegulationViewModel();
+            regulationViewModel.HeatCount = _regulation.HeatCount;
+            var heats = new List<HeatViewModel>();
+            int i = 0;
+            foreach (var item in _regulation.HeatResults)
+            {
+                heats.Add(new HeatViewModel(i, _regulation.MaxGroupCapacity, [new HeatColumnViewModel(item.Label, item.GetType())]));
+                i++;
+            }
+
+            regulationViewModel.Heats = heats;
+
+            //PilotUsedKarts = string.Join(" ", pilot.UsedKarts.Select(x => x.ToString())),
             throw new NotImplementedException();
+
         }
+        //public List<HeatTableDTO> BuildHeatTable(List<Heat> heats, Pilots pilots)
+        //{
+        //    throw new NotImplementedException();
+        //}
     }
-
-    public class GeneralTableDTO
+    public class RegulationViewModel
     {
-        public List<string> Columns { get; set; } = new();
-        public List<GeneralTableRowDTO> Rows { get; set; } = new();
+        public int HeatCount { get; set; }
+        public List<HeatViewModel> Heats { get; set; } = new();
     }
-
-    public class GeneralTableRowDTO
+    public class HeatViewModel
     {
-        public string PilotName { get; set; }
-        public string PilotUsedKarts { get; set; }
+        public HeatViewModel(int heatIndex, int maxGroupCapacity, List<HeatColumnViewModel> columns)
+        {
+            HeatIndex = heatIndex;
+            MaxGroupCapacity = maxGroupCapacity;
+            Columns = columns;
+        }
+
+        public int HeatIndex { get; }
+        public int MaxGroupCapacity { get; }
+        public List<HeatColumnViewModel> Columns { get; } = new();
     }
-
-    public class HeatTableDTO
+    public class HeatColumnViewModel
     {
+        public HeatColumnViewModel(string name, Type dataType)
+        {
+            Name = name;
+            DataType = dataType;
+        }
 
+        public string Name { get; }
+        public Type DataType { get; }
     }
 }
+

@@ -4,11 +4,11 @@ namespace Hekki.Domain.Models
 {
     public abstract class Regulation
     {
-        public int HeatCount { get; protected set; }
-        protected List<Func<Pilots, Pilots>> _sortMethods;
+        protected List<Func<List<Pilot>, List<Pilot>>> _sortMethods;
         protected List<IResult> _heatResults;
 
-        public IReadOnlyList<Func<Pilots, Pilots>> SortMethods { get { return _sortMethods; } }
+        public int HeatCount { get; protected set; }
+        public IReadOnlyList<Func<List<Pilot>, List<Pilot>>> SortMethods { get { return _sortMethods; } }
         public IReadOnlyList<IResult> HeatResults { get { return _heatResults; } }
         public int MaxGroupCapacity { get; protected set; } = 10;
         
@@ -16,7 +16,7 @@ namespace Hekki.Domain.Models
 
     public class TestRegulation : Regulation
     {
-        public TestRegulation(int heatCount, List<IResult> heatResults, List<Func<Pilots, Pilots>> sortMethods)
+        public TestRegulation(int heatCount, List<IResult> heatResults, List<Func<List<Pilot>, List<Pilot>>> sortMethods)
         {
             HeatCount = heatCount;
             _sortMethods = sortMethods;

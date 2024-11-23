@@ -21,7 +21,7 @@ namespace Hekki.UI
                 new PointsResult(),
                 new PointsResult()
             };
-            return new TestRegulation(3, results, new List<Func<Pilots, Pilots>>
+            return new TestRegulation(3, results, new List<Func<List<Pilot>, List<Pilot>>>
             {
                 list => SortService.RandomSort(list),
                 list => SortService.RandomSort(list),

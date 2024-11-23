@@ -7,9 +7,8 @@ using System.Threading.Tasks;
 
 namespace Hekki.Domain.Interfaces
 {
-    public interface IResult<T> where T : IComparable
+    public interface IResult
     {
-        string GetLabel();
-        void PopulateRow(Dictionary<string, T> row, int heatIndex);
+        public string Label { get; }
     }
 }
