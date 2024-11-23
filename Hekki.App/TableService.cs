@@ -1,4 +1,5 @@
-﻿using Hekki.Domain.Models;
+﻿using Hekki.Domain.Interfaces;
+using Hekki.Domain.Models;
 
 namespace Hekki.App
 {
@@ -20,17 +21,24 @@ namespace Hekki.App
             regulationViewModel.HeatCount = _regulation.HeatCount;
             var heats = new List<HeatViewModel>();
             int i = 0;
-            foreach (var item in _regulation.HeatResults)
+            foreach (var heat in _regulation.HeatResults)
             {
-                heats.Add(new HeatViewModel(i, _regulation.MaxGroupCapacity, [new HeatColumnViewModel(item.Label, item.GetType())]));
+                heats.Add(new HeatViewModel(i, _regulation.MaxGroupCapacity, [new HeatColumnViewModel(heat.Label, heat.GetType())]));
                 i++;
             }
 
             regulationViewModel.Heats = heats;
 
-            //PilotUsedKarts = string.Join(" ", pilot.UsedKarts.Select(x => x.ToString())),
-            throw new NotImplementedException();
+            var pilotsViewModel = new List<PilotViewModel>();
+            foreach (var pilot in _pilots)
+            {
+                pilotsViewModel.Add(new PilotViewModel(pilot.Name, [.. pilot.UsedKarts], new PilotRowViewModel([.. pilot.Results])));
+            }
 
+            regulationViewModel.PilotViewModels = pilotsViewModel;
+
+            return regulationViewModel;
+            
         }
         //public List<HeatTableDTO> BuildHeatTable(List<Heat> heats, Pilots pilots)
         //{
@@ -41,7 +49,33 @@ namespace Hekki.App
     {
         public int HeatCount { get; set; }
         public List<HeatViewModel> Heats { get; set; } = new();
+        public List<PilotViewModel> PilotViewModels { get; set; } = new();
     }
+
+    public class PilotViewModel
+    {
+        public PilotViewModel(string name, List<int> usedKarts, PilotRowViewModel rowViewModel)
+        {
+            Name = name;
+            UsedKarts = usedKarts;
+            RowViewModel = rowViewModel;
+        }
+
+        public string Name { get; set; }
+        public List<int> UsedKarts { get; set; } = new();
+        public PilotRowViewModel RowViewModel { get; set; }
+    }
+
+    public class PilotRowViewModel
+    {
+        public PilotRowViewModel(List<IResult> results)
+        {
+            Results = results;
+        }
+
+        public List<IResult> Results {  get; set; } = new();
+    }
+
     public class HeatViewModel
     {
         public HeatViewModel(int heatIndex, int maxGroupCapacity, List<HeatColumnViewModel> columns)

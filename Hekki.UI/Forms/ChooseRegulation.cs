@@ -32,7 +32,7 @@ namespace Hekki.UI
         private void ImitationStartButton_Click(object sender, EventArgs e)
         {
             _regulation = GetRegulation();
-            var raceForm = new RaceUIForm();
+            var raceForm = new RaceUIForm(_regulation);
             raceForm.Show();
             
         }

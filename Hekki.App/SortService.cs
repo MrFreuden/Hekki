@@ -5,7 +5,7 @@ namespace Hekki.App
     public static class SortService
     {
         private static Random _rnd = new();
-        public static Pilots RandomSort(Pilots list)
+        public static List<Pilot> RandomSort(List<Pilot> list)
         {
             int n = list.Count;
             while (n > 1)
@@ -17,16 +17,16 @@ namespace Hekki.App
             return list;
         }
 
-        public static Pilots NoSort(Pilots list)
+        public static List<Pilot> NoSort(List<Pilot> list)
         {
             return list;
         }
 
-        public static Pilots CardSort(Pilots list)
+        public static List<Pilot> CardSort(List<Pilot> list)
         {
             var evenIndexElements = list.Where((t, index) => index % 2 == 0);
             var oddIndexElements = list.Where((t, index) => index % 2 != 0);
-            return (Pilots)evenIndexElements.Concat(oddIndexElements).ToList();
+            return evenIndexElements.Concat(oddIndexElements).ToList();
         }
 
         //public static List<T> RandomSort<T>(List<T> list)
