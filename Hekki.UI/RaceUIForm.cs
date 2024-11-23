@@ -81,7 +81,7 @@ namespace Hekki.UI
                 foreach (var row in regulationViewModel.PilotViewModels)
                 {
                     var rowValues = new List<object> { string.Join(" ", row.UsedKarts.Select(x => x.ToString())), row.Name};
-                    rowValues.AddRange(row.RowViewModel.Results.Select(x => x.Value));
+                    rowValues.AddRange(row.Results.Select(x => x.Value));
                     dataGridView.Rows.Add(rowValues.ToArray());
                 }
             }

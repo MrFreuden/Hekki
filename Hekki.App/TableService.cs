@@ -16,27 +16,22 @@ namespace Hekki.App
 
         public RegulationViewModel BuildGeneralTable()
         {
-
-            var regulationViewModel = new RegulationViewModel();
-            regulationViewModel.HeatCount = _regulation.HeatCount;
-            var heats = new List<HeatViewModel>();
-            int i = 0;
-            foreach (var heat in _regulation.HeatResults)
+            var regulationViewModel = new RegulationViewModel
             {
-                heats.Add(new HeatViewModel(i, _regulation.MaxGroupCapacity, [new HeatColumnViewModel(heat.Label, heat.GetType())]));
-                i++;
-            }
-
-            regulationViewModel.Heats = heats;
-
-            var pilotsViewModel = new List<PilotViewModel>();
-            foreach (var pilot in _pilots)
-            {
-                pilotsViewModel.Add(new PilotViewModel(pilot.Name, [.. pilot.UsedKarts], new PilotRowViewModel([.. pilot.Results])));
-            }
-
-            regulationViewModel.PilotViewModels = pilotsViewModel;
-
+                HeatCount = _regulation.HeatCount,
+                Heats = _regulation.HeatResults
+                .Select((heatResult, i) => new HeatViewModel(
+                    i,
+                    _regulation.MaxGroupCapacity,
+                    new List<HeatColumnViewModel>
+                    {
+                        new HeatColumnViewModel(heatResult.Label, heatResult.GetType())
+                    }))
+                .ToList(),
+                PilotViewModels = _pilots
+                .Select(pilot => new PilotViewModel(pilot.Name, [.. pilot.UsedKarts], [.. pilot.Results]))
+                .ToList()
+            };
             return regulationViewModel;
             
         }
@@ -54,26 +49,16 @@ namespace Hekki.App
 
     public class PilotViewModel
     {
-        public PilotViewModel(string name, List<int> usedKarts, PilotRowViewModel rowViewModel)
+        public PilotViewModel(string name, List<int> usedKarts, List<IResult> results)
         {
             Name = name;
             UsedKarts = usedKarts;
-            RowViewModel = rowViewModel;
-        }
-
-        public string Name { get; set; }
-        public List<int> UsedKarts { get; set; } = new();
-        public PilotRowViewModel RowViewModel { get; set; }
-    }
-
-    public class PilotRowViewModel
-    {
-        public PilotRowViewModel(List<IResult> results)
-        {
             Results = results;
         }
 
-        public List<IResult> Results {  get; set; } = new();
+        public string Name { get; }
+        public List<int> UsedKarts { get; } = new();
+        public List<IResult> Results { get; } = new();
     }
 
     public class HeatViewModel
