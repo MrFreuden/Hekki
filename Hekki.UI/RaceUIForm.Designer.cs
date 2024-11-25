@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             dataGridView1 = new DataGridView();
+            flowLayoutPanel1 = new FlowLayoutPanel();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             SuspendLayout();
             // 
@@ -41,20 +42,31 @@
             dataGridView1.Size = new Size(734, 284);
             dataGridView1.TabIndex = 0;
             // 
+            // flowLayoutPanel1
+            // 
+            flowLayoutPanel1.AutoSize = true;
+            flowLayoutPanel1.Location = new Point(778, 12);
+            flowLayoutPanel1.Name = "flowLayoutPanel1";
+            flowLayoutPanel1.Size = new Size(561, 284);
+            flowLayoutPanel1.TabIndex = 1;
+            // 
             // RaceUIForm
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1792, 606);
+            ClientSize = new Size(1792, 1048);
+            Controls.Add(flowLayoutPanel1);
             Controls.Add(dataGridView1);
             Name = "RaceUIForm";
             Text = "RaceUIForm";
             ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
 
         private DataGridView dataGridView1;
+        private FlowLayoutPanel flowLayoutPanel1;
     }
 }

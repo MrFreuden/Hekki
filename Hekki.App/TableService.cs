@@ -35,10 +35,16 @@ namespace Hekki.App
             return regulationViewModel;
             
         }
-        //public List<HeatTableDTO> BuildHeatTable(List<Heat> heats, Pilots pilots)
-        //{
-        //    throw new NotImplementedException();
-        //}
+
+        public List<HeatViewModel> BuildHeatTables()
+        {
+            var heats = _regulation.HeatResults
+                .Select((res, index) => new HeatViewModel(
+                    index, _regulation.MaxGroupCapacity, new List<HeatColumnViewModel>
+                        { new HeatColumnViewModel(res.Label, res.GetType()) }))
+                .ToList();
+            return heats;
+        }
     }
     public class RegulationViewModel
     {
@@ -63,15 +69,17 @@ namespace Hekki.App
 
     public class HeatViewModel
     {
-        public HeatViewModel(int heatIndex, int maxGroupCapacity, List<HeatColumnViewModel> columns)
+        public HeatViewModel(int heatIndex, int maxGroupCapacity, List<HeatColumnViewModel> columns, int groupsCount = 5)
         {
             HeatIndex = heatIndex;
             MaxGroupCapacity = maxGroupCapacity;
             Columns = columns;
+            GroupsCount = groupsCount;
         }
 
         public int HeatIndex { get; }
         public int MaxGroupCapacity { get; }
+        public int GroupsCount { get; }
         public List<HeatColumnViewModel> Columns { get; } = new();
     }
     public class HeatColumnViewModel

@@ -1,7 +1,5 @@
 ﻿using Hekki.App;
 using Hekki.Domain.Models;
-using System.Data.Common;
-using System.Windows.Forms;
 
 namespace Hekki.UI
 {
@@ -51,6 +49,7 @@ namespace Hekki.UI
 
             _tableService = new TableService(_regulation, _pilots);
             DrawGeneralTable();
+            DrawHeats();
         }
 
         private void DrawGeneralTable()
@@ -61,7 +60,7 @@ namespace Hekki.UI
             RegulationViewModel regulationViewModel = _tableService.BuildGeneralTable();
             DrawColumns(dataGridView1);
             DrawRows(dataGridView1);
-            
+
             void DrawColumns(DataGridView dataGridView)
             {
                 dataGridView.Columns.Add("UsedKarts", "Used Karts");
@@ -80,7 +79,7 @@ namespace Hekki.UI
             {
                 foreach (var row in regulationViewModel.PilotViewModels)
                 {
-                    var rowValues = new List<object> { string.Join(" ", row.UsedKarts.Select(x => x.ToString())), row.Name};
+                    var rowValues = new List<object> { string.Join(" ", row.UsedKarts.Select(x => x.ToString())), row.Name };
                     rowValues.AddRange(row.Results.Select(x => x.Value));
                     dataGridView.Rows.Add(rowValues.ToArray());
                 }
@@ -90,7 +89,63 @@ namespace Hekki.UI
 
         private void DrawHeats()
         {
+            var heatsModels = _tableService.BuildHeatTables();
 
+            foreach (var heat in heatsModels)
+            {
+                var dgv = CreateDataGridView();
+                DrawColumns(dgv, heat);
+                DrawRows(dgv, heat);
+                AdjustDataGridViewHeight(dgv);
+            }
+
+            void DrawColumns(DataGridView dataGridView, HeatViewModel heatView)
+            {
+                dataGridView.Columns.Add("PilotName", "Pilot Name");
+
+                foreach (var heatColumn in heatView.Columns)
+                {
+                    dataGridView.Columns.Add(heatColumn.Name, heatColumn.Name);
+                }
+
+            }
+
+            void DrawRows(DataGridView dataGridView, HeatViewModel heatView)
+            {
+                for (int i = 0; i < heatView.GroupsCount; i++)
+                {
+                    dataGridView.Rows.Add(heatView.MaxGroupCapacity);
+                    var rowIndex = dataGridView.Rows.Add();
+                    var separatorRow = dataGridView.Rows[rowIndex];
+                    separatorRow.DefaultCellStyle.BackColor = Color.Black;
+                    separatorRow.DefaultCellStyle.ForeColor = Color.Black;
+                    separatorRow.ReadOnly = true;
+                }
+                
+            }
+        }
+
+        private DataGridView CreateDataGridView()
+        {
+            var dgv = new DataGridView
+            {
+                Width = 300,
+                AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill,
+                Margin = new Padding(10),
+            };
+
+            flowLayoutPanel1.Controls.Add(dgv);
+            return dgv;
+        }
+
+        private void AdjustDataGridViewHeight(DataGridView dgv)
+        {
+            int rowHeight = dgv.RowTemplate.Height;
+            int headerHeight = dgv.ColumnHeadersHeight;
+            int totalRowsHeight = dgv.Rows.Count * rowHeight;
+            int totalHeight = headerHeight + totalRowsHeight;
+
+            dgv.Height = totalHeight + 2;
         }
     }
 }
