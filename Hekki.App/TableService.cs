@@ -5,8 +5,8 @@ namespace Hekki.App
 {
     public class TableService
     {
-        private Regulation _regulation;
-        private List<Pilot> _pilots;
+        private readonly Regulation _regulation;
+        private readonly List<Pilot> _pilots;
 
         public TableService(Regulation regulation, List<Pilot> pilots)
         {
@@ -19,15 +19,7 @@ namespace Hekki.App
             var regulationViewModel = new RegulationViewModel
             {
                 HeatCount = _regulation.HeatCount,
-                Heats = _regulation.HeatResults
-                .Select((heatResult, i) => new HeatViewModel(
-                    i,
-                    _regulation.MaxGroupCapacity,
-                    new List<HeatColumnViewModel>
-                    {
-                        new HeatColumnViewModel(heatResult.Label, heatResult.GetType())
-                    }))
-                .ToList(),
+                Heats = BuildHeatTables(),
                 PilotViewModels = _pilots
                 .Select(pilot => new PilotViewModel(pilot.Name, [.. pilot.UsedKarts], [.. pilot.Results]))
                 .ToList()
@@ -39,9 +31,9 @@ namespace Hekki.App
         public List<HeatViewModel> BuildHeatTables()
         {
             var heats = _regulation.HeatResults
-                .Select((res, index) => new HeatViewModel(
+                .Select((heatResult, index) => new HeatViewModel(
                     index, _regulation.MaxGroupCapacity, new List<HeatColumnViewModel>
-                        { new HeatColumnViewModel(res.Label, res.GetType()) }))
+                        { new HeatColumnViewModel(heatResult.Label, heatResult.GetType()) }))
                 .ToList();
             return heats;
         }

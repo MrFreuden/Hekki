@@ -64,7 +64,7 @@ namespace Hekki.UI
             void DrawColumns(DataGridView dataGridView)
             {
                 dataGridView.Columns.Add("UsedKarts", "Used Karts");
-                dataGridView.Columns.Add("PilotName", "Pilot Name");
+                dataGridView.Columns.Add("PilotName", "Name");
 
                 foreach (var heatViewModel in regulationViewModel.Heats)
                 {
@@ -101,7 +101,8 @@ namespace Hekki.UI
 
             void DrawColumns(DataGridView dataGridView, HeatViewModel heatView)
             {
-                dataGridView.Columns.Add("PilotName", "Pilot Name");
+                dataGridView.Columns.Add("KartNumber", "Kart");
+                dataGridView.Columns.Add("PilotName", "Name");
 
                 foreach (var heatColumn in heatView.Columns)
                 {
