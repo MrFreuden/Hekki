@@ -21,7 +21,7 @@ namespace Hekki.App
                 HeatCount = _regulation.HeatCount,
                 Heats = BuildHeatTables(),
                 PilotViewModels = _pilots
-                .Select(pilot => new PilotViewModel(pilot.Name, [.. pilot.UsedKarts], [.. pilot.Results]))
+                .Select(pilot => new PilotGeneralDTO(pilot.Name, [.. pilot.UsedKarts], [.. pilot.Results]))
                 .ToList()
             };
             return regulationViewModel;
@@ -42,12 +42,12 @@ namespace Hekki.App
     {
         public int HeatCount { get; set; }
         public List<HeatViewModel> Heats { get; set; } = new();
-        public List<PilotViewModel> PilotViewModels { get; set; } = new();
+        public List<PilotGeneralDTO> PilotViewModels { get; set; } = new();
     }
 
-    public class PilotViewModel
+    public class PilotGeneralDTO
     {
-        public PilotViewModel(string name, List<int> usedKarts, List<IResult> results)
+        public PilotGeneralDTO(string name, List<int> usedKarts, List<IResult> results)
         {
             Name = name;
             UsedKarts = usedKarts;
@@ -58,7 +58,45 @@ namespace Hekki.App
         public List<int> UsedKarts { get; } = new();
         public List<IResult> Results { get; } = new();
     }
+    public class PilotHeatDTO
+    {
+        public PilotHeatDTO(string name, int usedKart, IResult result)
+        {
+            Name = name;
+            UsedKart = usedKart;
+            Result = result;
+        }
 
+        public string Name { get; }
+        public int UsedKart { get; }
+        public IResult Result { get; }
+    }
+    public class HeatGeneralDTO
+    {
+        public HeatGeneralDTO(int heatIndex, List<HeatColumnViewModel> columns)
+        {
+            HeatIndex = heatIndex;
+            Columns = columns;
+        }
+
+        public int HeatIndex { get; }
+        public List<HeatColumnViewModel> Columns { get; } = new();
+    }
+    public class HeatHeatDTO
+    {
+        public HeatHeatDTO(int heatIndex, List<HeatColumnViewModel> columns, int maxGroupCapacity, int groupsCount = 3)
+        {
+            HeatIndex = heatIndex;
+            Columns = columns;
+            MaxGroupCapacity = maxGroupCapacity;
+            GroupsCount = groupsCount;
+        }
+
+        public int HeatIndex { get; }
+        public int MaxGroupCapacity { get; }
+        public int GroupsCount { get; }
+        public List<HeatColumnViewModel> Columns { get; } = new();
+    }
     public class HeatViewModel
     {
         public HeatViewModel(int heatIndex, int maxGroupCapacity, List<HeatColumnViewModel> columns, int groupsCount = 5)

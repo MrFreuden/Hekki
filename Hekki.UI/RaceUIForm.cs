@@ -14,7 +14,7 @@ namespace Hekki.UI
             InitializeComponent();
             _regulation = regulation;
 
-
+            #region
 
             _pilots = new List<Pilot>
             {
@@ -46,7 +46,7 @@ namespace Hekki.UI
             _pilots[2].AddUsedKart(3);
             _pilots[2].AddUsedKart(1);
 
-
+            #endregion
             _tableService = new TableService(_regulation, _pilots);
             DrawGeneralTable();
             DrawHeats();
