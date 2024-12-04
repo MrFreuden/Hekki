@@ -1,4 +1,5 @@
 ﻿using Hekki.App;
+using Hekki.App.DTO;
 using Hekki.Domain.Models;
 
 namespace Hekki.UI
@@ -99,7 +100,7 @@ namespace Hekki.UI
                 AdjustDataGridViewHeight(dgv);
             }
 
-            void DrawColumns(DataGridView dataGridView, HeatViewModel heatView)
+            void DrawColumns(DataGridView dataGridView, HeatDTO heatView)
             {
                 dataGridView.Columns.Add("KartNumber", "Kart");
                 dataGridView.Columns.Add("PilotName", "Name");
@@ -111,7 +112,7 @@ namespace Hekki.UI
 
             }
 
-            void DrawRows(DataGridView dataGridView, HeatViewModel heatView)
+            void DrawRows(DataGridView dataGridView, HeatDTO heatView)
             {
                 for (int i = 0; i < heatView.GroupsCount; i++)
                 {
