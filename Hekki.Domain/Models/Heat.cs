@@ -13,7 +13,7 @@ namespace Hekki.Domain.Models
         {
 
         }
-        public Heat(int index, IResult resultType, int maxGroupCapacity, int groupsCount)
+        public Heat(int index, IResult resultType, int maxGroupCapacity, int groupsCount = 3)
         {
             Index = index;
             ResultType = resultType;

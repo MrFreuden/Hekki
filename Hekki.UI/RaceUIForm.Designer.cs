@@ -28,19 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            dataGridView1 = new DataGridView();
             flowLayoutPanel1 = new FlowLayoutPanel();
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
+            flowLayoutPanel2 = new FlowLayoutPanel();
             SuspendLayout();
-            // 
-            // dataGridView1
-            // 
-            dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Location = new Point(3, 12);
-            dataGridView1.Name = "dataGridView1";
-            dataGridView1.RowHeadersWidth = 51;
-            dataGridView1.Size = new Size(734, 284);
-            dataGridView1.TabIndex = 0;
             // 
             // flowLayoutPanel1
             // 
@@ -50,23 +40,30 @@
             flowLayoutPanel1.Size = new Size(561, 284);
             flowLayoutPanel1.TabIndex = 1;
             // 
+            // flowLayoutPanel2
+            // 
+            flowLayoutPanel2.AutoSize = true;
+            flowLayoutPanel2.Location = new Point(12, 12);
+            flowLayoutPanel2.Name = "flowLayoutPanel2";
+            flowLayoutPanel2.Size = new Size(561, 284);
+            flowLayoutPanel2.TabIndex = 2;
+            flowLayoutPanel2.Paint += flowLayoutPanel2_Paint;
+            // 
             // RaceUIForm
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1792, 1048);
+            Controls.Add(flowLayoutPanel2);
             Controls.Add(flowLayoutPanel1);
-            Controls.Add(dataGridView1);
             Name = "RaceUIForm";
             Text = "RaceUIForm";
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
 
         #endregion
-
-        private DataGridView dataGridView1;
         private FlowLayoutPanel flowLayoutPanel1;
+        private FlowLayoutPanel flowLayoutPanel2;
     }
 }

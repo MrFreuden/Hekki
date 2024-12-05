@@ -6,68 +6,38 @@ namespace Hekki.UI
 {
     public partial class RaceUIForm : Form
     {
-        private Regulation _regulation;
-        private List<Pilot> _pilots;
-        private TableService _tableService;
-
+        private RaceService _raceService;
+        private readonly DataGridViewFactory _gridFactory = new DataGridViewFactory();
         public RaceUIForm(Regulation regulation)
         {
+            _raceService = new RaceService(regulation);
             InitializeComponent();
-            _regulation = regulation;
-
-            #region
-
-            _pilots = new List<Pilot>
-            {
-                new Pilot("Test1"),
-                new Pilot("Test2"),
-                new Pilot("Test3"),
-            };
-            _pilots[0].AddResult(new PointsResult(5));
-            _pilots[0].AddResult(new PointsResult(4));
-            _pilots[0].AddResult(new PointsResult(3));
-
-            _pilots[1].AddResult(new PointsResult(3));
-            _pilots[1].AddResult(new PointsResult(5));
-            _pilots[1].AddResult(new PointsResult(4));
-
-            _pilots[2].AddResult(new PointsResult(4));
-            _pilots[2].AddResult(new PointsResult(3));
-            _pilots[2].AddResult(new PointsResult(5));
-
-            _pilots[0].AddUsedKart(1);
-            _pilots[0].AddUsedKart(2);
-            _pilots[0].AddUsedKart(3);
-
-            _pilots[1].AddUsedKart(4);
-            _pilots[1].AddUsedKart(1);
-            _pilots[1].AddUsedKart(2);
-
-            _pilots[2].AddUsedKart(2);
-            _pilots[2].AddUsedKart(3);
-            _pilots[2].AddUsedKart(1);
-
-            #endregion
-            _tableService = new TableService(_regulation, _pilots);
             DrawGeneralTable();
             DrawHeats();
         }
 
         private void DrawGeneralTable()
         {
-            dataGridView1.Columns.Clear();
-            dataGridView1.Rows.Clear();
+            var grid = _gridFactory.CreateGeneralTableGrid();
+            this.Controls.Add(grid);
+            flowLayoutPanel2.Controls.Add(grid);
+            FillGeneralTable(grid);
+        }
 
-            RegulationViewModel regulationViewModel = _tableService.BuildGeneralTable();
-            DrawColumns(dataGridView1);
-            DrawRows(dataGridView1);
+        private void FillGeneralTable(DataGridView grid)
+        {
+            var heats = _raceService.GetHeatsDTO();
+            var pilots = _raceService.GetPilotsDTO();
+
+            DrawColumns(grid);
+            DrawRows(grid);
 
             void DrawColumns(DataGridView dataGridView)
             {
                 dataGridView.Columns.Add("UsedKarts", "Used Karts");
                 dataGridView.Columns.Add("PilotName", "Name");
 
-                foreach (var heatViewModel in regulationViewModel.Heats)
+                foreach (var heatViewModel in heats)
                 {
                     foreach (var heatColumn in heatViewModel.Columns)
                     {
@@ -78,27 +48,34 @@ namespace Hekki.UI
 
             void DrawRows(DataGridView dataGridView)
             {
-                foreach (var row in regulationViewModel.PilotViewModels)
+                foreach (var pilot in pilots)
                 {
-                    var rowValues = new List<object> { string.Join(" ", row.UsedKarts.Select(x => x.ToString())), row.Name };
-                    rowValues.AddRange(row.Results.Select(x => x.Value));
+                    var rowValues = new List<object> { string.Join(" ", pilot.UsedKarts.Select(x => x.ToString())), pilot.Name };
+                    rowValues.AddRange(pilot.Results.Select(x => x.Value));
                     dataGridView.Rows.Add(rowValues.ToArray());
                 }
             }
-            //PilotUsedKarts = string.Join(" ", pilot.UsedKarts.Select(x => x.ToString())),
         }
 
         private void DrawHeats()
         {
-            var heatsModels = _tableService.BuildHeatTables();
-
-            foreach (var heat in heatsModels)
+            var heats = _raceService.GetHeatsDTO();
+            var pilots = _raceService.GetPilotsDTO();
+            foreach (var heat in heats)
             {
-                var dgv = CreateDataGridView();
-                DrawColumns(dgv, heat);
-                DrawRows(dgv, heat);
-                AdjustDataGridViewHeight(dgv);
+                var heatTable = _gridFactory.CreateHeatTableGrid();
+                this.Controls.Add(heatTable);
+                flowLayoutPanel1.Controls.Add(heatTable);
+                FillHeatTable(heatTable, heat);
+                AdjustDataGridViewHeight(heatTable);
             }
+        }
+
+        private void FillHeatTable(DataGridView item, HeatDTO heatDTO)
+        {
+
+            DrawColumns(item, heatDTO);
+            DrawRows(item, heatDTO);
 
             void DrawColumns(DataGridView dataGridView, HeatDTO heatView)
             {
@@ -123,21 +100,8 @@ namespace Hekki.UI
                     separatorRow.DefaultCellStyle.ForeColor = Color.Black;
                     separatorRow.ReadOnly = true;
                 }
-                
+
             }
-        }
-
-        private DataGridView CreateDataGridView()
-        {
-            var dgv = new DataGridView
-            {
-                Width = 300,
-                AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill,
-                Margin = new Padding(10),
-            };
-
-            flowLayoutPanel1.Controls.Add(dgv);
-            return dgv;
         }
 
         private void AdjustDataGridViewHeight(DataGridView dgv)
@@ -148,6 +112,11 @@ namespace Hekki.UI
             int totalHeight = headerHeight + totalRowsHeight;
 
             dgv.Height = totalHeight + 2;
+        }
+
+        private void flowLayoutPanel2_Paint(object sender, PaintEventArgs e)
+        {
+
         }
     }
 }
