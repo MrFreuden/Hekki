@@ -8,8 +8,8 @@ namespace Hekki.App
         private Race _race;
         private Regulation _regulation;
         private HeatService _heatService;
-        private readonly PilotMapper _pilotMapper = new();
-        private readonly HeatMapper _heatMapper = new();
+        private readonly DTOFactory _dTOFactory = new();
+
         public RaceService(Regulation regulation)
         {
             _regulation = regulation;
@@ -62,20 +62,8 @@ namespace Hekki.App
             
         }
 
-        public IEnumerable<HeatDTO> GetHeatsDTO()
-        {
-            foreach (var heat in _race.Heats)
-            {
-                yield return _heatMapper.Map(heat);
-            }
-        }
+        public List<HeatDTO> GetHeatsDTO() => _dTOFactory.CreateHeatDTOs(_race.Heats);
 
-        public IEnumerable<PilotGeneralDTO> GetPilotsDTO()
-        {
-            foreach (var pilot in _race.Pilots)
-            {
-                yield return _pilotMapper.Map(pilot);
-            }
-        }
+        public List<PilotGeneralDTO> GetPilotsDTO() => _dTOFactory.CreatePilotDTOs(_race.Pilots);
     }
 }
