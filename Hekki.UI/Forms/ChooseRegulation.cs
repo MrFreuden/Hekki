@@ -33,9 +33,8 @@ namespace Hekki.UI
         {
             _regulation = GetRegulation();
             var raceForm = new RaceUIForm(_regulation);
-            this.Hide();
             raceForm.Show();
-            
+            Close();
         }
     }
 }
