@@ -5,17 +5,39 @@ namespace Hekki.Domain.Models
     public class Pilot
     {
         private string _name;
-        private readonly List<IResult> _results = new();
-        private readonly List<int> _usedKarts = new();
+        private List<IResult> _results = new();
+        private Karts _usedKarts = new();
+        private Guid _guid;
 
         public Pilot(string name)
         {
             _name = name;
+            _guid = Guid.NewGuid();
         }
 
-        public string Name { get => _name; }
-        public IReadOnlyList<IResult> Results { get => _results; }
-        public IReadOnlyList<int> UsedKarts { get => _usedKarts; }
+        public Guid Id
+        {
+            get => _guid;
+            set => _guid = value;
+        }
+
+        public string Name 
+        { 
+            get => _name; 
+            set => _name = value; 
+        }
+
+        public List<IResult> Results 
+        { 
+            get => _results; 
+            set => _results = value;
+        }
+
+        public Karts UsedKarts 
+        { 
+            get => _usedKarts; 
+            set => _usedKarts = new Karts(value);
+        }
 
         public void AddResult(IResult result)
         {

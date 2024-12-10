@@ -9,7 +9,9 @@ namespace Hekki.Domain.Interfaces
 {
     public interface IResult
     {
-        public string Value { get; set; }
-        public string Label { get; }
+        string GetFormattedValue(); 
+        void SetValueFromString(string value);
+        string Name { get; }
+        int HeatIndex { get; }
     }
 }

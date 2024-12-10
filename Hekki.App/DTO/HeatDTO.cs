@@ -2,10 +2,10 @@
 {
     public class HeatDTO
     {
-        public HeatDTO(int heatIndex, List<HeatColumnViewModel> columns, int maxGroupCapacity, int groupsCount = 3)
+        public HeatDTO(int heatIndex, HeatColumnViewModel column, int maxGroupCapacity, int groupsCount = 3)
         {
             HeatIndex = heatIndex;
-            Columns = columns;
+            Column = column;
             MaxGroupCapacity = maxGroupCapacity;
             GroupsCount = groupsCount;
         }
@@ -13,7 +13,7 @@
         public int HeatIndex { get; }
         public int MaxGroupCapacity { get; }
         public int GroupsCount { get; }
-        public List<HeatColumnViewModel> Columns { get; } = new();
+        public HeatColumnViewModel Column { get; }
     }
     
     public class HeatColumnViewModel

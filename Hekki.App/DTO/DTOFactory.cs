@@ -22,9 +22,9 @@ namespace Hekki.App.DTO
             return result;
         }
 
-        public List<PilotGeneralDTO> CreatePilotDTOs(List<Pilot> pilots)
+        public List<PilotDTO> CreatePilotDTOs(List<Pilot> pilots)
         {
-            var result = new List<PilotGeneralDTO>();
+            var result = new List<PilotDTO>();
             foreach (var pilot in pilots)
             {
                 result.Add(_pilotMapper.Map(pilot));

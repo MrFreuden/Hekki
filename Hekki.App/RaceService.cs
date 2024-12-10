@@ -17,7 +17,7 @@ namespace Hekki.App
             _race = MakeRace();
         }
 
-        public IReadOnlyList<Pilot> Pilots => _race.Pilots;
+        public List<Pilot> Pilots => _race.Pilots;
 
 
         private Race MakeRace()
@@ -30,17 +30,17 @@ namespace Hekki.App
                 new Pilot("Test2"),
                 new Pilot("Test3"),
             };
-                _pilots[0].AddResult(new PointsResult(5));
-                _pilots[0].AddResult(new PointsResult(4));
-                _pilots[0].AddResult(new PointsResult(3));
+                _pilots[0].AddResult(new PointsResult(0, 5));
+                _pilots[0].AddResult(new PointsResult(1, 4));
+                _pilots[0].AddResult(new PointsResult(2, 3));
 
-                _pilots[1].AddResult(new PointsResult(3));
-                _pilots[1].AddResult(new PointsResult(5));
-                _pilots[1].AddResult(new PointsResult(4));
+                _pilots[1].AddResult(new PointsResult(0, 3));
+                _pilots[1].AddResult(new PointsResult(1, 5));
+                _pilots[1].AddResult(new PointsResult(2, 4));
 
-                _pilots[2].AddResult(new PointsResult(4));
-                _pilots[2].AddResult(new PointsResult(3));
-                _pilots[2].AddResult(new PointsResult(5));
+                _pilots[2].AddResult(new PointsResult(0, 4));
+                _pilots[2].AddResult(new PointsResult(1, 3));
+                _pilots[2].AddResult(new PointsResult(2, 5));
 
                 _pilots[0].AddUsedKart(1);
                 _pilots[0].AddUsedKart(2);
@@ -64,6 +64,15 @@ namespace Hekki.App
 
         public List<HeatDTO> GetHeatsDTO() => _dTOFactory.CreateHeatDTOs(_race.Heats);
 
-        public List<PilotGeneralDTO> GetPilotsDTO() => _dTOFactory.CreatePilotDTOs(_race.Pilots);
+        public List<PilotDTO> GetPilotsDTO() => _dTOFactory.CreatePilotDTOs(_race.Pilots);
+
+        public void AddNewPilot(PilotDTO pilotDTO)
+        {
+            var mapper = new DTOToModelMapper();
+            var pilot = new Pilot("");
+            mapper.SyncPilotDTOToModel(pilotDTO, pilot);
+            //if (string.IsNullOrEmpty(pilotDTO.Name)) return;
+            _race.Pilots.Add(pilot);
+        }
     }
 }

@@ -8,8 +8,10 @@ namespace Hekki.UI
         {
             var dataGridView1 = new DataGridView()
             {
-                Width = 400,
+                Width = 700,
                 AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill,
+                AllowUserToAddRows = true,
+                EditMode = DataGridViewEditMode.EditOnKeystroke
             };
             return dataGridView1;
         }
