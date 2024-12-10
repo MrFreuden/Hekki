@@ -37,7 +37,7 @@ namespace Hekki.UI
         {
             var bindingList = new BindingList<PilotDTO>(pilotDTOs);
             grid.DataSource = bindingList;
-            grid.AutoGenerateColumns = false;
+            
 
             var columnMappers = _columnMapper.GenerateColumnMappers(heatDTOs);
             AddColumns(grid, columnMappers);

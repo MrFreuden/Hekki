@@ -9,9 +9,11 @@ namespace Hekki.UI
             var dataGridView1 = new DataGridView()
             {
                 Width = 700,
+                AutoGenerateColumns = false,
                 AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill,
                 AllowUserToAddRows = true,
-                EditMode = DataGridViewEditMode.EditOnKeystroke
+                EditMode = DataGridViewEditMode.EditOnKeystroke,
+                AllowUserToOrderColumns = true,
             };
             return dataGridView1;
         }
