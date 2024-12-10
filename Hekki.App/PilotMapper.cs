@@ -43,13 +43,11 @@ namespace Hekki.App
     {
         public void SyncPilotDTOToModel(PilotDTO dto, Pilot model)
         {
-            //model.Id = dto.Id;
             model.Name = dto.Name;
             model.UsedKarts = new Karts(dto.UsedKarts);
             model.Results = dto.Results.ToList();
 
-
-            //dto.Id = model.Id; //TODO: разобраться с этим
+            dto.Id = model.Id; //TODO: разобраться с этим
         }
 
         public void SyncModelToPilotDTO(Pilot model, PilotDTO dto)
