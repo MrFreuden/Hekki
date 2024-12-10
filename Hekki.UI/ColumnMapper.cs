@@ -10,6 +10,7 @@ namespace Hekki.UI
         public Action<PilotDTO, string> Parser { get; set; }
         public int HeatIndex { get; set; }
         public string ColumnName { get; set; }
+        public int Z_index { get; set; }
 
         public List<ColumnMapper> GenerateColumnMappers(List<HeatDTO> heatDTOs)
         {
@@ -24,14 +25,16 @@ namespace Hekki.UI
                     pilot.UsedKarts = new Karts(input.Split(',')
                         .Select(kart => int.TryParse(kart.Trim(), out var num) ? num : 0)
                         .ToList());
-                }
+                },
+                Z_index = 0
             });
 
             mappers.Add(new ColumnMapper
             {
                 HeaderText = "Pilot Name",
                 Formatter = pilot => pilot.Name,
-                Parser = (pilot, input) => pilot.Name = input
+                Parser = (pilot, input) => pilot.Name = input,
+                Z_index = 1
             });
 
             for (int heatIndex = 0; heatIndex < heatDTOs.Count; heatIndex++)
@@ -56,7 +59,8 @@ namespace Hekki.UI
                         {
                             result.SetValueFromString(input);
                         }
-                    }
+                    },
+                    Z_index = 2
                 });
             }
             return mappers;

@@ -109,7 +109,7 @@ namespace Hekki.UI
 
         private void AddColumns(DataGridView grid, List<ColumnMapper> columnMappers)
         {
-            foreach (var mapper in columnMappers)
+            foreach (var mapper in columnMappers.OrderBy(c => c.Z_index))
             {
                 grid.Columns.Add(new DataGridViewTextBoxColumn
                 {
@@ -126,7 +126,7 @@ namespace Hekki.UI
                 var heatTable = _gridFactory.CreateHeatTableGrid();
                 this.Controls.Add(heatTable);
                 flowLayoutPanel1.Controls.Add(heatTable);
-
+                
                 AdjustDataGridViewHeight(heatTable);
             }
         }
