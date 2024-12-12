@@ -21,7 +21,7 @@ namespace Hekki.UI
                 EditMode = DataGridViewEditMode.EditOnKeystroke,
                 AllowUserToOrderColumns = true,
                 RowHeadersVisible = false,
-                //BackgroundColor = System.Drawing.SystemColors.Control,
+                BackgroundColor = System.Drawing.SystemColors.Control,
                 BorderStyle = BorderStyle.None,
                 AllowUserToResizeRows = false,
                 AllowUserToDeleteRows = true
@@ -31,15 +31,19 @@ namespace Hekki.UI
 
         public DataGridView CreateHeatTableGrid()
         {
+            var screenHeight = Screen.PrimaryScreen.WorkingArea.Height - 70;
             var dgv = new DataGridView
             {
-                Width = 300,
+                MaximumSize = new Size(300, screenHeight), 
+                AutoSize = true,
                 AutoGenerateColumns = false,
                 AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill,
+                AutoSizeRowsMode= DataGridViewAutoSizeRowsMode.AllCells,
                 Margin = new Padding(10),
                 AllowUserToAddRows = false,
                 RowHeadersVisible = false,
-                BackgroundColor = Color.White,
+                BackgroundColor = System.Drawing.SystemColors.Control,
+                BorderStyle = BorderStyle.None,
                 AllowUserToResizeRows = false
             };
             return dgv;

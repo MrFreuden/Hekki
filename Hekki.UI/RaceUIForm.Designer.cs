@@ -36,7 +36,7 @@
             // flowLayoutPanel1
             // 
             flowLayoutPanel1.AutoSize = true;
-            flowLayoutPanel1.Location = new Point(1206, 512);
+            flowLayoutPanel1.Location = new Point(747, 12);
             flowLayoutPanel1.Name = "flowLayoutPanel1";
             flowLayoutPanel1.Size = new Size(561, 284);
             flowLayoutPanel1.TabIndex = 1;

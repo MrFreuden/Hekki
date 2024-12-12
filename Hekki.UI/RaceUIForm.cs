@@ -22,7 +22,7 @@ namespace Hekki.UI
             _heatDTOs = _raceService.GetHeatsDTO();
             InitializeComponent();
             DrawGeneralTable();
-            //DrawHeats();
+            DrawHeats();
         }
 
         private void DrawGeneralTable()
