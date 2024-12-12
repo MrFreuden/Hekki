@@ -22,7 +22,7 @@ namespace Hekki.UI
             _heatDTOs = _raceService.GetHeatsDTO();
             InitializeComponent();
             DrawGeneralTable();
-            DrawHeats();
+            //DrawHeats();
         }
 
         private void DrawGeneralTable()
@@ -179,6 +179,7 @@ namespace Hekki.UI
 
         private void button1_Click(object sender, EventArgs e)
         {
+            var s = flowLayoutPanel2.Controls;
             _raceService.StartNextHeat();
         }
     }
