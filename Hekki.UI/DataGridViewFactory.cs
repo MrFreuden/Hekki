@@ -14,6 +14,7 @@ namespace Hekki.UI
                 AllowUserToAddRows = true,
                 EditMode = DataGridViewEditMode.EditOnKeystroke,
                 AllowUserToOrderColumns = true,
+       
             };
             return dataGridView1;
         }
@@ -23,8 +24,10 @@ namespace Hekki.UI
             var dgv = new DataGridView
             {
                 Width = 300,
+                AutoGenerateColumns = false,
                 AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill,
                 Margin = new Padding(10),
+                AllowUserToAddRows = false
             };
             return dgv;
 

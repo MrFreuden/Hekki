@@ -6,7 +6,7 @@ namespace Hekki.Domain.Models
     {
         private string _name;
         private List<IResult> _results = new();
-        private Karts _usedKarts = new();
+        private List<Kart> _usedKarts = new();
         private Guid _guid;
 
         public Pilot(string name)
@@ -33,10 +33,10 @@ namespace Hekki.Domain.Models
             set => _results = value;
         }
 
-        public Karts UsedKarts 
+        public List<Kart> UsedKarts 
         { 
             get => _usedKarts; 
-            set => _usedKarts = new Karts(value);
+            set => _usedKarts = new List<Kart>(value);
         }
 
         public void AddResult(IResult result)
@@ -46,7 +46,7 @@ namespace Hekki.Domain.Models
 
         public void AddUsedKart(int kartNumber)
         {
-            _usedKarts.Add(kartNumber);
+            _usedKarts.Add(new Kart(kartNumber));
         }
     }
 }

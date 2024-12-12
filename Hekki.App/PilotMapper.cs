@@ -44,7 +44,7 @@ namespace Hekki.App
         public void SyncPilotDTOToModel(PilotDTO dto, Pilot model)
         {
             model.Name = dto.Name;
-            model.UsedKarts = new Karts(dto.UsedKarts);
+            model.UsedKarts = new List<Kart>(dto.UsedKarts);
             model.Results = dto.Results.ToList();
 
             dto.Id = model.Id; //TODO: разобраться с этим
@@ -54,9 +54,8 @@ namespace Hekki.App
         {
             dto.Id = model.Id;
             dto.Name = model.Name;
-            dto.UsedKarts = new Karts(model.UsedKarts);
-
-            dto.Results = model.Results.ToList();
+            dto.UsedKarts = new System.Collections.ObjectModel.ObservableCollection<Kart>(model.UsedKarts);
+            dto.Results = new System.Collections.ObjectModel.ObservableCollection<IResult>(model.Results.ToList());
         }
     }
 }

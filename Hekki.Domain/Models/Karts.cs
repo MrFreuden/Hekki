@@ -1,31 +1,47 @@
-﻿using System.Text;
+﻿using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Text;
 
 namespace Hekki.Domain.Models
 {
-    public class Karts : List<int>
+    public class Kart : INotifyPropertyChanged
     {
-        public Karts()
+        private int _value;
+
+        public Kart()
         {
 
         }
 
-        public Karts(List<int> list)
+        public Kart(int value)
         {
-            foreach (var item in list)
+            Value = value;
+        }
+
+        public int Value
+        {
+            get => _value;
+            set
             {
-                Add(item);
+                if (_value != value)
+                {
+                    _value = value;
+                    OnPropertyChanged(nameof(Value));
+                }
             }
+        }
+
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
         public override string ToString()
         {
-            var sb = new StringBuilder();
-            foreach (var item in this)
-            {
-                sb.Append(item + ' ');
-            }
-            sb.Remove(sb.Length - 1, 1);
-            return sb.ToString();
+            return _value.ToString();
         }
     }
 }

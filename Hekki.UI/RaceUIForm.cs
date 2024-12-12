@@ -42,6 +42,71 @@ namespace Hekki.UI
             var columnMappers = _columnMapper.GenerateColumnMappers(heatDTOs);
             AddColumns(grid, columnMappers);
 
+            SubscribeGrid(grid);
+
+            grid.UserAddedRow += (sender, e) =>
+            {
+                var pilot = bindingList.Last();
+                foreach (var heat in heatDTOs)
+                {
+                    pilot.Results.Add((IResult)Activator.CreateInstance(heat.Column.DataType, heat.HeatIndex, default));
+                }
+                _raceService.AddNewPilot(pilot);
+            };
+
+            foreach (var pilot in pilotDTOs)
+            {
+                pilot.PropertyChanged += (sender, e) => grid.Refresh();
+            }
+        }
+
+        private void AddColumns(DataGridView grid, List<ColumnMapper> columnMappers)
+        {
+            foreach (var mapper in columnMappers.OrderBy(c => c.Z_index))
+            {
+                grid.Columns.Add(new DataGridViewTextBoxColumn
+                {
+                    HeaderText = mapper.HeaderText,
+                    Tag = mapper
+                });
+            }
+        }
+
+        private void DrawHeats()
+        {
+            foreach (var heat in _heatDTOs)
+            {
+                var heatTable = _gridFactory.CreateHeatTableGrid();
+                BindPilotsToHeatsTables(heatTable, _pilotDTOs, heat);
+                this.Controls.Add(heatTable);
+                flowLayoutPanel1.Controls.Add(heatTable);
+                //AdjustDataGridViewHeight(heatTable);
+                    
+            }
+        }
+
+        private void BindPilotsToHeatsTables(DataGridView grid, List<PilotDTO> pilotDTOs, HeatDTO heatDTO)
+        {
+            var bindingList = new BindingList<PilotDTO>(pilotDTOs);
+            grid.DataSource = bindingList;
+
+            var columnMappers = _columnMapper.HeatColumnMappers(heatDTO);
+            AddColumns(grid, columnMappers);
+            //AddHeatRows(grid, heatDTO);
+            SubscribeGrid(grid); 
+            foreach (var pilot in pilotDTOs)
+            {
+                pilot.PropertyChanged += (sender, e) => grid.Refresh();
+            }
+        }
+
+        private void AddHeatRows(DataGridView grid, HeatDTO heatDTO)
+        {
+            grid.RowCount = heatDTO.MaxGroupCapacity * heatDTO.GroupsCount;
+        }
+
+        private void SubscribeGrid(DataGridView grid)
+        {
             grid.CellFormatting += (sender, e) =>
             {
                 if (e.RowIndex >= 0 && e.ColumnIndex >= 0)
@@ -96,41 +161,11 @@ namespace Hekki.UI
                 }
             };
 
-            grid.UserAddedRow += (sender, e) =>
+            grid.DataBindingComplete += (sender, e) =>
             {
-                var pilot = bindingList.Last();
-                foreach (var heat in heatDTOs)
-                {
-                    pilot.Results.Add((IResult)Activator.CreateInstance(heat.Column.DataType, heat.HeatIndex, default));
-                }
-                _raceService.AddNewPilot(pilot);
+                grid.ClearSelection();
             };
         }
-
-        private void AddColumns(DataGridView grid, List<ColumnMapper> columnMappers)
-        {
-            foreach (var mapper in columnMappers.OrderBy(c => c.Z_index))
-            {
-                grid.Columns.Add(new DataGridViewTextBoxColumn
-                {
-                    HeaderText = mapper.HeaderText,
-                    Tag = mapper
-                });
-            }
-        }
-
-        private void DrawHeats()
-        {
-            foreach (var heat in _heatDTOs)
-            {
-                var heatTable = _gridFactory.CreateHeatTableGrid();
-                this.Controls.Add(heatTable);
-                flowLayoutPanel1.Controls.Add(heatTable);
-                
-                AdjustDataGridViewHeight(heatTable);
-            }
-        }
-
 
         private void AdjustDataGridViewHeight(DataGridView dgv)
         {

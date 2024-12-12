@@ -1,5 +1,6 @@
 ﻿using Hekki.Domain.Interfaces;
 using Hekki.Domain.Models;
+using System.ComponentModel;
 
 namespace Hekki.App
 {
@@ -10,6 +11,19 @@ namespace Hekki.App
         {
             _value = point;
             HeatIndex = heatIndex;
+        }
+
+        public int Value
+        {
+            get => _value;
+            set
+            {
+                if (_value != value)
+                {
+                    _value = value;
+                    OnPropertyChanged(nameof(Value));
+                }
+            }
         }
 
         public string Name => "Points";
@@ -25,12 +39,19 @@ namespace Hekki.App
         {
             if (int.TryParse(value, out int result))
             {
-                _value = result;
+                Value = result;
             }
             else
             {
                 throw new ArgumentException();
             }
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected virtual void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 
@@ -41,6 +62,19 @@ namespace Hekki.App
         {
             _value = time;
             HeatIndex = heatIndex;
+        }
+
+        public TimeSpan Value
+        {
+            get => _value;
+            set
+            {
+                if (_value != value)
+                {
+                    _value = value;
+                    OnPropertyChanged(nameof(Value));
+                }
+            }
         }
 
         public string Name => "Times";
@@ -54,12 +88,18 @@ namespace Hekki.App
         {
             if (TimeSpan.TryParse(value, out TimeSpan result))
             {
-                _value = result;
+                Value = result;
             }
             else
             {
                 throw new ArgumentException();
             }
+        }
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected virtual void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }
