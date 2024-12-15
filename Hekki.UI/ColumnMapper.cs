@@ -78,7 +78,9 @@ namespace Hekki.UI
             mappers.Add(new ColumnMapper
             {
                 HeaderText = "Kart",
-                Formatter = pilot => pilot.UsedKarts[heatDTO.HeatIndex].ToString(),
+                Formatter = pilot => (pilot.UsedKarts != null && heatDTO.HeatIndex < pilot.UsedKarts.Count)
+                                ? pilot.UsedKarts[heatDTO.HeatIndex].ToString()
+                                : string.Empty,
                 Parser = (pilot, input) =>
                 {
                     pilot.UsedKarts[heatDTO.HeatIndex].Value = int.TryParse(input, out var num) ? num : 0;

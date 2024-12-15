@@ -31,6 +31,7 @@
             flowLayoutPanel1 = new FlowLayoutPanel();
             flowLayoutPanel2 = new FlowLayoutPanel();
             button1 = new Button();
+            button2 = new Button();
             SuspendLayout();
             // 
             // flowLayoutPanel1
@@ -51,7 +52,7 @@
             // 
             // button1
             // 
-            button1.Location = new Point(538, 608);
+            button1.Location = new Point(628, 608);
             button1.Name = "button1";
             button1.Size = new Size(94, 29);
             button1.TabIndex = 3;
@@ -59,11 +60,22 @@
             button1.UseVisualStyleBackColor = true;
             button1.Click += button1_Click;
             // 
+            // button2
+            // 
+            button2.Location = new Point(808, 608);
+            button2.Name = "button2";
+            button2.Size = new Size(94, 29);
+            button2.TabIndex = 4;
+            button2.Text = "button2";
+            button2.UseVisualStyleBackColor = true;
+            button2.Click += button2_Click;
+            // 
             // RaceUIForm
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1792, 1048);
+            Controls.Add(button2);
             Controls.Add(button1);
             Controls.Add(flowLayoutPanel1);
             Controls.Add(flowLayoutPanel2);
@@ -77,5 +89,6 @@
         private FlowLayoutPanel flowLayoutPanel1;
         private FlowLayoutPanel flowLayoutPanel2;
         private Button button1;
+        private Button button2;
     }
 }

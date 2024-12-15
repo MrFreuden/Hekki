@@ -37,11 +37,9 @@ namespace Hekki.UI
         {
             var bindingList = new BindingList<PilotDTO>(pilotDTOs);
             grid.DataSource = bindingList;
-            
 
             var columnMappers = _columnMapper.GenerateColumnMappers(heatDTOs);
             AddColumns(grid, columnMappers);
-
             SubscribeGrid(grid);
 
             grid.UserAddedRow += (sender, e) =>
@@ -76,12 +74,17 @@ namespace Hekki.UI
         {
             foreach (var heat in _heatDTOs)
             {
-                var heatTable = _gridFactory.CreateHeatTableGrid();
-                BindPilotsToHeatsTables(heatTable, _pilotDTOs, heat);
+                var heatTable = _gridFactory.CreateHeatTableGrid(heat.HeatIndex);
+                if (_pilotDTOs.Count == 0)
+                {
+                    heatTable.RowCount = heat.GroupsCount * heat.MaxGroupCapacity;
+                }
+                else
+                {
+                    BindPilotsToHeatsTables(heatTable, _pilotDTOs, heat);
+                }
                 this.Controls.Add(heatTable);
                 flowLayoutPanel1.Controls.Add(heatTable);
-                //AdjustDataGridViewHeight(heatTable);
-                    
             }
         }
 
@@ -92,17 +95,12 @@ namespace Hekki.UI
 
             var columnMappers = _columnMapper.HeatColumnMappers(heatDTO);
             AddColumns(grid, columnMappers);
-            //AddHeatRows(grid, heatDTO);
-            SubscribeGrid(grid); 
+            SubscribeGrid(grid);
+
             foreach (var pilot in pilotDTOs)
             {
                 pilot.PropertyChanged += (sender, e) => grid.Refresh();
             }
-        }
-
-        private void AddHeatRows(DataGridView grid, HeatDTO heatDTO)
-        {
-            grid.RowCount = heatDTO.MaxGroupCapacity * heatDTO.GroupsCount;
         }
 
         private void SubscribeGrid(DataGridView grid)
@@ -167,20 +165,16 @@ namespace Hekki.UI
             };
         }
 
-        private void AdjustDataGridViewHeight(DataGridView dgv)
-        {
-            int rowHeight = dgv.RowTemplate.Height;
-            int headerHeight = dgv.ColumnHeadersHeight;
-            int totalRowsHeight = dgv.Rows.Count * rowHeight;
-            int totalHeight = headerHeight + totalRowsHeight;
-
-            dgv.Height = totalHeight + 2;
-        }
-
         private void button1_Click(object sender, EventArgs e)
         {
-            var s = flowLayoutPanel2.Controls;
-            _raceService.StartNextHeat();
+
+            //var s = flowLayoutPanel2.Controls;
+            //_raceService.StartNextHeat();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

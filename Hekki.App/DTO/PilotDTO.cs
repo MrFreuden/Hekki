@@ -20,6 +20,12 @@ namespace Hekki.App.DTO
             _guid = id;
 
         }
+        public PilotDTO(string name)
+        {
+            _name = name;
+            _usedKarts = new ObservableCollection<Kart>();
+            _results = new ObservableCollection<IResult>();
+        }
 
         public PilotDTO()
         {
@@ -145,6 +151,16 @@ namespace Hekki.App.DTO
         protected virtual void OnPropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        public static List<PilotDTO> CreateEmptyDTOs(int count)
+        {
+            var list = new List<PilotDTO>();
+            for (int i = 0; i < count; i++)
+            {
+                list.Add(new PilotDTO());
+            }
+            return list;
         }
     }
 }

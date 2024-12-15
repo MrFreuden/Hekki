@@ -24,16 +24,18 @@ namespace Hekki.UI
                 BackgroundColor = System.Drawing.SystemColors.Control,
                 BorderStyle = BorderStyle.None,
                 AllowUserToResizeRows = false,
+                VirtualMode = true,
                 AllowUserToDeleteRows = true
             };
             return dataGridView1;
         }
 
-        public DataGridView CreateHeatTableGrid()
+        public DataGridView CreateHeatTableGrid(int heatIndex)
         {
             var screenHeight = Screen.PrimaryScreen.WorkingArea.Height - 70;
             var dgv = new DataGridView
             {
+                Name = heatIndex.ToString(),
                 MaximumSize = new Size(300, screenHeight), 
                 AutoSize = true,
                 AutoGenerateColumns = false,
@@ -42,6 +44,7 @@ namespace Hekki.UI
                 Margin = new Padding(10),
                 AllowUserToAddRows = false,
                 RowHeadersVisible = false,
+                VirtualMode = true,
                 BackgroundColor = System.Drawing.SystemColors.Control,
                 BorderStyle = BorderStyle.None,
                 AllowUserToResizeRows = false
