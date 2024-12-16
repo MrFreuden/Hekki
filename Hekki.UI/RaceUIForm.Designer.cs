@@ -28,27 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            flowLayoutPanel1 = new FlowLayoutPanel();
-            flowLayoutPanel2 = new FlowLayoutPanel();
             button1 = new Button();
             button2 = new Button();
             SuspendLayout();
-            // 
-            // flowLayoutPanel1
-            // 
-            flowLayoutPanel1.AutoSize = true;
-            flowLayoutPanel1.Location = new Point(747, 12);
-            flowLayoutPanel1.Name = "flowLayoutPanel1";
-            flowLayoutPanel1.Size = new Size(561, 284);
-            flowLayoutPanel1.TabIndex = 1;
-            // 
-            // flowLayoutPanel2
-            // 
-            flowLayoutPanel2.AutoSize = true;
-            flowLayoutPanel2.Location = new Point(12, 12);
-            flowLayoutPanel2.Name = "flowLayoutPanel2";
-            flowLayoutPanel2.Size = new Size(561, 531);
-            flowLayoutPanel2.TabIndex = 2;
             // 
             // button1
             // 
@@ -77,17 +59,12 @@
             ClientSize = new Size(1792, 1048);
             Controls.Add(button2);
             Controls.Add(button1);
-            Controls.Add(flowLayoutPanel1);
-            Controls.Add(flowLayoutPanel2);
             Name = "RaceUIForm";
             Text = "RaceUIForm";
             ResumeLayout(false);
-            PerformLayout();
         }
 
         #endregion
-        private FlowLayoutPanel flowLayoutPanel1;
-        private FlowLayoutPanel flowLayoutPanel2;
         private Button button1;
         private Button button2;
     }
