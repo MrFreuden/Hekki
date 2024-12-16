@@ -1,6 +1,6 @@
 ﻿using Hekki.App.DTO;
 
-namespace Hekki.UI
+namespace Hekki.UI.FormElementsFactorys
 {
     public class DataGridViewFactory
     {
@@ -21,7 +21,7 @@ namespace Hekki.UI
                 EditMode = DataGridViewEditMode.EditOnKeystroke,
                 AllowUserToOrderColumns = true,
                 RowHeadersVisible = false,
-                BackgroundColor = System.Drawing.SystemColors.Control,
+                BackgroundColor = SystemColors.Control,
                 BorderStyle = BorderStyle.None,
                 AllowUserToResizeRows = false,
                 VirtualMode = true,
@@ -36,16 +36,16 @@ namespace Hekki.UI
             var dgv = new DataGridView
             {
                 Name = heatIndex.ToString(),
-                MaximumSize = new Size(300, screenHeight), 
+                MaximumSize = new Size(300, screenHeight),
                 AutoSize = true,
                 AutoGenerateColumns = false,
                 AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill,
-                AutoSizeRowsMode= DataGridViewAutoSizeRowsMode.AllCells,
+                AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells,
                 Margin = new Padding(10),
                 AllowUserToAddRows = false,
                 RowHeadersVisible = false,
                 VirtualMode = true,
-                BackgroundColor = System.Drawing.SystemColors.Control,
+                BackgroundColor = SystemColors.Control,
                 BorderStyle = BorderStyle.None,
                 AllowUserToResizeRows = false
             };

@@ -1,4 +1,4 @@
-﻿namespace Hekki.UI
+﻿namespace Hekki.UI.FormElementsFactorys
 {
     public class FlowLayoutPanelFactory
     {
