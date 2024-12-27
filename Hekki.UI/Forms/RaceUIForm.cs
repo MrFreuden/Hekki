@@ -8,15 +8,20 @@ namespace Hekki.UI
     public partial class RaceUIForm : Form
     {
         private RaceService _raceService;
-        private List<PilotDTO> _pilotDTOs;
+        private PilotsDTO _pilotsDTO;
         private List<HeatDTO> _heatDTOs;
         private UIPanelFactory _block;
         public RaceUIForm(Regulation regulation)
         {
             _raceService = new RaceService(regulation);
-            _pilotDTOs = _raceService.GetPilotsDTO();
+
+            _pilotsDTO = new PilotsDTO(_raceService.GetPilotsDTO());
+            _pilotsDTO.PilotAdded += (sender, pilot) => _raceService.AddNewPilot(pilot);
+
             _heatDTOs = _raceService.GetHeatsDTO();
-            _block = new UIFlowLayoutPanelFactory(new DataGridViewFactory(), new FlowLayoutPanelFactory(), new ColumnMapper(), _raceService);
+
+            _block = new UIFlowLayoutPanelFactory(new DataGridViewFactory(), new FlowLayoutPanelFactory(), new ColumnMapper());
+
             InitializeComponent();
             DrawGeneralTable();
             DrawHeats();
@@ -24,19 +29,20 @@ namespace Hekki.UI
 
         private void DrawGeneralTable()
         {
-            var panel = _block.GetGeneral(_pilotDTOs, _heatDTOs);
+            var panel = _block.GetGeneral(_pilotsDTO, _heatDTOs);
             this.Controls.Add(panel);
         }
 
         private void DrawHeats()
         {
-            var panel = _block.GetSub(_pilotDTOs, _heatDTOs);
+            var panel = _block.GetSub(_pilotsDTO, _heatDTOs);
             this.Controls.Add(panel);
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-
+            
+            
             //var s = flowLayoutPanel2.Controls;
             //_raceService.StartNextHeat();
         }

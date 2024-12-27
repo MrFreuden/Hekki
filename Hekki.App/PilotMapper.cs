@@ -38,24 +38,4 @@ namespace Hekki.App
         TDestination Map(TSource source);
         TSource MapBack(TDestination destination);
     }
-
-    public class DTOToModelMapper
-    {
-        public void SyncPilotDTOToModel(PilotDTO dto, Pilot model)
-        {
-            model.Name = dto.Name;
-            model.UsedKarts = new List<Kart>(dto.UsedKarts);
-            model.Results = dto.Results.ToList();
-
-            dto.Id = model.Id; //TODO: разобраться с этим
-        }
-
-        public void SyncModelToPilotDTO(Pilot model, PilotDTO dto)
-        {
-            dto.Id = model.Id;
-            dto.Name = model.Name;
-            dto.UsedKarts = new System.Collections.ObjectModel.ObservableCollection<Kart>(model.UsedKarts);
-            dto.Results = new System.Collections.ObjectModel.ObservableCollection<IResult>(model.Results.ToList());
-        }
-    }
 }

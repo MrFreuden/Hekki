@@ -163,5 +163,31 @@ namespace Hekki.App.DTO
             return list;
         }
     }
+
+    public class PilotsDTO : ObservableCollection<PilotDTO>
+    {
+        public event EventHandler<PilotDTO> PilotAdded;
+
+        public PilotsDTO()
+        {
+
+        }
+
+        public PilotsDTO(IEnumerable<PilotDTO> pilots)
+        {
+            foreach (var pilot in pilots)
+            {
+                Add(pilot);
+            }
+        }
+
+        protected override void InsertItem(int index, PilotDTO item)
+        {
+            base.InsertItem(index, item);
+
+            PilotAdded?.Invoke(this, item);
+        }
+
+    }
 }
 

@@ -68,11 +68,10 @@ namespace Hekki.App
 
         public void AddNewPilot(PilotDTO pilotDTO)
         {
-            var mapper = new DTOToModelMapper();
-            var pilot = new Pilot("");
-            mapper.SyncPilotDTOToModel(pilotDTO, pilot);
+            var mapper = new DTOToModelSynchronizer();
+            mapper.SyncPilotDTOToModel(pilotDTO);
             //if (string.IsNullOrEmpty(pilotDTO.Name)) return;
-            _race.Pilots.Add(pilot);
+            //_race.Pilots.Add(pilot);
         }
     }
 }

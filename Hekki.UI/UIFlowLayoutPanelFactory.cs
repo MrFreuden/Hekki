@@ -11,18 +11,15 @@ namespace Hekki.UI
         private readonly DataGridViewFactory _gridFactory;
         private readonly ColumnMapper _columnMapper;
         private readonly FlowLayoutPanelFactory _flowLayoutPanelFactory;
-        private readonly RaceService _raceService;
 
-        public UIFlowLayoutPanelFactory(DataGridViewFactory gridFactory, FlowLayoutPanelFactory panelFactory,
-            ColumnMapper columnMapper, RaceService raceService)
+        public UIFlowLayoutPanelFactory(DataGridViewFactory gridFactory, FlowLayoutPanelFactory panelFactory, ColumnMapper columnMapper)
         {
             _gridFactory = gridFactory;
             _columnMapper = columnMapper;
             _flowLayoutPanelFactory = panelFactory;
-            _raceService = raceService;
         }
 
-        public FlowLayoutPanel GetGeneral(List<PilotDTO> pilotDTOs, List<HeatDTO> heatDTOs)
+        public FlowLayoutPanel GetGeneral(PilotsDTO pilotDTOs, List<HeatDTO> heatDTOs)
         {
             var grid = _gridFactory.CreateGeneralTableGrid();
             BindPilotsToGeneralGrid(grid, pilotDTOs, heatDTOs);
@@ -31,7 +28,7 @@ namespace Hekki.UI
             return panel;
         }
 
-        private void BindPilotsToGeneralGrid(DataGridView grid, List<PilotDTO> pilotDTOs, List<HeatDTO> heatDTOs)
+        private void BindPilotsToGeneralGrid(DataGridView grid, PilotsDTO pilotDTOs, List<HeatDTO> heatDTOs)
         {
             var bindingList = new BindingList<PilotDTO>(pilotDTOs);
             grid.DataSource = bindingList;
@@ -43,11 +40,11 @@ namespace Hekki.UI
             grid.UserAddedRow += (sender, e) =>
             {
                 var pilot = bindingList.Last();
-                foreach (var heat in heatDTOs)
-                {
-                    pilot.Results.Add((IResult)Activator.CreateInstance(heat.Column.DataType, heat.HeatIndex, default));
-                }
-                _raceService.AddNewPilot(pilot);
+                //foreach (var heat in heatDTOs)
+                //{
+                //    pilot.Results.Add((IResult)Activator.CreateInstance(heat.Column.DataType, heat.HeatIndex, default));
+                //}
+                //pilotDTOs.Insert(pilotDTOs.Count - 1, pilot); //TODO
             };
 
             foreach (var pilot in pilotDTOs)
@@ -68,7 +65,7 @@ namespace Hekki.UI
             }
         }
 
-        public FlowLayoutPanel GetSub(List<PilotDTO> pilotDTOs, List<HeatDTO> heatDTOs)
+        public FlowLayoutPanel GetSub(PilotsDTO pilotDTOs, List<HeatDTO> heatDTOs)
         {
             var panel = _flowLayoutPanelFactory.GetForHeats();
             foreach (var heat in heatDTOs)
@@ -87,7 +84,7 @@ namespace Hekki.UI
             return panel;
         }
 
-        private void BindPilotsToHeatsTables(DataGridView grid, List<PilotDTO> pilotDTOs, HeatDTO heatDTO)
+        private void BindPilotsToHeatsTables(DataGridView grid, PilotsDTO pilotDTOs, HeatDTO heatDTO)
         {
             var bindingList = new BindingList<PilotDTO>(pilotDTOs);
             grid.DataSource = bindingList;
@@ -140,7 +137,7 @@ namespace Hekki.UI
                     }
                 }
             };
-
+            var synchronizer = new DTOToModelSynchronizer();
             grid.CellValueChanged += (sender, e) =>
             {
                 if (e.RowIndex >= 0 && e.ColumnIndex >= 0)
@@ -148,12 +145,7 @@ namespace Hekki.UI
                     var pilotDTO = grid.Rows[e.RowIndex].DataBoundItem as PilotDTO;
                     if (pilotDTO != null)
                     {
-                        var model = _raceService.Pilots.FirstOrDefault(p => p.Id == pilotDTO.Id);
-                        if (model != null)
-                        {
-                            var mapper = new DTOToModelMapper();
-                            mapper.SyncPilotDTOToModel(pilotDTO, model);
-                        }
+                        synchronizer.SyncPilotDTOToModel(pilotDTO);
                     }
                 }
             };
@@ -172,8 +164,8 @@ namespace Hekki.UI
 
     public interface UIPanelFactory
     {
-        public FlowLayoutPanel GetGeneral(List<PilotDTO> pilotDTOs, List<HeatDTO> heatDTOs);
-        public FlowLayoutPanel GetSub(List<PilotDTO> pilotDTOs, List<HeatDTO> heatDTOs);
+        public FlowLayoutPanel GetGeneral(PilotsDTO pilotDTOs, List<HeatDTO> heatDTOs);
+        public FlowLayoutPanel GetSub(PilotsDTO pilotDTOs, List<HeatDTO> heatDTOs);
         public FlowLayoutPanel GetControlPanel();
     }
 }
