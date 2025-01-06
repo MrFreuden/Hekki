@@ -34,7 +34,7 @@ namespace Hekki.App.DTO
             }
         }
 
-        private void ItemPropertyChanged(object sender, PropertyChangedEventArgs e)
+        protected virtual void ItemPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             var args = new NotifyCollectionChangedEventArgs(
                 NotifyCollectionChangedAction.Replace,

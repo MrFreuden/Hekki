@@ -1,6 +1,5 @@
 ﻿using Hekki.Domain.Interfaces;
 using Hekki.Domain.Models;
-using System.Collections.ObjectModel;
 using System.ComponentModel;
 
 namespace Hekki.App.DTO
@@ -31,7 +30,7 @@ namespace Hekki.App.DTO
             _name = string.Empty;
             _usedKarts = new FullyObservableCollection<Kart>();
             _results = new FullyObservableCollection<IResult>();
-            
+
         }
 
         public Guid Id { get; set; }
@@ -57,7 +56,6 @@ namespace Hekki.App.DTO
                 if (_usedKarts != value)
                 {
                     _usedKarts = value;
-                    OnPropertyChanged(nameof(UsedKarts));
                 }
             }
         }
@@ -70,7 +68,6 @@ namespace Hekki.App.DTO
                 if (_results != value)
                 {
                     _results = value;
-                    OnPropertyChanged(nameof(Results));
                 }
             }
         }
@@ -105,53 +102,51 @@ namespace Hekki.App.DTO
 
         public PilotsDTO(IEnumerable<PilotDTO> pilots, Action<PilotDTO> sync) : this(sync)
         {
+            _synchronizator = sync ?? throw new ArgumentNullException(nameof(sync));
             foreach (var pilot in pilots)
             {
-                base.Add(pilot);
-                SubscribeToPilot(pilot);
+                SubscribeToResultChanges(pilot);
+                SubscribeToUsedKartChanges(pilot);
             }
         }
 
-        private void OnPilotPropertyChanged(object sender, PropertyChangedEventArgs e)
+        protected override void ItemPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
+            base.ItemPropertyChanged(sender, e);
+
             if (sender is PilotDTO pilot)
             {
-                Console.WriteLine($"PropertyChanged triggered for {e.PropertyName}");
-                _synchronizator.Invoke(pilot);
+                _synchronizator?.Invoke(pilot);
             }
         }
 
-        private void SubscribeToPilot(PilotDTO pilot)
+        private void SubscribeToResultChanges(PilotDTO pilot)
         {
-            pilot.PropertyChanged += OnPilotPropertyChanged;
+            foreach (var result in pilot.Results)
+            {
+                result.PropertyChanged += (sender, args) =>
+                {
+                    _synchronizator?.Invoke(pilot);
+                };
+            }
         }
 
-        private void UnsubscribeFromPilot(PilotDTO pilot)
+        private void SubscribeToUsedKartChanges(PilotDTO pilot)
         {
-            pilot.PropertyChanged -= OnPilotPropertyChanged;
+            foreach (var kart in pilot.UsedKarts)
+            {
+                kart.PropertyChanged += (sender, args) =>
+                {
+                    _synchronizator.Invoke(pilot);
+                };
+            }
         }
-
         protected override void InsertItem(int index, PilotDTO item)
         {
             base.InsertItem(index, item);
-            SubscribeToPilot(item);
             PilotAdded?.Invoke(this, item);
-        }
-
-        protected override void RemoveItem(int index)
-        {
-            var item = this[index];
-            UnsubscribeFromPilot(item);
-            base.RemoveItem(index);
-        }
-
-        protected override void ClearItems()
-        {
-            foreach (var pilot in Items)
-            {
-                UnsubscribeFromPilot(pilot);
-            }
-            base.ClearItems();
+            SubscribeToUsedKartChanges(item);
+            SubscribeToResultChanges(item);
         }
 
         public void Add(PilotDTO pilot)

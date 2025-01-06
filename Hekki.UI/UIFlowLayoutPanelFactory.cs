@@ -48,11 +48,11 @@ namespace Hekki.UI
             grid.UserAddedRow += (sender, e) =>
             {
                 var pilot = bindingList.Last();
-                //foreach (var heat in heatDTOs)
-                //{
-                //    pilot.Results.Add((IResult)Activator.CreateInstance(heat.Column.DataType, heat.HeatIndex, default));
-                //}
-                //pilotDTOs.Insert(pilotDTOs.Count - 1, pilot); //TODO
+                foreach (var heat in heatDTOs)
+                {
+                    pilot.Results.Add((IResult)Activator.CreateInstance(heat.Column.DataType, heat.HeatIndex, default));
+                }
+                 //TODO
             };
 
             foreach (var pilot in pilotDTOs)
