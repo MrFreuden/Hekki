@@ -9,12 +9,16 @@ namespace Hekki.App
         private Regulation _regulation;
         private HeatService _heatService;
         private readonly DTOFactory _dTOFactory = new();
+        private readonly DTOToModelSynchronizer _dTOToModelSynchronizer;
+        private PilotsDTO _DTOs;
 
         public RaceService(Regulation regulation)
         {
             _regulation = regulation;
             _heatService = new();
             _race = MakeRace();
+            _DTOs = new(_dTOFactory.CreatePilotDTOs(_race.Pilots), Sync);
+            _dTOToModelSynchronizer = new(_DTOs, _race.Pilots);
         }
 
         public List<Pilot> Pilots => _race.Pilots;
@@ -59,19 +63,16 @@ namespace Hekki.App
 
         public void StartNextHeat()
         {
-            
+            _dTOToModelSynchronizer.SyncPilotDTOToModel(new PilotDTO());
         }
 
         public List<HeatDTO> GetHeatsDTO() => _dTOFactory.CreateHeatDTOs(_race.Heats);
 
-        public List<PilotDTO> GetPilotsDTO() => _dTOFactory.CreatePilotDTOs(_race.Pilots);
+        public PilotsDTO GetPilotsDTO() => _DTOs;
 
-        public void AddNewPilot(PilotDTO pilotDTO)
+        public void Sync(PilotDTO pilotDTO)
         {
-            var mapper = new DTOToModelSynchronizer();
-            mapper.SyncPilotDTOToModel(pilotDTO);
-            //if (string.IsNullOrEmpty(pilotDTO.Name)) return;
-            //_race.Pilots.Add(pilot);
+            _dTOToModelSynchronizer.SyncPilotDTOToModel(pilotDTO);
         }
     }
 }

@@ -25,6 +25,7 @@ namespace Hekki.UI
                     var newKarts = input.Split(' ')
                         .Select(kart => new Kart(int.TryParse(kart.Trim(), out var num) ? num : 0))
                         .ToList();
+
                     pilot.UsedKarts.Clear();
                     foreach (var kart in newKarts)
                     {

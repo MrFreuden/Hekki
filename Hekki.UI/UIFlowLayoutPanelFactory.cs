@@ -3,6 +3,7 @@ using Hekki.App.DTO;
 using Hekki.Domain.Interfaces;
 using Hekki.UI.FormElementsFactorys;
 using System.ComponentModel;
+using System.Windows.Forms;
 
 namespace Hekki.UI
 {
@@ -31,6 +32,13 @@ namespace Hekki.UI
         private void BindPilotsToGeneralGrid(DataGridView grid, PilotsDTO pilotDTOs, List<HeatDTO> heatDTOs)
         {
             var bindingList = new BindingList<PilotDTO>(pilotDTOs);
+            bindingList.AddingNew += (sender, e) =>
+            {
+                if (grid.Rows.Count == bindingList.Count)
+                {
+                    bindingList.RemoveAt(bindingList.Count - 2); //TODO 2????!
+                }
+            };
             grid.DataSource = bindingList;
 
             var columnMappers = _columnMapper.GenerateColumnMappers(heatDTOs);
@@ -51,6 +59,8 @@ namespace Hekki.UI
             {
                 pilot.PropertyChanged += (sender, e) => grid.Refresh();
             }
+
+            
         }
 
         private void AddColumns(DataGridView grid, List<ColumnMapper> columnMappers)
@@ -134,18 +144,6 @@ namespace Hekki.UI
                         {
                             MessageBox.Show("Invalid value format.");
                         }
-                    }
-                }
-            };
-            var synchronizer = new DTOToModelSynchronizer();
-            grid.CellValueChanged += (sender, e) =>
-            {
-                if (e.RowIndex >= 0 && e.ColumnIndex >= 0)
-                {
-                    var pilotDTO = grid.Rows[e.RowIndex].DataBoundItem as PilotDTO;
-                    if (pilotDTO != null)
-                    {
-                        synchronizer.SyncPilotDTOToModel(pilotDTO);
                     }
                 }
             };

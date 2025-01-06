@@ -8,43 +8,33 @@ namespace Hekki.App.DTO
     public class PilotDTO : INotifyPropertyChanged
     {
         private string _name;
-        private ObservableCollection<Kart> _usedKarts;
-        private ObservableCollection<IResult> _results;
-        private Guid _guid;
+        private FullyObservableCollection<Kart> _usedKarts;
+        private FullyObservableCollection<IResult> _results;
 
         public PilotDTO(string name, List<Kart> usedKarts, List<IResult> results, Guid id)
         {
             Name = name;
-            UsedKarts = new ObservableCollection<Kart>(usedKarts);
-            Results = new ObservableCollection<IResult>(results);
-            _guid = id;
+            UsedKarts = new FullyObservableCollection<Kart>(usedKarts);
+            Results = new FullyObservableCollection<IResult>(results);
+            Id = id;
 
         }
         public PilotDTO(string name)
         {
             _name = name;
-            _usedKarts = new ObservableCollection<Kart>();
-            _results = new ObservableCollection<IResult>();
+            _usedKarts = new FullyObservableCollection<Kart>();
+            _results = new FullyObservableCollection<IResult>();
         }
 
         public PilotDTO()
         {
             _name = string.Empty;
-            _usedKarts = new ObservableCollection<Kart>();
-            _results = new ObservableCollection<IResult>();
+            _usedKarts = new FullyObservableCollection<Kart>();
+            _results = new FullyObservableCollection<IResult>();
+            
         }
 
-        public Guid Id
-        {
-            get
-            {
-                return _guid;
-            }
-            set
-            {
-                _guid = value;
-            }
-        }
+        public Guid Id { get; set; }
 
         public string Name
         {
@@ -59,95 +49,34 @@ namespace Hekki.App.DTO
             }
         }
 
-        public ObservableCollection<Kart> UsedKarts
+        public FullyObservableCollection<Kart> UsedKarts
         {
             get => _usedKarts;
             set
             {
                 if (_usedKarts != value)
                 {
-                    if (_usedKarts != null)
-                        UnsubscribeFromResults(_usedKarts);
-
                     _usedKarts = value;
-
-                    if (_usedKarts != null)
-                        SubscribeToResults(_usedKarts);
-
-                    OnPropertyChanged(nameof(Results));
+                    OnPropertyChanged(nameof(UsedKarts));
                 }
             }
         }
 
-        public ObservableCollection<IResult> Results
+        public FullyObservableCollection<IResult> Results
         {
             get => _results;
             set
             {
                 if (_results != value)
                 {
-                    if (_results != null)
-                        UnsubscribeFromResults(_results);
-
                     _results = value;
-
-                    if (_results != null)
-                        SubscribeToResults(_results);
-
                     OnPropertyChanged(nameof(Results));
                 }
             }
         }
 
-        public event PropertyChangedEventHandler PropertyChanged; 
-        private void SubscribeToResults<T>(ObservableCollection<T> results)
-        {
-            foreach (var result in results)
-            {
-                if (result is INotifyPropertyChanged notifyResult)
-                    notifyResult.PropertyChanged += OnResultPropertyChanged;
-            }
+        public event PropertyChangedEventHandler PropertyChanged;
 
-            results.CollectionChanged += OnResultsCollectionChanged;
-        }
-
-        private void UnsubscribeFromResults<T>(ObservableCollection<T> results)
-        {
-            foreach (var result in results)
-            {
-                if (result is INotifyPropertyChanged notifyResult)
-                    notifyResult.PropertyChanged -= OnResultPropertyChanged;
-            }
-
-            results.CollectionChanged -= OnResultsCollectionChanged;
-        }
-
-        private void OnResultsCollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
-        {
-            if (e.OldItems != null)
-            {
-                foreach (var item in e.OldItems)
-                {
-                    if (item is INotifyPropertyChanged notifyResult)
-                        notifyResult.PropertyChanged -= OnResultPropertyChanged;
-                }
-            }
-
-            if (e.NewItems != null)
-            {
-                foreach (var item in e.NewItems)
-                {
-                    if (item is INotifyPropertyChanged notifyResult)
-                        notifyResult.PropertyChanged += OnResultPropertyChanged;
-                }
-            }
-
-            OnPropertyChanged(nameof(Results));
-        }
-        private void OnResultPropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-            OnPropertyChanged(nameof(Results));
-        }
         protected virtual void OnPropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
@@ -164,30 +93,71 @@ namespace Hekki.App.DTO
         }
     }
 
-    public class PilotsDTO : ObservableCollection<PilotDTO>
+    public class PilotsDTO : FullyObservableCollection<PilotDTO>
     {
+        private readonly Action<PilotDTO> _synchronizator;
         public event EventHandler<PilotDTO> PilotAdded;
 
-        public PilotsDTO()
+        public PilotsDTO(Action<PilotDTO> sync)
         {
-
+            _synchronizator = sync ?? throw new ArgumentNullException(nameof(sync));
         }
 
-        public PilotsDTO(IEnumerable<PilotDTO> pilots)
+        public PilotsDTO(IEnumerable<PilotDTO> pilots, Action<PilotDTO> sync) : this(sync)
         {
             foreach (var pilot in pilots)
             {
-                Add(pilot);
+                base.Add(pilot);
+                SubscribeToPilot(pilot);
             }
+        }
+
+        private void OnPilotPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (sender is PilotDTO pilot)
+            {
+                Console.WriteLine($"PropertyChanged triggered for {e.PropertyName}");
+                _synchronizator.Invoke(pilot);
+            }
+        }
+
+        private void SubscribeToPilot(PilotDTO pilot)
+        {
+            pilot.PropertyChanged += OnPilotPropertyChanged;
+        }
+
+        private void UnsubscribeFromPilot(PilotDTO pilot)
+        {
+            pilot.PropertyChanged -= OnPilotPropertyChanged;
         }
 
         protected override void InsertItem(int index, PilotDTO item)
         {
             base.InsertItem(index, item);
-
+            SubscribeToPilot(item);
             PilotAdded?.Invoke(this, item);
         }
 
+        protected override void RemoveItem(int index)
+        {
+            var item = this[index];
+            UnsubscribeFromPilot(item);
+            base.RemoveItem(index);
+        }
+
+        protected override void ClearItems()
+        {
+            foreach (var pilot in Items)
+            {
+                UnsubscribeFromPilot(pilot);
+            }
+            base.ClearItems();
+        }
+
+        public void Add(PilotDTO pilot)
+        {
+            InsertItem(Count, pilot);
+        }
     }
 }
 

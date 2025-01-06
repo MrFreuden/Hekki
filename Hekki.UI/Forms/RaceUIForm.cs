@@ -15,8 +15,7 @@ namespace Hekki.UI
         {
             _raceService = new RaceService(regulation);
 
-            _pilotsDTO = new PilotsDTO(_raceService.GetPilotsDTO());
-            _pilotsDTO.PilotAdded += (sender, pilot) => _raceService.AddNewPilot(pilot);
+            _pilotsDTO = _raceService.GetPilotsDTO();
 
             _heatDTOs = _raceService.GetHeatsDTO();
 
@@ -24,7 +23,7 @@ namespace Hekki.UI
 
             InitializeComponent();
             DrawGeneralTable();
-            DrawHeats();
+            //DrawHeats();
         }
 
         private void DrawGeneralTable()
@@ -41,10 +40,7 @@ namespace Hekki.UI
 
         private void button1_Click(object sender, EventArgs e)
         {
-            
-            
-            //var s = flowLayoutPanel2.Controls;
-            //_raceService.StartNextHeat();
+            _raceService.StartNextHeat();
         }
 
         private void button2_Click(object sender, EventArgs e)
