@@ -13,10 +13,13 @@ namespace Hekki.Domain.Models
 
         }
 
-        public Kart(int value)
+        public Kart(int value, int heatIndex)
         {
             Value = value;
+            HeatIndex = heatIndex;
         }
+
+        public int HeatIndex { get; }
 
         public int Value
         {

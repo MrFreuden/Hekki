@@ -23,7 +23,7 @@ namespace Hekki.UI
                 Parser = (pilot, input) =>
                 {
                     var newKarts = input.Split(' ')
-                        .Select(kart => new Kart(int.TryParse(kart.Trim(), out var num) ? num : 0))
+                        .Select((kart, index) => new Kart(int.TryParse(kart.Trim(), out var num) ? num : 0, index))
                         .ToList();
 
                     pilot.UsedKarts.Clear();

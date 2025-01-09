@@ -44,9 +44,9 @@ namespace Hekki.Domain.Models
             _results.Add(result);
         }
 
-        public void AddUsedKart(int kartNumber)
+        public void AddUsedKart(int kartNumber, int heatIndex)
         {
-            _usedKarts.Add(new Kart(kartNumber));
+            _usedKarts.Add(new Kart(kartNumber, heatIndex));
         }
     }
 }
