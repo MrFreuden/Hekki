@@ -6,10 +6,9 @@
   "compilationOptions": {},
   "targets": {
     ".NETCoreApp,Version=v6.0": {
-      "Hekki/0.0.39-alpha.0.1": {
+      "Hekki/0.0.39": {
         "dependencies": {
           "Clowd.Squirrel": "2.9.42",
-          "ExcelController": "1.0.0",
           "MinVer": "4.3.0",
           "RaceLogic": "1.0.0"
         },
@@ -39,7 +38,10 @@
       },
       "ExcelController/1.0.0": {
         "runtime": {
-          "ExcelController.dll": {}
+          "ExcelController.dll": {
+            "assemblyVersion": "1.0.0",
+            "fileVersion": "1.0.0.0"
+          }
         }
       },
       "RaceLogic/1.0.0": {
@@ -47,13 +49,16 @@
           "ExcelController": "1.0.0"
         },
         "runtime": {
-          "RaceLogic.dll": {}
+          "RaceLogic.dll": {
+            "assemblyVersion": "1.0.0",
+            "fileVersion": "1.0.0.0"
+          }
         }
       }
     }
   },
   "libraries": {
-    "Hekki/0.0.39-alpha.0.1": {
+    "Hekki/0.0.39": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

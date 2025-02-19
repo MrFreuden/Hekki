@@ -47,7 +47,7 @@ namespace Hekki
 
         private void DoFinal_Click(object sender, EventArgs e)
         {
-            testNew.DoFinal(numbersKarts);
+            testNew.DoOneRace(numbersKarts);
             testNew.WriteUsedKarts();
         }
 

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Office.Interop.Excel;
+using System;
 using System.Diagnostics;
 
 namespace RaceLogic
@@ -73,7 +74,10 @@ namespace RaceLogic
                 var lastIndex = BinSearchLastIndex(combinations, numbers[i], 
                                                         position, 0, combinations.Count - 1);
                 var length = lastIndex - firstIndex + 1;
-                
+                if (length < 0)
+                {
+                    throw new ArgumentException("Нету доступных комбинаций для пилотов, без повторений картов");
+                }
                 combinations.RemoveRange(firstIndex, length);
             }
         }

@@ -7,8 +7,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hekki", "Hekki\Hekki.csproj
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{5231AA22-18B6-4F19-AB31-80D3121EA33F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExcelController", "ExcelController\ExcelController.csproj", "{BE7CE2ED-A6F3-41D3-8AC7-FDD179B8B57A}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RaceLogic", "RaceLogic\RaceLogic.csproj", "{B8E009C6-E96D-4F27-896E-020984A76B21}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExcelWorker.Test", "ExcelWorkerTest\ExcelWorker.Test.csproj", "{10F79E9F-1183-45D1-975A-EDF2834AF8D1}"
@@ -23,10 +21,6 @@ Global
 		{7FEE59C6-D1C3-41FE-943C-1D4344B2C3AF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7FEE59C6-D1C3-41FE-943C-1D4344B2C3AF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7FEE59C6-D1C3-41FE-943C-1D4344B2C3AF}.Release|Any CPU.Build.0 = Release|Any CPU
-		{BE7CE2ED-A6F3-41D3-8AC7-FDD179B8B57A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BE7CE2ED-A6F3-41D3-8AC7-FDD179B8B57A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{BE7CE2ED-A6F3-41D3-8AC7-FDD179B8B57A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BE7CE2ED-A6F3-41D3-8AC7-FDD179B8B57A}.Release|Any CPU.Build.0 = Release|Any CPU
 		{B8E009C6-E96D-4F27-896E-020984A76B21}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{B8E009C6-E96D-4F27-896E-020984A76B21}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B8E009C6-E96D-4F27-896E-020984A76B21}.Release|Any CPU.ActiveCfg = Release|Any CPU
